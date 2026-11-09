@@ -1,33 +1,133 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#080d09"><meta name="description" content="Join Shoeb & Fabbiha for their wedding celebration, 31 March 2027."><title>Shoeb & Fabbiha · Wedding Invitation</title>
-<style>
-*{box-sizing:border-box}html,body{margin:0;background:#080d09;color:#efdfb7}body{font-family:Georgia,'Times New Roman',serif}.invitation{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding: max(24px,env(safe-area-inset-top)) 24px max(34px,env(safe-area-inset-bottom))}.ambience{position:absolute;inset:-30px;z-index:-3;background:linear-gradient(#09100b44,#080d09),url('poster.jpg') center/cover;filter:blur(24px);opacity:.5}.film{position:absolute;inset:0 0 auto;width:100%;height:64svh;object-fit:contain;z-index:-2;mask-image:linear-gradient(to bottom,transparent 0%,#000 10%,#000 65%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 10%,#000 65%,transparent 100%)}.shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(to bottom,transparent 30%,#080d0922 45%,#080d09ed 76%,#080d09)}.copy{width:100%;text-align:center;padding-top:46svh;animation:arrive 1.8s ease both}.eyebrow,.date,.enter,.note,.replay{font-family:Arial,sans-serif}.eyebrow{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#d5bc85;margin:0 0 19px}h1{font-weight:400;font-size:clamp(39px,11vw,64px);line-height:1.04;letter-spacing:.025em;margin:0;text-shadow:0 2px 28px #000}h1 span{display:block}.amp{font-size:.55em;font-style:italic;color:#ba995d;margin:8px 0}.date{font-size:10px;letter-spacing:.27em;margin:22px 0;color:#d9c595}.line{width:46px;height:1px;margin:22px auto;background:linear-gradient(90deg,transparent,#c5a56a,transparent)}.enter{display:inline-flex;min-height:52px;align-items:center;justify-content:center;padding:0 28px;border:1px solid #b8975c;color:#f1dfb8;background:#18221988;text-decoration:none;font-size:10px;letter-spacing:.2em;transition:background .2s}.enter:hover,.enter:focus-visible{background:#3d452b;outline:2px solid #efdfb7;outline-offset:4px}.note{font-size:9px;color:#a69b7d;letter-spacing:.08em;margin:16px 0 0}.replay{position:absolute;top:max(18px,env(safe-area-inset-top));right:18px;border:1px solid #b8975c66;color:#deca9f;background:#080d0988;border-radius:30px;min-height:44px;padding:0 15px;font-size:10px;cursor:pointer}.replay[hidden]{display:none}@keyframes arrive{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}@media(min-width:700px){.invitation{padding-bottom:40px}.film{height:100svh;object-fit:cover;mask-image:linear-gradient(#000 25%,transparent 92%)}.shade{background:linear-gradient(transparent,#080d09ed)}.copy{padding-top:38svh}h1 span{display:inline}.amp{margin:0 12px}h1{font-size:64px}.eyebrow{font-size:11px}}@media(max-height:700px) and (max-width:699px){.copy{padding-top:38svh}h1{font-size:36px}.eyebrow{margin-bottom:12px}.date,.line{margin:16px auto}.invitation{padding-bottom:22px}}@media(prefers-reduced-motion:reduce){.copy{animation:none}.enter{transition:none}}
-
-/* Added family details and a naturally scrolling continuation. */
-.copy{max-width:760px}.person-name{font-size:clamp(32px,8.7vw,52px);line-height:1.16;font-weight:400;letter-spacing:.02em;margin:0;text-wrap:balance}.family{font-size:14px;line-height:1.7;color:#c9b992;margin:12px auto 0;max-width:340px}.family strong{font-weight:400;color:#e4d1a5}.couple-amp{font-size:27px;font-style:italic;color:#ba995d;margin:19px 0}.scroll-note{font:10px/1.6 Arial,sans-serif;letter-spacing:.12em;color:#b8a77f;margin:24px 0 0}.details{position:relative;background:radial-gradient(ellipse at 50% 25%,#172219,#080d09 75%);padding:48px 24px 64px;text-align:center}.details-inner{max-width:660px;margin:auto}.countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:430px;margin:25px auto 48px}.countdown div{border-top:1px solid #b8975c66;border-bottom:1px solid #b8975c44;padding:16px 3px}.countdown span{display:block;font-size:clamp(25px,7vw,36px);font-variant-numeric:tabular-nums}.countdown small{display:block;font:9px/1.5 Arial,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:#c5b48e;margin-top:8px}.verse{margin:0}.arabic{font-family:'Noto Naskh Arabic','Traditional Arabic','Geeza Pro',serif;font-size:clamp(25px,6.3vw,34px);line-height:2.1;margin:0 auto 22px;text-wrap:pretty}.translation{font-size:17px;line-height:1.85;color:#e2d4b5;margin:0 auto 20px;max-width:580px}.verse cite{font:11px/1.8 Arial,sans-serif;color:#bfa671;font-style:normal}.translation-credit{display:block;font-size:10px;color:#a99c7d}.details .enter{margin-top:35px}.countdown-heading{font:11px/1.6 Arial,sans-serif;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#d5bc85;margin:0}.countdown-message{font-size:21px;margin:25px 0 40px}
-
-/* Reserve space for the film so invitation text never overlays the calligraphy. */
-.invitation{display:block;padding-top:0}
-.film{position:relative;inset:auto;display:block;width:calc(100% + 48px);max-width:none;height:auto;aspect-ratio:752 / 416;object-fit:contain;margin:0 -24px;z-index:0;mask-image:linear-gradient(to bottom,#000 80%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 100%)}
-.copy{position:relative;margin:0 auto;padding-top:24px;animation:none}
-.shade{background:linear-gradient(to bottom,transparent,#080d09 90%)}
-@media(min-width:700px){.film{width:min(calc(100% + 48px),1100px);height:auto;aspect-ratio:752 / 416;object-fit:contain;margin:0 auto}.copy{padding-top:24px}}
-
-/* Bring the wording closer to the calligraphy, within the film's faded lower edge. */
-.copy{padding-top:0;margin-top:-38px}
-@media(min-width:700px){.copy{padding-top:0;margin-top:-48px}}
-</style></head><body><main class="invitation"><div class="ambience" aria-hidden="true"></div><video class="film" id="film" autoplay muted playsinline preload="auto" poster="poster.jpg" aria-label="Golden arch with Bismillah calligraphy"><source src="intro.mp4" type="video/mp4"></video><div class="shade" aria-hidden="true"></div><button class="replay" id="replay" hidden>Play introduction</button><section class="copy" aria-label="Wedding invitation"><p class="eyebrow">The wedding celebration of</p><h1 class="person-name">Shoeb Ahmed</h1><p class="family">Beloved eldest son of<br><strong>Sohel Ahmed and Salima Begum</strong></p><div class="couple-amp" aria-hidden="true">&amp;</div><h2 class="person-name">Fabbiha Akther Shama</h2><p class="family">Beloved eldest daughter of<br><strong>Mohammed Helal Miah and Fatima Begum</strong></p><p class="date">31 MARCH 2027</p><p class="note">Guest Arrival: 5:00 PM · UK time</p><div class="line" aria-hidden="true"></div><a class="enter" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027">ENTER INVITATION &nbsp; →</a><p class="note">With the blessings of Allah</p><p class="scroll-note">Scroll for our countdown &amp; a verse from the Qur’an ↓</p></section></main>
-<section class="details" aria-label="Wedding countdown and Quranic verse"><div class="details-inner"><h2 class="countdown-heading">Counting down to our celebration</h2><div class="countdown" id="countdown" role="group" aria-label="Time until 31 March 2027 at 5pm UK time"><div><span id="days">—</span><small>Days</small></div><div><span id="hours">—</span><small>Hours</small></div><div><span id="minutes">—</span><small>Minutes</small></div><div><span id="seconds">—</span><small>Seconds</small></div></div><p id="countdown-message" class="countdown-message" hidden></p><blockquote class="verse"><p class="arabic" lang="ar" dir="rtl">هُوَ ٱلَّذِي خَلَقَكُم مِّن نَّفۡسٖ وَٰحِدَةٖ وَجَعَلَ مِنۡهَا زَوۡجَهَا لِيَسۡكُنَ إِلَيۡهَاۖ</p><p class="translation">“He is the One Who created you from a single soul, then from it made its spouse so he may find comfort in her.”</p><cite>Surah Al-A‘raf · 7:189 (excerpt)<span class="translation-credit">Translation: Dr. Mustafa Khattab, The Clear Quran</span></cite></blockquote><a class="enter" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027">ENTER INVITATION &nbsp; →</a></div></section><script>
-const film=document.getElementById('film'),replay=document.getElementById('replay');
-function fallback(){replay.hidden=false;replay.textContent='Play introduction'}
-film.addEventListener('ended',()=>{replay.hidden=false;replay.textContent='Replay introduction'});film.addEventListener('error',fallback);
-replay.addEventListener('click',()=>{film.currentTime=0;film.play().then(()=>replay.hidden=true).catch(fallback)});
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){film.autoplay=false;film.pause();fallback()}else{const attempt=film.play();if(attempt)attempt.catch(fallback)}
-
-// Counts to guest arrival at 5pm UK time (BST, UTC+1).
-const weddingDate=Date.parse('2027-03-31T17:00:00+01:00');
-function countdownParts(now){const total=Math.max(0,Math.floor((weddingDate-now)/1000));return {days:Math.floor(total/86400),hours:Math.floor(total/3600)%24,minutes:Math.floor(total/60)%60,seconds:total%60}}
-function updateCountdown(){const now=Date.now(),parts=countdownParts(now);for(const [key,value] of Object.entries(parts)){document.getElementById(key).textContent=String(value).padStart(2,'0')}
-if(now>=weddingDate){document.getElementById('countdown').hidden=true;document.getElementById('countdown').style.display='none';const message=document.getElementById('countdown-message');message.hidden=false;message.textContent=now<weddingDate+86400000?'Our wedding day is here':'Our celebration began on 31 March 2027';return false}return true}
-if(updateCountdown()){const ticker=setInterval(()=>{if(!updateCountdown())clearInterval(ticker)},1000)}
-</script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080e0b">
+  <meta name="description" content="Shoeb & Fabbiha invite you to celebrate their wedding on 31 March 2027.">
+  <title>Shoeb &amp; Fabbiha | Wedding Invitation</title>
+  <style>
+    :root{--ink:#080e0b;--green:#112018;--gold:#ddc38d;--light:#f3e6c6;--muted:#c2ac7e}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--ink)}
+    body{margin:0;background:var(--ink);color:var(--light);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+    a{-webkit-tap-highlight-color:transparent}
+    .invitation{position:relative;isolation:isolate;overflow:hidden;min-height:100svh;background:radial-gradient(ellipse 80% 55% at 50% 70%,#19291b 0%,#0b150e 65%,var(--ink) 100%)}
+    .cinema{position:absolute;z-index:-2;inset:0 0 auto;height:105svh;min-height:650px;overflow:hidden;pointer-events:none;background:#09110c url('poster-mobile.jpg') center top/cover no-repeat}
+    .cinema video{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+    .cinema::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,14,11,.08) 0%,rgba(8,14,11,0) 26%,rgba(8,14,11,.28) 36%,rgba(8,14,11,.7) 50%,rgba(8,14,11,.94) 73%,var(--ink) 100%)}
+    .ambient-glow{position:absolute;z-index:-1;top:46svh;left:50%;transform:translateX(-50%);width:min(950px,160vw);height:800px;background:radial-gradient(ellipse,rgba(70,69,39,.12),transparent 68%);pointer-events:none}
+    .page-border{position:absolute;z-index:2;inset:12px 12px auto;height:calc(100svh - 24px);border:1px solid rgba(221,195,141,.22);border-bottom:0;pointer-events:none;mask-image:linear-gradient(#000,transparent 96%)}
+    .content{position:relative;z-index:1;margin:auto;max-width:760px;padding:clamp(275px,40svh,425px) 25px 64px;text-align:center}
+    .eyebrow,.date,.arrival,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
+    .eyebrow{font-size:10px;line-height:1.6;letter-spacing:.29em;color:var(--gold);text-transform:uppercase;margin:0 0 19px;text-shadow:0 2px 12px #080e0b}
+    .names{margin:0;font-weight:400;font-size:clamp(34px,9vw,49px);line-height:1.1;letter-spacing:.035em;text-shadow:0 4px 24px #050805}
+    .family{margin:12px auto 0;max-width:390px;color:#d8c69c;font-size:clamp(13px,3.6vw,15px);line-height:1.65;text-shadow:0 2px 18px #080e0b}
+    .family strong{font-weight:400;color:var(--light)}
+    .ampersand{display:block;color:#b99961;margin:16px 0;font-size:30px;font-style:italic;line-height:1}
+    .ornament{display:flex;gap:10px;align-items:center;justify-content:center;width:150px;margin:35px auto 24px;color:#c5a86f}
+    .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#a78c54)}
+    .ornament::after{transform:rotate(180deg)}
+    .ornament span{font-size:14px}
+    .date{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--light);line-height:1.7;margin:0}
+    .arrival{margin:10px 0 0;color:var(--muted);font-size:10px;letter-spacing:.18em;line-height:1.8;text-transform:uppercase}
+    .soft-divider{width:42px;height:1px;margin:48px auto 31px;background:#b99b60}
+    .count-title{font-size:10px;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);font-weight:400;margin:0 0 24px;line-height:1.6}
+    .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;max-width:440px;margin:0 auto 42px}
+    .time-unit{padding:15px 3px 14px;border-top:1px solid rgba(187,154,88,.48);border-bottom:1px solid rgba(187,154,88,.28);background:linear-gradient(to bottom,rgba(63,57,31,.12),transparent)}
+    .number{display:block;font-size:clamp(25px,7.5vw,38px);line-height:1.1;font-variant-numeric:tabular-nums;color:var(--light)}
+    .unit-label{display:block;margin-top:10px;color:#c8b289;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+    .countdown-complete{font-size:20px;line-height:1.5;color:var(--light);margin:0 0 40px}
+    .verse{margin:0 auto;max-width:630px;padding:0;border:0}
+    .arabic{font-family:'Geeza Pro','Noto Naskh Arabic','Traditional Arabic',serif;font-size:clamp(25px,6.4vw,37px);line-height:2.1;color:#f1dca8;margin:0 0 15px;overflow-wrap:normal}
+    .translation{font-style:italic;color:#e7dabc;font-size:clamp(16px,4.2vw,19px);line-height:1.75;margin:0 0 17px;text-wrap:pretty}
+    .scripture-ref{color:#bba271;font-size:11px;line-height:1.7;font-style:normal;letter-spacing:.05em}
+    .translation-credit{font-size:10px;color:#a79879;display:block;margin-top:4px;letter-spacing:0}
+    .end-ornament{display:block;color:#b59558;font-size:20px;line-height:1;margin:42px auto 20px}
+    .next-note{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#cab78c;line-height:1.7;margin:0 0 22px}
+    .enter{display:flex;align-items:center;justify-content:center;gap:12px;width:min(100%,350px);min-height:58px;margin:0 auto;padding:14px 18px;border:1px solid #d2b77d;background:linear-gradient(120deg,rgba(60,65,38,.58),rgba(19,37,25,.78));color:var(--light);text-decoration:none;letter-spacing:.22em;font:600 11px/1.5 Arial,Helvetica,sans-serif;box-shadow:0 8px 36px rgba(0,0,0,.22);transition:background .2s,transform .2s,border-color .2s}
+    .enter:focus-visible{outline:3px solid #f0dda7;outline-offset:5px}
+    .enter:active{transform:scale(.98)}
+    .enter:hover{background:rgba(101,83,43,.55);border-color:#f0dda7}
+    .arrow{font-size:17px;font-weight:400;line-height:1}
+    .footnote{margin:22px 0 0;font-size:9px;line-height:1.7;letter-spacing:.12em;color:#94856c}
+    @media(min-width:700px){
+      .cinema{height:100svh;min-height:660px;background-image:url('poster.jpg')}
+      .cinema::after{background:linear-gradient(transparent 8%,rgba(8,14,11,.04) 22%,rgba(8,14,11,.52) 46%,rgba(8,14,11,.97) 78%,var(--ink) 100%)}
+      .content{padding-top:clamp(520px,68svh,700px);padding-bottom:90px}
+      .eyebrow{font-size:11px}.family{font-size:15px}.names{font-size:52px}.ornament{margin-top:38px}.page-border{inset:22px 22px auto;height:calc(100svh - 44px)}
+    }
+    @media(max-width:370px){.content{padding-left:18px;padding-right:18px}.page-border{inset:9px 9px auto;height:calc(100svh - 18px)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.enter{transition:none}}
+  </style>
+</head>
+<body>
+  <main class="invitation">
+    <div class="cinema" aria-hidden="true">
+      <video id="film" autoplay muted playsinline preload="metadata" poster="poster-mobile.jpg" disablepictureinpicture>
+        <source src="intro-mobile.mp4" type="video/mp4" media="(max-width:699px)">
+        <source src="intro.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <div class="page-border" aria-hidden="true"></div>
+    <div class="content">
+      <header>
+        <p class="eyebrow">The wedding celebration of</p>
+        <h1 class="names">Shoeb Ahmed</h1>
+        <p class="family">Beloved eldest son of<br><strong>Sohel Ahmed and Salima Begum</strong></p>
+        <span class="ampersand" aria-hidden="true">&amp;</span>
+        <h2 class="names">Fabbiha Akther Shama</h2>
+        <p class="family">Beloved eldest daughter of<br><strong>Mohammed Helal Miah and Fatima Begum</strong></p>
+        <div class="ornament" aria-hidden="true"><span>✧</span></div>
+        <p class="date">Wednesday · 31 March 2027</p>
+        <p class="arrival">Guest arrival · 5:00 PM · UK time</p>
+      </header>
+      <div class="soft-divider" aria-hidden="true"></div>
+      <section aria-label="Wedding countdown">
+        <h2 class="count-title">Counting down to our celebration</h2>
+        <div class="countdown" id="countdown" role="timer" aria-label="Time until 31 March 2027 at 5pm UK time">
+          <div class="time-unit"><span class="number" id="days">–</span><span class="unit-label">Days</span></div>
+          <div class="time-unit"><span class="number" id="hours">–</span><span class="unit-label">Hours</span></div>
+          <div class="time-unit"><span class="number" id="minutes">–</span><span class="unit-label">Minutes</span></div>
+          <div class="time-unit"><span class="number" id="seconds">–</span><span class="unit-label">Seconds</span></div>
+        </div>
+        <p id="countdown-complete" class="countdown-complete" hidden>Our wedding day is here</p>
+      </section>
+      <blockquote class="verse">
+        <p class="arabic" lang="ar" dir="rtl">هُوَ ٱلَّذِي خَلَقَكُم مِّن نَّفۡسٖ وَٰحِدَةٖ وَجَعَلَ مِنۡهَا زَوۡجَهَا لِيَسۡكُنَ إِلَيۡهَاۖ</p>
+        <p class="translation">“He is the One Who created you from a single soul, then from it made its spouse so he may find comfort in her.”</p>
+        <footer class="scripture-ref">Surah Al-A‘raf · 7:189 (excerpt)<span class="translation-credit">Translation: Dr. Mustafa Khattab, The Clear Quran</span></footer>
+      </blockquote>
+      <div class="end-ornament" aria-hidden="true">✧</div>
+      <p class="next-note">With the blessings of Allah</p>
+      <a class="enter" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" aria-label="Enter our wedding invitation on Joy">
+        ENTER INVITATION <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="footnote">We look forward to celebrating with you</p>
+    </div>
+  </main>
+  <script>
+    // UK will be on British Summer Time (UTC+1) on 31 March 2027.
+    const weddingAt = Date.parse('2027-03-31T17:00:00+01:00');
+    const unitIds = ['days','hours','minutes','seconds'];
+    const unitEls = Object.fromEntries(unitIds.map(id=>[id,document.getElementById(id)]));
+    function updateCountdown(){
+      const remaining = Math.max(0, Math.floor((weddingAt - Date.now())/1000));
+      if (remaining===0){
+        document.getElementById('countdown').hidden=true;
+        document.getElementById('countdown-complete').hidden=false;
+        return false;
+      }
+      const parts = {days:Math.floor(remaining/86400),hours:Math.floor(remaining/3600)%24,minutes:Math.floor(remaining/60)%60,seconds:remaining%60};
+      for(const id of unitIds){unitEls[id].textContent=String(parts[id]).padStart(2,'0');}
+      return true;
+    }
+    if(updateCountdown()){const tick=setInterval(()=>{if(!updateCountdown())clearInterval(tick)},1000);}
+    const film=document.getElementById('film');
+    if(matchMedia('(min-width:700px)').matches){film.poster='poster.jpg';}
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches){film.autoplay=false;film.pause();}
+    else {const play=film.play();if(play&&play.catch){play.catch(()=>{});}}
+  </script>
+</body>
+</html>
