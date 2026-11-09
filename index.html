@@ -172,45 +172,59 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
   if(tick()){const timer=setInterval(()=>{if(!tick())clearInterval(timer)},1000);}
 
   const root=document.documentElement, film=document.getElementById('film');
-  // Keep the original film frame protected above the text after playback; no duplicate Arabic typography.
+  // One continuous, slow rise. It begins halfway through the video and
+  // continues for 2.4 seconds after the cinematic has faded to its still.
   const story=document.getElementById('invitation-start'),cue=document.getElementById('scroll-cue');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const START_AT=2.85; // halfway through the ~6.04-second Bismillah film
+  const START_AT=2.85; // halfway through the ~6-second Bismillah film
   const END_AT=5.95;
+  const FOLLOW_THROUGH=2.4; // extra gentle scroll after the film ends
+  const TOTAL_RISE=END_AT-START_AT+FOLLOW_THROUGH;
   let cancelled=false,completeIntro=false,playAttempted=false,lastProgress=0;
+  let filmEndClock=null;
   const clamp=(v,min=0,max=1)=>Math.min(max,Math.max(min,v));
-  const ease=p=>p*p*(3-2*p); // gentle start and finish, more movement in the middle
+  const ease=p=>(1-Math.cos(Math.PI*p))/2; // one curve, no abrupt second animation
   function startReveal(){root.classList.remove('pending');root.classList.add('revealing');}
   function scrollTarget(){
-    const top=story.getBoundingClientRect().top+window.scrollY;
-    // Let the first line settle beneath the existing calligraphy in the retained film frame.
-    // Retained calligraphy is protected by the foreground veil; text stops below its faded edge.
-    const fraction=window.innerWidth<700 ? .60 : .80;
-    return Math.max(0,top - window.innerHeight*fraction);
+    // Layout position rather than getBoundingClientRect(): unaffected by
+    // the heading's fading/translation and independent of current scroll.
+    let top=0;
+    for(let node=story;node;node=node.offsetParent)top+=node.offsetTop;
+    const margin=window.innerWidth<700?24:40;
+    return Math.max(0,top-margin);
+  }
+  function advanceRise(secondsElapsed){
+    const eased=ease(clamp(secondsElapsed/TOTAL_RISE));
+    if(eased<=lastProgress)return;
+    lastProgress=eased;
+    window.scrollTo(0,Math.round(scrollTarget()*eased));
   }
   function finish(){
-    if(completeIntro)return;
-    completeIntro=true;
-    startReveal();root.classList.add('video-complete');
-    // Once the original Bismillah dissolves into its faint still, finish the
-    // cinematic rise by bringing the invitation heading to the top of view.
-    // The page remains a normal, freely scrollable document afterwards.
-    requestAnimationFrame(()=>{
-      const headingTop=story.getBoundingClientRect().top + window.scrollY;
-      const margin=window.innerWidth < 700 ? 24 : 40;
-      window.scrollTo({top:Math.max(0,Math.round(headingTop-margin)),behavior:'smooth'});
-    });
+    if(completeIntro||filmEndClock!==null||cancelled)return;
+    startReveal();
+    // The original film becomes its softly faded still while the SAME
+    // upward movement continues. No separate scrollTo(... smooth) jump.
+    root.classList.add('video-complete');
+    filmEndClock=performance.now();
+    requestAnimationFrame(followThrough);
+  }
+  function followThrough(now){
+    if(cancelled||completeIntro)return;
+    const postSeconds=Math.min(FOLLOW_THROUGH,(now-filmEndClock)/1000);
+    advanceRise(END_AT-START_AT+postSeconds);
+    if(postSeconds>=FOLLOW_THROUGH){
+      completeIntro=true;
+      advanceRise(TOTAL_RISE);
+      return; // normal manual page scrolling from this point on
+    }
+    requestAnimationFrame(followThrough);
   }
   function frame(){
-    if(cancelled||reduce||completeIntro)return;
+    if(cancelled||reduce||completeIntro||filmEndClock!==null)return;
     const t=film.currentTime;
     if(t>=START_AT){
       startReveal();
-      const p=clamp((t-START_AT)/(END_AT-START_AT));
-      if(p>lastProgress){
-        lastProgress=p;
-        window.scrollTo({top:Math.round(scrollTarget()*ease(p)),behavior:'instant'});
-      }
+      advanceRise(Math.min(t,END_AT)-START_AT);
     }
     if(film.ended||t>=END_AT){finish();return;}
     requestAnimationFrame(frame);
