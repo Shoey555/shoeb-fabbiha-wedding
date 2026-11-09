@@ -23,6 +23,30 @@ html.video-complete .afterglow{opacity:.21}
 /* The lower half is blended into the exact same deep olive as the invitation. */
 .scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,14,9,.03) 0%,rgba(7,14,9,.04) 27%,rgba(8,15,10,.12) 44%,rgba(8,15,10,.35) 58%,rgba(8,14,11,.73) 84%,#080e0b 100%);pointer-events:none}
 .scene .gold-haze{position:absolute;z-index:2;inset:36% 0 -18%;background:radial-gradient(ellipse 85% 43% at 50% 50%,rgba(113,94,44,.115),transparent 70%);mix-blend-mode:screen}
+/* Subtle floating golden particles to add atmosphere after the cinematic.
+   Decorative only, lightweight, and kept soft so text remains readable. */
+.particles,.particles::before,.particles::after{position:absolute;inset:0;pointer-events:none;content:"";display:block}
+.particles{z-index:2;opacity:0;transition:opacity 1400ms ease}
+html.video-complete .particles{opacity:.65}
+.particles::before,.particles::after{background-repeat:repeat;background-size:340px 340px,420px 420px,520px 520px;mix-blend-mode:screen;filter:blur(.15px)}
+.particles::before{
+  background-image:
+    radial-gradient(circle, rgba(230,196,122,.28) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle, rgba(245,223,170,.18) 0 1.6px, transparent 2.1px),
+    radial-gradient(circle, rgba(212,170,92,.15) 0 1px, transparent 1.6px);
+  animation:particleFloatA 18s linear infinite;
+}
+.particles::after{
+  background-image:
+    radial-gradient(circle, rgba(245,224,175,.18) 0 1.1px, transparent 1.7px),
+    radial-gradient(circle, rgba(224,189,116,.13) 0 1.7px, transparent 2.2px),
+    radial-gradient(circle, rgba(255,239,201,.12) 0 1px, transparent 1.5px);
+  background-size:280px 280px,380px 380px,460px 460px;
+  animation:particleFloatB 25s linear infinite;
+  opacity:.78;
+}
+@keyframes particleFloatA{0%{transform:translate3d(0,14px,0)}50%{transform:translate3d(-10px,-14px,0)}100%{transform:translate3d(0,-34px,0)}}
+@keyframes particleFloatB{0%{transform:translate3d(0,20px,0)}50%{transform:translate3d(12px,-8px,0)}100%{transform:translate3d(0,-28px,0)}}
 html.video-complete .scene video{opacity:0}
 /* The cinematic still remains faintly in the fixed scene behind the text.
    IMPORTANT: The document itself is the only scrolling surface. */
@@ -108,7 +132,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
  .frame{inset:22px 22px auto;height:calc(100vh - 44px);height:calc(100svh - 44px)}
 }
 @media(max-width:370px){.content{padding-left:18px;padding-right:18px}.frame{inset:8px 8px auto;height:calc(100vh - 16px);height:calc(100svh - 16px)}}
-@media(prefers-reduced-motion:reduce){.story,.scene,.scene video,.bismillah-veil,.frame,.cue{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}html.video-complete .afterglow{opacity:.21}}
+@media(prefers-reduced-motion:reduce){.story,.scene,.scene video,.bismillah-veil,.frame,.cue,.particles{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}html.video-complete .afterglow{opacity:.21}.particles::before,.particles::after{animation:none!important}}
 
 /* Ballroom reveal: an understated double champagne-gold frame arrives as the
    Bismillah film dissolves. It is decorative only and never changes scroll. */
@@ -140,6 +164,7 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
     <source src="intro.mp4" type="video/mp4">
   </video>
   <div class="gold-haze"></div>
+  <div class="particles" aria-hidden="true"></div>
 </div>
 <picture class="bismillah-veil" aria-hidden="true">
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile.jpg">
