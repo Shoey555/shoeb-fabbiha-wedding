@@ -13,21 +13,27 @@ html{background:var(--ink);scroll-behavior:auto}
 body{margin:0;background:var(--ink);color:var(--ivory);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{-webkit-tap-highlight-color:transparent}
 /* ONE CONTINUOUS FULL-SCREEN SCENE, never a rectangular header or embedded player. */
-.scene{position:fixed;inset:0;z-index:0;width:100%;height:100svh;min-height:100svh;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 90% 80% at 50% 27%,#223025 0%,#102018 45%,var(--ink) 100%)}
+.scene{position:fixed;inset:0;z-index:0;width:100%;height:100vh;min-height:100vh;height:100svh;min-height:100svh;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 90% 80% at 50% 27%,#223025 0%,#102018 45%,var(--ink) 100%)}
 .scene video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;opacity:1;transition:opacity 1700ms ease;will-change:opacity}
 /* The lower half is blended into the exact same deep olive as the invitation. */
 .scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,14,9,.03) 0%,rgba(7,14,9,.04) 27%,rgba(8,15,10,.12) 44%,rgba(8,15,10,.35) 58%,rgba(8,14,11,.73) 84%,#080e0b 100%);pointer-events:none}
 .scene .gold-haze{position:absolute;z-index:2;inset:36% 0 -18%;background:radial-gradient(ellipse 85% 43% at 50% 50%,rgba(113,94,44,.115),transparent 70%);mix-blend-mode:screen}
-html.video-complete .scene video{opacity:.06}
+html.video-complete .scene video{opacity:0}
 /* Subtle border stays on screen while the video is open, then fades away. */
-.frame{position:fixed;z-index:3;inset:12px 12px auto;height:calc(100svh - 24px);border:1px solid rgba(213,181,113,.30);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(9,15,11,.14);transition:opacity 1300ms ease}
+.frame{position:fixed;z-index:3;inset:12px 12px auto;height:calc(100vh - 24px);height:calc(100svh - 24px);border:1px solid rgba(213,181,113,.30);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(9,15,11,.14);transition:opacity 1300ms ease}
 html.video-complete .frame{opacity:0}
-.invitation{position:relative;z-index:1;min-height:100svh;isolation:isolate}
+.invitation{position:relative;z-index:1;min-height:100vh;min-height:100svh;isolation:isolate}
 /* Starting below viewport allows the heading to enter while Bismillah is STILL animating. */
-.content{position:relative;max-width:770px;margin:0 auto;padding:100svh 23px 90px;text-align:center}
+.content{position:relative;max-width:770px;margin:0 auto;padding:100vh 23px 90px;padding-top:100svh;text-align:center}
 .story{opacity:1;transform:none;filter:none;transition:opacity 1600ms ease,transform 1900ms cubic-bezier(.16,1,.3,1),filter 1500ms ease}
 html.pending .story{opacity:0;transform:translateY(35px);filter:blur(3px)}
-.eyebrow,.date,.arrival,.venue,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
+.bismillah-translation,.eyebrow,.date,.arrival,.venue,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
+/* Permanent invitation Bismillah: appears during the transition, stays visible after the video ends. */
+.bismillah-still{margin:0 auto 27px;max-width:670px;opacity:1;transform:translateY(0);transition:opacity 1450ms ease,transform 1700ms ease;}
+html.pending .bismillah-still{opacity:0;transform:translateY(22px)}
+.bismillah-arabic{font-family:'Geeza Pro','Noto Naskh Arabic','Traditional Arabic',serif;font-weight:400;font-size:clamp(24px,7vw,38px);line-height:1.9;direction:rtl;color:#f1dca8;text-shadow:0 2px 22px rgba(4,9,5,.8);margin:0}
+.bismillah-translation{font-size:9px;letter-spacing:.08em;line-height:1.7;color:#c9b387;margin:0 auto 18px}
+.bismillah-still::after{content:'';display:block;width:42px;height:1px;background:rgba(220,193,139,.62);margin:0 auto}
 .eyebrow{font-size:10px;line-height:1.7;letter-spacing:.27em;color:var(--gold);text-transform:uppercase;margin:0 0 15px;text-shadow:0 2px 16px #080e0b}
 .eyebrow::before{content:"";display:block;height:1px;width:26px;margin:0 auto 15px;background:rgba(221,195,141,.75)}
 .names{margin:0;font-weight:400;font-size:clamp(32px,9.1vw,53px);line-height:1.18;letter-spacing:.035em;text-shadow:0 3px 26px #080e0b}
@@ -68,15 +74,22 @@ html.pending .story{opacity:0;transform:translateY(35px);filter:blur(3px)}
 .cue span{font-size:19px;line-height:1;animation:bob 2s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(5px)}}
 html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
-@media(min-width:700px){.scene video{object-position:center center}.content{padding-left:45px;padding-right:45px}.eyebrow{font-size:11px}.names{font-size:53px}.family{font-size:15px}.frame{inset:22px 22px auto;height:calc(100svh - 44px)}}
-@media(max-width:370px){.content{padding-left:18px;padding-right:18px}.frame{inset:8px 8px auto;height:calc(100svh - 16px)}}
+@media(min-width:700px){
+ .scene video{object-position:center center}
+ .content{padding-left:45px;padding-right:45px}
+ .eyebrow{font-size:11px}
+ .names{font-size:53px}
+ .family{font-size:15px}
+ .frame{inset:22px 22px auto;height:calc(100vh - 44px);height:calc(100svh - 44px)}
+}
+@media(max-width:370px){.content{padding-left:18px;padding-right:18px}.frame{inset:8px 8px auto;height:calc(100vh - 16px);height:calc(100svh - 16px)}}
 @media(prefers-reduced-motion:reduce){.story,.scene video,.frame,.cue{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}}
 </style>
 <script>document.documentElement.classList.add('pending');</script>
 </head>
 <body>
 <div class="scene" aria-hidden="true">
-  <video id="film" muted autoplay playsinline preload="auto" disablepictureinpicture poster="poster-mobile.jpg">
+  <video id="film" muted autoplay playsinline webkit-playsinline preload="metadata" disablepictureinpicture poster="poster-mobile.jpg">
     <source media="(max-width:699px)" src="intro-mobile.mp4" type="video/mp4">
     <source src="intro.mp4" type="video/mp4">
   </video>
@@ -87,6 +100,10 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
 <main class="invitation">
  <div class="content">
   <div class="story" id="invitation-start">
+   <div class="bismillah-still" aria-label="Bismillah">
+    <p class="bismillah-arabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</p>
+   </div>
    <header>
     <p class="eyebrow">The wedding celebration of</p>
     <h1 class="names">Shoeb Ahmed</h1>
@@ -143,6 +160,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
   if(tick()){const timer=setInterval(()=>{if(!tick())clearInterval(timer)},1000);}
 
   const root=document.documentElement, film=document.getElementById('film');
+  // The Bismillah is real text in the page, not just part of the video, and remains after playback.
   const story=document.getElementById('invitation-start'),cue=document.getElementById('scroll-cue');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const START_AT=2.85; // halfway through the ~6.04-second Bismillah film
@@ -153,7 +171,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
   function startReveal(){root.classList.remove('pending');root.classList.add('revealing');}
   function scrollTarget(){
     const top=story.getBoundingClientRect().top+window.scrollY;
-    const fraction=window.innerWidth<700 ? .45 : .54;
+    const fraction=window.innerWidth<700 ? .24 : .30;
     return Math.max(0,top - window.innerHeight*fraction);
   }
   function finish(){
@@ -192,6 +210,8 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
   }
   film.addEventListener('ended',finish);
   film.addEventListener('error',()=>{cancelled=true;startReveal();root.classList.add('video-complete')});
+  // If video has no playable source, still reveal the complete invitation.
+  film.addEventListener('stalled',()=>{if(film.currentTime<.1&&film.paused){startReveal();}});
   if(reduce){
     film.pause();root.classList.remove('pending');root.classList.add('video-complete');
   }else{
