@@ -192,8 +192,14 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
     if(completeIntro)return;
     completeIntro=true;
     startReveal();root.classList.add('video-complete');
-    // Do not reset scroll position: keep the text exactly where it settled.
-    // The whole document remains scrollable right down to ENTER INVITATION.
+    // Once the original Bismillah dissolves into its faint still, finish the
+    // cinematic rise by bringing the invitation heading to the top of view.
+    // The page remains a normal, freely scrollable document afterwards.
+    requestAnimationFrame(()=>{
+      const headingTop=story.getBoundingClientRect().top + window.scrollY;
+      const margin=window.innerWidth < 700 ? 24 : 40;
+      window.scrollTo({top:Math.max(0,Math.round(headingTop-margin)),behavior:'smooth'});
+    });
   }
   function frame(){
     if(cancelled||reduce||completeIntro)return;
