@@ -6,20 +6,21 @@
   <meta name="theme-color" content="#080e0b">
   <meta name="description" content="Shoeb & Fabbiha invite you to celebrate their wedding on 31 March 2027.">
   <title>Shoeb &amp; Fabbiha | Wedding Invitation</title>
+  <script>document.documentElement.classList.add("js-capable");</script>
   <style>
     :root{--ink:#080e0b;--green:#112018;--gold:#ddc38d;--light:#f3e6c6;--muted:#c2ac7e}
     *,*::before,*::after{box-sizing:border-box}
-    html{scroll-behavior:smooth;background:var(--ink)}
+    html{scroll-behavior:smooth;background:var(--ink);scroll-padding-top:20px}
     body{margin:0;background:var(--ink);color:var(--light);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
     a{-webkit-tap-highlight-color:transparent}
     .invitation{position:relative;isolation:isolate;overflow:hidden;min-height:100svh;background:radial-gradient(ellipse 80% 55% at 50% 70%,#19291b 0%,#0b150e 65%,var(--ink) 100%)}
-    .cinema{position:absolute;z-index:-2;inset:0 0 auto;height:105svh;min-height:650px;overflow:hidden;pointer-events:none;background:#09110c url('poster-mobile.jpg') center top/cover no-repeat}
+    .cinema{position:absolute;z-index:-2;inset:0 0 auto;height:120svh;min-height:620px;overflow:hidden;pointer-events:none;background:#09110c url('poster-mobile.jpg') center top/cover no-repeat}
     .cinema video{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-    .cinema::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,14,11,.08) 0%,rgba(8,14,11,0) 26%,rgba(8,14,11,.28) 36%,rgba(8,14,11,.7) 50%,rgba(8,14,11,.94) 73%,var(--ink) 100%)}
-    .ambient-glow{position:absolute;z-index:-1;top:46svh;left:50%;transform:translateX(-50%);width:min(950px,160vw);height:800px;background:radial-gradient(ellipse,rgba(70,69,39,.12),transparent 68%);pointer-events:none}
+    .cinema::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,14,11,.04) 0%,rgba(8,14,11,0) 25%,rgba(8,14,11,.1) 36%,rgba(8,14,11,.36) 48%,rgba(8,14,11,.85) 63%,rgba(8,14,11,.98) 80%,var(--ink) 100%)}
+    .ambient-glow{position:absolute;z-index:-1;top:58svh;left:50%;transform:translateX(-50%);width:min(950px,160vw);height:800px;background:radial-gradient(ellipse,rgba(70,69,39,.12),transparent 68%);pointer-events:none}
     .page-border{position:absolute;z-index:2;inset:12px 12px auto;height:calc(100svh - 24px);border:1px solid rgba(221,195,141,.22);border-bottom:0;pointer-events:none;mask-image:linear-gradient(#000,transparent 96%)}
-    .content{position:relative;z-index:1;margin:auto;max-width:760px;padding:clamp(275px,40svh,425px) 25px 64px;text-align:center}
-    .eyebrow,.date,.arrival,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
+    .content{position:relative;z-index:1;margin:auto;max-width:760px;padding:60svh 25px 88px;text-align:center}
+    .eyebrow,.date,.arrival,.venue,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
     .eyebrow{font-size:10px;line-height:1.6;letter-spacing:.29em;color:var(--gold);text-transform:uppercase;margin:0 0 19px;text-shadow:0 2px 12px #080e0b}
     .names{margin:0;font-weight:400;font-size:clamp(34px,9vw,49px);line-height:1.1;letter-spacing:.035em;text-shadow:0 4px 24px #050805}
     .family{margin:12px auto 0;max-width:390px;color:#d8c69c;font-size:clamp(13px,3.6vw,15px);line-height:1.65;text-shadow:0 2px 18px #080e0b}
@@ -31,6 +32,7 @@
     .ornament span{font-size:14px}
     .date{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--light);line-height:1.7;margin:0}
     .arrival{margin:10px 0 0;color:var(--muted);font-size:10px;letter-spacing:.18em;line-height:1.8;text-transform:uppercase}
+    .venue{margin:9px 0 0;color:#cdb98c;font-size:10px;letter-spacing:.15em;line-height:1.8;text-transform:uppercase}
     .soft-divider{width:42px;height:1px;margin:48px auto 31px;background:#b99b60}
     .count-title{font-size:10px;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);font-weight:400;margin:0 0 24px;line-height:1.6}
     .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;max-width:440px;margin:0 auto 42px}
@@ -50,15 +52,23 @@
     .enter:active{transform:scale(.98)}
     .enter:hover{background:rgba(101,83,43,.55);border-color:#f0dda7}
     .arrow{font-size:17px;font-weight:400;line-height:1}
-    .footnote{margin:22px 0 0;font-size:9px;line-height:1.7;letter-spacing:.12em;color:#94856c}
+    .footnote{margin:0 0 22px;font-size:10px;line-height:1.7;letter-spacing:.08em;color:#a99c81}
+    /* The film and invitation share one continuous stage. Text rises only when the intro finishes. */
+    .cinema video{transition:filter 1800ms ease}
+    .intro-revealed .cinema video{filter:brightness(.83) saturate(.89)}
+    .js-capable:not(.intro-revealed) .story{opacity:0;transform:translateY(76px);filter:blur(7px)}
+    .story{opacity:1;transform:translateY(0);filter:blur(0);transition:opacity 1250ms ease,transform 1450ms cubic-bezier(.18,.72,.18,1),filter 1450ms ease}
+    .story .eyebrow{position:relative}
+    .story .eyebrow::before{content:"";display:block;width:22px;height:1px;background:rgba(221,195,141,.65);margin:0 auto 16px}
+    .enter{margin-bottom:0}
     @media(min-width:700px){
       .cinema{height:100svh;min-height:660px;background-image:url('poster.jpg')}
       .cinema::after{background:linear-gradient(transparent 8%,rgba(8,14,11,.04) 22%,rgba(8,14,11,.52) 46%,rgba(8,14,11,.97) 78%,var(--ink) 100%)}
-      .content{padding-top:clamp(520px,68svh,700px);padding-bottom:90px}
+      .content{padding-top:clamp(540px,72svh,800px);padding-bottom:110px}
       .eyebrow{font-size:11px}.family{font-size:15px}.names{font-size:52px}.ornament{margin-top:38px}.page-border{inset:22px 22px auto;height:calc(100svh - 44px)}
     }
     @media(max-width:370px){.content{padding-left:18px;padding-right:18px}.page-border{inset:9px 9px auto;height:calc(100svh - 18px)}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.enter{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.enter,.story,.cinema video{transition:none!important}.js-capable:not(.intro-revealed) .story{opacity:1;transform:none;filter:none}}
   </style>
 </head>
 <body>
@@ -72,6 +82,7 @@
     <div class="ambient-glow" aria-hidden="true"></div>
     <div class="page-border" aria-hidden="true"></div>
     <div class="content">
+      <div class="story" id="invitation-start">
       <header>
         <p class="eyebrow">The wedding celebration of</p>
         <h1 class="names">Shoeb Ahmed</h1>
@@ -82,6 +93,7 @@
         <div class="ornament" aria-hidden="true"><span>✧</span></div>
         <p class="date">Wednesday · 31 March 2027</p>
         <p class="arrival">Guest arrival · 5:00 PM · UK time</p>
+        <p class="venue">The White Abbey Ballroom · Bradford</p>
       </header>
       <div class="soft-divider" aria-hidden="true"></div>
       <section aria-label="Wedding countdown">
@@ -101,10 +113,11 @@
       </blockquote>
       <div class="end-ornament" aria-hidden="true">✧</div>
       <p class="next-note">With the blessings of Allah</p>
+      <p class="footnote">Full celebration details and RSVP inside</p>
       <a class="enter" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" aria-label="Enter our wedding invitation on Joy">
         ENTER INVITATION <span class="arrow" aria-hidden="true">→</span>
       </a>
-      <p class="footnote">We look forward to celebrating with you</p>
+      </div>
     </div>
   </main>
   <script>
@@ -124,10 +137,62 @@
       return true;
     }
     if(updateCountdown()){const tick=setInterval(()=>{if(!updateCountdown())clearInterval(tick)},1000);}
-    const film=document.getElementById('film');
-    if(matchMedia('(min-width:700px)').matches){film.poster='poster.jpg';}
-    if(matchMedia('(prefers-reduced-motion:reduce)').matches){film.autoplay=false;film.pause();}
-    else {const play=film.play();if(play&&play.catch){play.catch(()=>{});}}
+    const film = document.getElementById('film');
+    const story = document.getElementById('invitation-start');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let finished = false;
+    let visitorInteracted = false;
+    let autoScrollStarted = false;
+    if (matchMedia('(min-width:700px)').matches) film.poster = 'poster.jpg';
+
+    function showInvitation(autoScroll = false) {
+      if (finished) return;
+      finished = true;
+      document.documentElement.classList.add('intro-revealed');
+      // Fade text in while the last frame of the film merges into the green background.
+      if (autoScroll && !visitorInteracted && !reducedMotion && window.scrollY < 50) {
+        window.setTimeout(() => {
+          if (visitorInteracted || autoScrollStarted || document.visibilityState === 'hidden') return;
+          autoScrollStarted = true;
+          // Leave a little of the illuminated arch above the opening wording.
+          const target = story.getBoundingClientRect().top + window.scrollY - window.innerHeight * (window.innerWidth < 700 ? 0.32 : 0.27);
+          window.scrollTo({ top: Math.max(0, Math.round(target)), behavior: 'smooth' });
+        }, 250);
+      }
+    }
+
+    function onUserIntent() {
+      if (autoScrollStarted) return;
+      visitorInteracted = true;
+      showInvitation(false);
+    }
+    ['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(type => {
+      window.addEventListener(type, onUserIntent, {passive: true, once: true});
+    });
+    film.addEventListener('ended', () => showInvitation(true));
+    // Some mobile Safari versions occasionally omit 'ended' for inline video.
+    film.addEventListener('timeupdate', () => {
+      if (!finished && Number.isFinite(film.duration) && film.duration > 0 && film.currentTime >= film.duration - 0.12) {
+        showInvitation(true);
+      }
+    });
+
+    if (reducedMotion) {
+      film.autoplay = false;
+      film.pause();
+      showInvitation(false);
+    } else {
+      const maybePlay = film.play();
+      if (maybePlay && maybePlay.catch) {
+        maybePlay.catch(() => { showInvitation(false); });
+      }
+      // On battery-saving browsers, autoplay may never begin: reveal all information anyway.
+      window.setTimeout(() => { if (!finished && film.currentTime < 0.1 && film.paused) showInvitation(false); }, 3200);
+    }
+    // Returning to the tab must not leave text invisible.
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) showInvitation(false);
+    });
   </script>
 </body>
 </html>
