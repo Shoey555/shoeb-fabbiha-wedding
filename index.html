@@ -23,28 +23,34 @@ html.video-complete .afterglow{opacity:.21}
 /* The lower half is blended into the exact same deep olive as the invitation. */
 .scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,14,9,.03) 0%,rgba(7,14,9,.04) 27%,rgba(8,15,10,.12) 44%,rgba(8,15,10,.35) 58%,rgba(8,14,11,.73) 84%,#080e0b 100%);pointer-events:none}
 .scene .gold-haze{position:absolute;z-index:2;inset:36% 0 -18%;background:radial-gradient(ellipse 85% 43% at 50% 50%,rgba(113,94,44,.115),transparent 70%);mix-blend-mode:screen}
-/* Warm gold dust: discrete glowing particles, not an almost invisible gradient.
-   Floats after the cinematic without changing the original scroll or typography. */
+/* Whisper-soft floating gold dust. These are deliberately tiny, dim and slow.
+   Only the particles change; cinematic, invitation and scroll timing stay intact. */
 .particles{
   position:fixed;inset:0;z-index:1;pointer-events:none;
-  opacity:0;transition:opacity 1200ms ease;
+  opacity:0;transition:opacity 1800ms ease;
   overflow:hidden;isolation:isolate;
 }
-html.video-complete .particles{opacity:1}
+html.video-complete .particles{opacity:.82}
 .particle{
   position:absolute;left:var(--x);top:var(--y);
-  width:var(--s);height:var(--s);border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #fff9df 0%, #ffe8ad 33%, #d5a55b 72%, rgba(213,165,91,0) 100%);
-  box-shadow:0 0 7px 1px rgba(255,222,148,.88),0 0 19px 3px rgba(234,179,83,.53);
-  opacity:var(--o);
-  animation:goldDust var(--t) ease-in-out var(--delay) infinite alternate;
+  width:calc(var(--s) * .29);height:calc(var(--s) * .29);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(251,226,169,.77) 0%,rgba(218,180,105,.42) 50%,rgba(218,180,105,0) 90%);
+  box-shadow:0 0 3px rgba(224,190,117,.17);
+  opacity:calc(var(--o) * .29);
+  animation:goldDust calc(var(--t) * 2.3) ease-in-out var(--delay) infinite alternate;
   will-change:transform,opacity;
 }
-.particle.star::before,.particle.star::after{content:"";position:absolute;left:50%;top:50%;background:rgba(255,231,166,.86);transform:translate(-50%,-50%);border-radius:100%}
-.particle.star::before{width:2px;height:17px}
-.particle.star::after{width:17px;height:2px}
-@keyframes goldDust{0%{transform:translate3d(0,9px,0) scale(.82);opacity:calc(var(--o) * .7)}50%{transform:translate3d(5px,-7px,0) scale(1.2);opacity:var(--o)}100%{transform:translate3d(-3px,-21px,0) scale(.9);opacity:calc(var(--o) * .75)}}
-@media(max-width:480px){.particle:nth-child(n+47){display:none}}
+/* No prominent crosses or starbursts: all particles appear as tiny dust motes. */
+.particle.star::before,.particle.star::after{display:none}
+@keyframes goldDust{
+  0%{transform:translate3d(-3px,7px,0) scale(.85);opacity:calc(var(--o) * .12)}
+  45%{transform:translate3d(6px,-6px,0) scale(1.02);opacity:calc(var(--o) * .32)}
+  100%{transform:translate3d(-5px,-12px,0) scale(.92);opacity:calc(var(--o) * .17)}
+}
+/* Airy rather than crowded, especially on small phone screens. */
+.particle:nth-child(n+39){display:none}
+@media(max-width:480px){.particle:nth-child(n+27){display:none}}
 @media(prefers-reduced-motion:reduce){.particles{transition:none}.particle{animation:none!important}}
 html.video-complete .scene video{opacity:0}
 /* The cinematic still remains faintly in the fixed scene behind the text.
