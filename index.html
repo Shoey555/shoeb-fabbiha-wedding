@@ -32,7 +32,11 @@
     .ornament span{font-size:14px}
     .date{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--light);line-height:1.7;margin:0}
     .arrival{margin:10px 0 0;color:var(--muted);font-size:10px;letter-spacing:.18em;line-height:1.8;text-transform:uppercase}
-    .venue{margin:9px 0 0;color:#cdb98c;font-size:10px;letter-spacing:.15em;line-height:1.8;text-transform:uppercase}
+    .venue{margin:14px 0 0;color:#ddc38d;font-size:11px;letter-spacing:.19em;line-height:1.8;text-transform:uppercase}
+    .address{margin:8px auto 0;max-width:380px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.8;letter-spacing:.05em;color:#d6c7a6;font-style:normal}
+    .directions{display:inline-flex;align-items:center;gap:9px;margin-top:15px;padding:10px 16px;border:1px solid rgba(221,195,141,.55);color:#f0dda7;background:rgba(10,18,12,.36);font:600 10px/1.5 Arial,Helvetica,sans-serif;letter-spacing:.13em;text-decoration:none;transition:background .2s ease,border-color .2s ease}
+    .directions:focus-visible{outline:3px solid #f0dda7;outline-offset:4px}
+    .directions:hover{background:rgba(95,76,43,.25);border-color:#ead7a5}
     .soft-divider{width:42px;height:1px;margin:48px auto 31px;background:#b99b60}
     .count-title{font-size:10px;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);font-weight:400;margin:0 0 24px;line-height:1.6}
     .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;max-width:440px;margin:0 auto 42px}
@@ -53,11 +57,11 @@
     .enter:hover{background:rgba(101,83,43,.55);border-color:#f0dda7}
     .arrow{font-size:17px;font-weight:400;line-height:1}
     .footnote{margin:0 0 22px;font-size:10px;line-height:1.7;letter-spacing:.08em;color:#a99c81}
-    /* The film and invitation share one continuous stage. Text rises only when the intro finishes. */
-    .cinema video{transition:filter 1800ms ease}
-    .intro-revealed .cinema video{filter:brightness(.83) saturate(.89)}
-    .js-capable:not(.intro-revealed) .story{opacity:0;transform:translateY(76px);filter:blur(7px)}
-    .story{opacity:1;transform:translateY(0);filter:blur(0);transition:opacity 1250ms ease,transform 1450ms cubic-bezier(.18,.72,.18,1),filter 1450ms ease}
+    /* Crossfade begins while the final 1.4 seconds of the Bismillah film are still playing. */
+    .cinema video{transition:filter 1500ms ease}
+    .intro-revealed .cinema video{filter:brightness(.68) saturate(.82)}
+    .js-capable:not(.intro-revealed) .story{opacity:0;transform:translateY(64px);filter:blur(5px)}
+    .story{opacity:1;transform:translateY(0);filter:blur(0);transition:opacity 1300ms ease-out,transform 1500ms cubic-bezier(.15,.75,.15,1),filter 1400ms ease-out}
     .story .eyebrow{position:relative}
     .story .eyebrow::before{content:"";display:block;width:22px;height:1px;background:rgba(221,195,141,.65);margin:0 auto 16px}
     .enter{margin-bottom:0}
@@ -93,7 +97,9 @@
         <div class="ornament" aria-hidden="true"><span>✧</span></div>
         <p class="date">Wednesday · 31 March 2027</p>
         <p class="arrival">Guest arrival · 5:00 PM · UK time</p>
-        <p class="venue">The White Abbey Ballroom · Bradford</p>
+        <p class="venue">The White Abbey Ballroom</p>
+        <address class="address">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL</address>
+        <a class="directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL&amp;travelmode=driving" target="_blank" rel="noopener noreferrer" aria-label="Get driving directions to The White Abbey Ballroom in Google Maps">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
       </header>
       <div class="soft-divider" aria-hidden="true"></div>
       <section aria-label="Wedding countdown">
@@ -145,23 +151,29 @@
     let autoScrollStarted = false;
     if (matchMedia('(min-width:700px)').matches) film.poster = 'poster.jpg';
 
+    // The video is 6.04s long: begin the reveal ~1.45s BEFORE it ends.
+    // Scroll begins a fraction later, while Bismillah is gently fading out.
+    const OVERLAP_SECONDS = 1.45;
+    const SCROLL_LEAD_MS = 150;
+
     function showInvitation(autoScroll = false) {
       if (finished) return;
       finished = true;
       document.documentElement.classList.add('intro-revealed');
-      // Fade text in while the last frame of the film merges into the green background.
       if (autoScroll && !visitorInteracted && !reducedMotion && window.scrollY < 50) {
         window.setTimeout(() => {
           if (visitorInteracted || autoScrollStarted || document.visibilityState === 'hidden') return;
           autoScrollStarted = true;
-          // Leave a little of the illuminated arch above the opening wording.
-          const target = story.getBoundingClientRect().top + window.scrollY - window.innerHeight * (window.innerWidth < 700 ? 0.32 : 0.27);
-          window.scrollTo({ top: Math.max(0, Math.round(target)), behavior: 'smooth' });
-        }, 250);
+          // Keep part of the Bismillah arch above the first line, for a connected reveal.
+          const top = story.getBoundingClientRect().top + window.scrollY;
+          const target = top - window.innerHeight * (window.innerWidth < 700 ? .32 : .27);
+          window.scrollTo({top: Math.max(0, Math.round(target)), behavior:'smooth'});
+        }, SCROLL_LEAD_MS);
       }
     }
 
     function onUserIntent() {
+      // Guests who choose to scroll themselves stay in control.
       if (autoScrollStarted) return;
       visitorInteracted = true;
       showInvitation(false);
@@ -169,13 +181,24 @@
     ['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(type => {
       window.addEventListener(type, onUserIntent, {passive: true, once: true});
     });
-    film.addEventListener('ended', () => showInvitation(true));
-    // Some mobile Safari versions occasionally omit 'ended' for inline video.
-    film.addEventListener('timeupdate', () => {
-      if (!finished && Number.isFinite(film.duration) && film.duration > 0 && film.currentTime >= film.duration - 0.12) {
+
+    function checkFilmProgress() {
+      if (finished || !Number.isFinite(film.duration) || film.duration <= 0) return;
+      if (film.currentTime >= Math.max(0, film.duration - OVERLAP_SECONDS)) {
         showInvitation(true);
       }
-    });
+    }
+    // requestVideoFrameCallback gives smoother timing; timeupdate handles older Safari.
+    film.addEventListener('timeupdate', checkFilmProgress);
+    film.addEventListener('loadedmetadata', checkFilmProgress);
+    if ('requestVideoFrameCallback' in film) {
+      const onVideoFrame = () => {
+        checkFilmProgress();
+        if (!finished && !film.ended && !film.paused) film.requestVideoFrameCallback(onVideoFrame);
+      };
+      film.addEventListener('playing', () => film.requestVideoFrameCallback(onVideoFrame));
+    }
+    film.addEventListener('ended', () => showInvitation(true));
 
     if (reducedMotion) {
       film.autoplay = false;
