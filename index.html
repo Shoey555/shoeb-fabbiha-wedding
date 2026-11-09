@@ -38,6 +38,31 @@ html.video-complete .scene video{opacity:0}
   filter:brightness(.72);
 }
 html.video-complete .bismillah-veil{opacity:1}
+/* AFTER THE FILM: the Bismillah stays softly visible in the top scene,
+   while invitation copy has its OWN scroll region below it. Text can never
+   move behind the calligraphy veil or disappear under a fixed mask. */
+html.video-complete body{overflow:hidden}
+html.video-complete .invitation{
+  position:fixed; z-index:4; left:0; right:0;
+  top:43vh; top:43svh; bottom:0;
+  overflow-y:auto; overflow-x:hidden; overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin; scrollbar-color:rgba(221,195,141,.35) transparent;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,black 13px,black 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,black 13px,black 100%);
+}
+html.video-complete .content{
+  padding-top:19px;
+  padding-bottom:max(85px,env(safe-area-inset-bottom) + 50px);
+}
+html.video-complete .story{opacity:1!important;transform:none!important;filter:none!important}
+@media(min-width:700px){
+  html.video-complete .invitation{top:67vh;top:67svh}
+  html.video-complete .content{padding-top:23px}
+}
+@media(max-height:580px) and (orientation:landscape){
+  html.video-complete .invitation{top:62vh;top:62svh}
+}
 /* The video remains behind invitation text while playing; the retained still rises over text only when the film ends. */
 /* Subtle border stays on screen while the video is open, then fades away. */
 .frame{position:fixed;z-index:3;inset:12px 12px auto;height:calc(100vh - 24px);height:calc(100svh - 24px);border:1px solid rgba(213,181,113,.30);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(9,15,11,.14);transition:opacity 1300ms ease}
@@ -199,7 +224,10 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
     if(completeIntro)return;
     completeIntro=true;
     startReveal();root.classList.add('video-complete');
-    if(!cancelled&&!reduce){window.scrollTo({top:scrollTarget(),behavior:'smooth'});}
+    // The completed invitation scrolls independently beneath the original Bismillah.
+    // Do not scroll the document after switching to the protected reading area.
+    window.scrollTo(0,0);
+    document.querySelector('.invitation').scrollTop=0;
   }
   function frame(){
     if(cancelled||reduce||completeIntro)return;
