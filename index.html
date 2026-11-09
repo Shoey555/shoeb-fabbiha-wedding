@@ -19,6 +19,21 @@ a{-webkit-tap-highlight-color:transparent}
 .scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,14,9,.03) 0%,rgba(7,14,9,.04) 27%,rgba(8,15,10,.12) 44%,rgba(8,15,10,.35) 58%,rgba(8,14,11,.73) 84%,#080e0b 100%);pointer-events:none}
 .scene .gold-haze{position:absolute;z-index:2;inset:36% 0 -18%;background:radial-gradient(ellipse 85% 43% at 50% 50%,rgba(113,94,44,.115),transparent 70%);mix-blend-mode:screen}
 html.video-complete .scene video{opacity:0}
+/* Bismillah remains visible after the cinematic film has faded, independently of scrolling content. */
+.permanent-bismillah{
+ position:fixed; z-index:8; top:0; left:0; right:0;
+ padding:calc(env(safe-area-inset-top) + 10px) 18px 11px;
+ text-align:center; pointer-events:none;
+ background:linear-gradient(to bottom,rgba(8,14,11,.97) 0%,rgba(8,14,11,.89) 68%,rgba(8,14,11,0) 100%);
+ opacity:0;visibility:hidden;transform:translateY(-9px);
+ transition:opacity 1100ms ease,transform 1100ms ease,visibility 0s linear 1100ms;
+}
+.permanent-bismillah p{margin:0;font:400 clamp(21px,5.2vw,32px)/1.8 'Geeza Pro','Noto Naskh Arabic','Traditional Arabic',serif;color:#f1dca8;text-shadow:0 2px 14px rgba(3,8,4,.8);direction:rtl}
+html.video-complete .permanent-bismillah{
+ opacity:1;visibility:visible;transform:none;transition:opacity 1100ms ease,transform 1100ms ease;
+}
+/* Hide duplicate Bismillah in the scrolling invitation when the permanent one appears. */
+html.video-complete .bismillah-still{opacity:0;visibility:hidden;transition:opacity 650ms ease,visibility 0s linear 650ms}
 /* Subtle border stays on screen while the video is open, then fades away. */
 .frame{position:fixed;z-index:3;inset:12px 12px auto;height:calc(100vh - 24px);height:calc(100svh - 24px);border:1px solid rgba(213,181,113,.30);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(9,15,11,.14);transition:opacity 1300ms ease}
 html.video-complete .frame{opacity:0}
@@ -96,6 +111,9 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
   <div class="gold-haze"></div>
 </div>
 <div class="frame" aria-hidden="true"></div>
+<div class="permanent-bismillah" aria-label="Bismillah — In the name of Allah, the Most Gracious, the Most Merciful">
+ <p lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+</div>
 <a class="cue" href="#invitation-start" id="scroll-cue" aria-label="Scroll to the wedding invitation">THE INVITATION UNFOLDS<span aria-hidden="true">⌄</span></a>
 <main class="invitation">
  <div class="content">
