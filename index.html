@@ -80,10 +80,10 @@ html.pending .story{opacity:0;transform:translateY(35px);filter:blur(3px)}
 .bismillah-translation,.eyebrow,.date,.arrival,.venue,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
 .eyebrow{font-size:10px;line-height:1.7;letter-spacing:.27em;color:var(--gold);text-transform:uppercase;margin:0 0 15px;text-shadow:0 2px 16px #080e0b}
 .eyebrow::before{content:"";display:block;height:1px;width:26px;margin:0 auto 15px;background:rgba(221,195,141,.75)}
-.names{margin:0;font-weight:400;font-size:clamp(32px,9.1vw,53px);line-height:1.18;letter-spacing:.035em;text-shadow:0 3px 26px #080e0b}
+.names{margin:0;font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(36px,9.4vw,62px);line-height:1.08;letter-spacing:.045em;text-shadow:0 3px 26px #080e0b;color:#f5e6c5}
 .family{margin:12px auto 0;max-width:405px;color:#d8c6a0;font-size:clamp(13px,3.55vw,16px);line-height:1.7;text-shadow:0 2px 18px #080e0b}
 .family strong{font-weight:400;color:var(--ivory)}
-.ampersand{display:block;color:#cfac72;margin:15px 0;font-size:29px;font-style:italic;line-height:1}
+.ampersand{display:block;color:#d7b87b;margin:15px 0;font-family:"Great Vibes","Apple Chancery","URW Chancery L",cursive;font-size:38px;font-style:normal;line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.45)}
 .ornament{display:flex;gap:10px;align-items:center;justify-content:center;width:150px;margin:37px auto 24px;color:#c5a86f}
 .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#a78c54)}
 .ornament::after{transform:rotate(180deg)}
@@ -145,7 +145,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
  .scene video{object-position:center center}
  .content{padding-left:45px;padding-right:45px}
  .eyebrow{font-size:11px}
- .names{font-size:53px}
+ .names{font-size:62px}
  .family{font-size:15px}
  .frame{inset:22px 22px auto;height:calc(100vh - 44px);height:calc(100svh - 44px)}
 }
@@ -168,8 +168,47 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
 @media(max-width:370px){.ballroom-frame{--frame-inset:10px}.ballroom-frame .corner{width:25px;height:25px}}
 @media(prefers-reduced-motion:reduce){.ballroom-frame{transition:none;transform:none}}
 
+
+/* Three-map directions selector, styled to match the invitation. */
+.directions{cursor:pointer;font-family:Arial,Helvetica,sans-serif}
+.directions:focus-visible,.map-choice-dialog :focus-visible{outline:2px solid #ead7a5;outline-offset:4px}
+.map-choice-dialog{
+  position:fixed;inset:0;margin:auto;
+  width:min(430px,calc(100vw - 28px));
+  max-height:min(680px,calc(100dvh - 40px));
+  overflow-y:auto;
+  padding:28px 22px 25px;
+  border:1px solid rgba(223,191,126,.72);
+  border-radius:3px;
+  background:linear-gradient(165deg,#19291e 0%,#0d1710 68%,#080d0a 100%);
+  color:#f3e6c9;
+  box-shadow:0 25px 85px rgba(0,0,0,.75),inset 0 0 0 6px rgba(217,182,108,.055);
+  text-align:center;
+}
+.map-choice-dialog::backdrop{background:rgba(2,6,4,.77);backdrop-filter:blur(5px)}
+.map-choice-x{position:absolute;right:9px;top:7px;border:0;background:transparent;color:#dfc79a;font:normal 29px/1 Arial,Helvetica,sans-serif;padding:8px 12px;cursor:pointer}
+.map-choice-kicker{font:500 10px/1.7 Arial,Helvetica,sans-serif;letter-spacing:.2em;color:#bfa36a;margin:0 20px 8px;text-transform:uppercase}
+.map-choice-title{font:normal clamp(24px,6vw,30px)/1.3 Georgia,serif;color:#f3e6c9;margin:0 0 8px}
+.map-choice-address{font:normal 12px/1.75 Arial,Helvetica,sans-serif;color:#c6b698;margin:0 0 21px}
+.map-choice-links{display:grid;gap:11px}
+.map-choice-option{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  min-height:54px;padding:13px 16px;
+  border:1px solid rgba(216,180,111,.48);color:#efdfbb;
+  background:rgba(49,60,41,.24);text-decoration:none;
+  font:600 12px/1.35 Arial,Helvetica,sans-serif;letter-spacing:.055em;
+  transition:background .2s ease,border-color .2s ease;
+}
+.map-choice-option:hover,.map-choice-option:focus-visible{background:rgba(132,109,64,.2);border-color:#dcbf81}
+.map-choice-option span:last-child{font:normal 18px/1 Arial,Helvetica,sans-serif;color:#d5bb80}
+.map-choice-note{color:#ab9b7a;font:normal 11px/1.65 Arial,Helvetica,sans-serif;margin:17px 0 0}
+@media(prefers-reduced-motion:reduce){.map-choice-option{transition:none}}
+
 </style>
 <script>document.documentElement.classList.add('pending');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="scene" aria-hidden="true">
@@ -262,14 +301,14 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
     <section class="formal-invitation" id="formal-invitation" aria-label="Formal wedding invitation">
       <span class="formal-seal" aria-hidden="true">✧</span>
       <p class="formal-kicker">Together with our families</p>
-      <p class="formal-copy">They request the honour of your presence as they celebrate their <em>wedding</em>.</p>
+      <p class="formal-copy">We request the honour of your presence as we celebrate our <em>wedding</em>.</p>
     </section>
     <div class="ornament" aria-hidden="true"><span>✧</span></div>
     <p class="date">Wednesday · 31 March 2027</p>
     <p class="arrival">Guest arrival · 5:00 PM · UK time</p>
     <p class="venue">The White Abbey Ballroom</p>
     <address class="address">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL</address>
-    <a class="directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+    <button class="directions" id="open-map-choices" type="button" aria-haspopup="dialog" aria-controls="map-choice-dialog">GET DIRECTIONS <span aria-hidden="true">↗</span></button>
    </header>
    <div class="soft-divider" aria-hidden="true"></div>
    <section aria-label="Wedding countdown">
@@ -294,6 +333,19 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
   </div>
  </div>
 </main>
+<dialog class="map-choice-dialog" id="map-choice-dialog" aria-labelledby="map-choice-title" aria-describedby="map-choice-description">
+ <button class="map-choice-x" type="button" id="close-map-choices" aria-label="Close directions choices">×</button>
+ <p class="map-choice-kicker">White Abbey Ballroom</p>
+ <h2 class="map-choice-title" id="map-choice-title">Choose your maps app</h2>
+ <p class="map-choice-address" id="map-choice-description">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL</p>
+ <div class="map-choice-links">
+  <a class="map-choice-option" href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;travelmode=driving" target="_blank" rel="noopener noreferrer"><span>Google Maps</span><span aria-hidden="true">↗</span></a>
+  <a class="map-choice-option" href="https://waze.com/ul?q=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;navigate=yes" target="_blank" rel="noopener noreferrer"><span>Waze</span><span aria-hidden="true">↗</span></a>
+  <a class="map-choice-option" href="https://maps.apple.com/directions?destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;mode=driving" target="_blank" rel="noopener noreferrer"><span>Apple Maps</span><span aria-hidden="true">↗</span></a>
+ </div>
+ <p class="map-choice-note">Opens your chosen app if available, or its website.</p>
+</dialog>
+
 <script>
 (()=>{
   // Date is British Summer Time (BST, UTC+1) in March 2027.
@@ -439,5 +491,28 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
   window.addEventListener('pageshow',e=>{if(e.persisted)failOpen();});
 })();
 </script>
+
+<script>
+(() => {
+  const chooser = document.getElementById('map-choice-dialog');
+  const trigger = document.getElementById('open-map-choices');
+  const dismiss = document.getElementById('close-map-choices');
+  if (!chooser || !trigger || !dismiss) return;
+  const close = () => {
+    if (typeof chooser.close === 'function') chooser.close();
+    else chooser.removeAttribute('open');
+  };
+  trigger.addEventListener('click', () => {
+    if (typeof chooser.showModal === 'function') chooser.showModal();
+    else chooser.setAttribute('open', '');
+  });
+  dismiss.addEventListener('click', close);
+  chooser.addEventListener('click', e => {
+    if (e.target === chooser) close();
+  });
+  chooser.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+})();
+</script>
+
 </body>
 </html>
