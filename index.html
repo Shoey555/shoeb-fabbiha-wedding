@@ -15,25 +15,15 @@ a{-webkit-tap-highlight-color:transparent}
 /* ONE CONTINUOUS FULL-SCREEN SCENE, never a rectangular header or embedded player. */
 .scene{position:fixed;inset:0;z-index:0;width:100%;height:100vh;min-height:100vh;height:100svh;min-height:100svh;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 90% 80% at 50% 27%,#223025 0%,#102018 45%,var(--ink) 100%)}
 .scene video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;opacity:1;transition:opacity 1700ms ease;will-change:opacity}
+/* Preserve the real final Bismillah frame behind the film, not duplicate typed calligraphy. */
+.afterglow{position:absolute;inset:0;z-index:0;display:block;opacity:0;transition:opacity 1700ms ease;will-change:opacity}
+.afterglow img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center}
+html.video-complete .afterglow{opacity:.50}
+.scene video{z-index:1}
 /* The lower half is blended into the exact same deep olive as the invitation. */
 .scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,14,9,.03) 0%,rgba(7,14,9,.04) 27%,rgba(8,15,10,.12) 44%,rgba(8,15,10,.35) 58%,rgba(8,14,11,.73) 84%,#080e0b 100%);pointer-events:none}
 .scene .gold-haze{position:absolute;z-index:2;inset:36% 0 -18%;background:radial-gradient(ellipse 85% 43% at 50% 50%,rgba(113,94,44,.115),transparent 70%);mix-blend-mode:screen}
 html.video-complete .scene video{opacity:0}
-/* Bismillah remains visible after the cinematic film has faded, independently of scrolling content. */
-.permanent-bismillah{
- position:fixed; z-index:8; top:0; left:0; right:0;
- padding:calc(env(safe-area-inset-top) + 10px) 18px 11px;
- text-align:center; pointer-events:none;
- background:linear-gradient(to bottom,rgba(8,14,11,.97) 0%,rgba(8,14,11,.89) 68%,rgba(8,14,11,0) 100%);
- opacity:0;visibility:hidden;transform:translateY(-9px);
- transition:opacity 1100ms ease,transform 1100ms ease,visibility 0s linear 1100ms;
-}
-.permanent-bismillah p{margin:0;font:400 clamp(21px,5.2vw,32px)/1.8 'Geeza Pro','Noto Naskh Arabic','Traditional Arabic',serif;color:#f1dca8;text-shadow:0 2px 14px rgba(3,8,4,.8);direction:rtl}
-html.video-complete .permanent-bismillah{
- opacity:1;visibility:visible;transform:none;transition:opacity 1100ms ease,transform 1100ms ease;
-}
-/* Hide duplicate Bismillah in the scrolling invitation when the permanent one appears. */
-html.video-complete .bismillah-still{opacity:0;visibility:hidden;transition:opacity 650ms ease,visibility 0s linear 650ms}
 /* Subtle border stays on screen while the video is open, then fades away. */
 .frame{position:fixed;z-index:3;inset:12px 12px auto;height:calc(100vh - 24px);height:calc(100svh - 24px);border:1px solid rgba(213,181,113,.30);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(9,15,11,.14);transition:opacity 1300ms ease}
 html.video-complete .frame{opacity:0}
@@ -43,12 +33,6 @@ html.video-complete .frame{opacity:0}
 .story{opacity:1;transform:none;filter:none;transition:opacity 1600ms ease,transform 1900ms cubic-bezier(.16,1,.3,1),filter 1500ms ease}
 html.pending .story{opacity:0;transform:translateY(35px);filter:blur(3px)}
 .bismillah-translation,.eyebrow,.date,.arrival,.venue,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
-/* Permanent invitation Bismillah: appears during the transition, stays visible after the video ends. */
-.bismillah-still{margin:0 auto 27px;max-width:670px;opacity:1;transform:translateY(0);transition:opacity 1450ms ease,transform 1700ms ease;}
-html.pending .bismillah-still{opacity:0;transform:translateY(22px)}
-.bismillah-arabic{font-family:'Geeza Pro','Noto Naskh Arabic','Traditional Arabic',serif;font-weight:400;font-size:clamp(24px,7vw,38px);line-height:1.9;direction:rtl;color:#f1dca8;text-shadow:0 2px 22px rgba(4,9,5,.8);margin:0}
-.bismillah-translation{font-size:9px;letter-spacing:.08em;line-height:1.7;color:#c9b387;margin:0 auto 18px}
-.bismillah-still::after{content:'';display:block;width:42px;height:1px;background:rgba(220,193,139,.62);margin:0 auto}
 .eyebrow{font-size:10px;line-height:1.7;letter-spacing:.27em;color:var(--gold);text-transform:uppercase;margin:0 0 15px;text-shadow:0 2px 16px #080e0b}
 .eyebrow::before{content:"";display:block;height:1px;width:26px;margin:0 auto 15px;background:rgba(221,195,141,.75)}
 .names{margin:0;font-weight:400;font-size:clamp(32px,9.1vw,53px);line-height:1.18;letter-spacing:.035em;text-shadow:0 3px 26px #080e0b}
@@ -98,30 +82,27 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
  .frame{inset:22px 22px auto;height:calc(100vh - 44px);height:calc(100svh - 44px)}
 }
 @media(max-width:370px){.content{padding-left:18px;padding-right:18px}.frame{inset:8px 8px auto;height:calc(100vh - 16px);height:calc(100svh - 16px)}}
-@media(prefers-reduced-motion:reduce){.story,.scene video,.frame,.cue{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}}
+@media(prefers-reduced-motion:reduce){.story,.scene video,.frame,.cue{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}html.video-complete .afterglow{opacity:.5}}
 </style>
 <script>document.documentElement.classList.add('pending');</script>
 </head>
 <body>
 <div class="scene" aria-hidden="true">
-  <video id="film" muted autoplay playsinline webkit-playsinline preload="metadata" disablepictureinpicture poster="poster-mobile.jpg">
+  <picture class="afterglow" aria-hidden="true">
+  <source media="(max-width:699px)" srcset="bismillah-frame-mobile.jpg">
+  <img src="bismillah-frame-desktop.jpg" alt="" decoding="async">
+ </picture>
+ <video id="film" muted autoplay playsinline webkit-playsinline preload="metadata" disablepictureinpicture poster="poster-mobile.jpg">
     <source media="(max-width:699px)" src="intro-mobile.mp4" type="video/mp4">
     <source src="intro.mp4" type="video/mp4">
   </video>
   <div class="gold-haze"></div>
 </div>
 <div class="frame" aria-hidden="true"></div>
-<div class="permanent-bismillah" aria-label="Bismillah — In the name of Allah, the Most Gracious, the Most Merciful">
- <p lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-</div>
 <a class="cue" href="#invitation-start" id="scroll-cue" aria-label="Scroll to the wedding invitation">THE INVITATION UNFOLDS<span aria-hidden="true">⌄</span></a>
 <main class="invitation">
  <div class="content">
   <div class="story" id="invitation-start">
-   <div class="bismillah-still" aria-label="Bismillah">
-    <p class="bismillah-arabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-    <p class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</p>
-   </div>
    <header>
     <p class="eyebrow">The wedding celebration of</p>
     <h1 class="names">Shoeb Ahmed</h1>
