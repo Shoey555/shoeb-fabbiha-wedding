@@ -81,6 +81,23 @@ html.pending .story{opacity:0;transform:translateY(35px);filter:blur(3px)}
 .cue span{font-size:19px;line-height:1;animation:bob 2s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(5px)}}
 html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
+
+/* Formal wedding invitation: an elegant reveal, never a second scrolling panel. */
+.formal-invitation{position:relative;max-width:525px;margin:39px auto 39px;padding:24px clamp(12px,4vw,33px) 25px;background:linear-gradient(180deg,rgba(42,49,31,.15),rgba(12,24,16,.05));text-align:center;isolation:isolate}
+.formal-invitation:before,.formal-invitation:after{content:"";display:block;height:1px;width:72%;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(221,189,116,.74),transparent);transform-origin:center}
+.formal-invitation:after{margin-top:25px}
+.formal-seal{display:block;font-size:16px;line-height:1;margin:-8px auto 22px;color:#cba96b;text-shadow:0 0 14px rgba(194,151,68,.3)}
+.formal-kicker{font:500 10px/1.8 Arial,Helvetica,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#c6ac77;margin:0 0 12px}
+.formal-copy{font-size:clamp(18px,4.6vw,24px);line-height:1.75;font-weight:400;color:#f1e2bc;margin:0;text-wrap:balance;text-shadow:0 2px 16px rgba(0,0,0,.55)}
+.formal-copy em{font-style:italic;color:#e4c893}
+/* Trigger just once when the invitation comes into view; keep content readable
+   before JS, after animation, when scrolling back, and in reduced-motion mode. */
+@keyframes formal-rise{from{opacity:.55;transform:translateY(16px);filter:blur(2px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes formal-line{from{opacity:.35;transform:scaleX(.45)}to{opacity:1;transform:scaleX(1)}}
+.formal-invitation.is-revealed .formal-kicker,.formal-invitation.is-revealed .formal-copy,.formal-invitation.is-revealed .formal-seal{animation:formal-rise 1.25s cubic-bezier(.2,.7,.2,1) both}
+.formal-invitation.is-revealed .formal-copy{animation-delay:.15s}
+.formal-invitation.is-revealed:before,.formal-invitation.is-revealed:after{animation:formal-line 1.4s ease-out both}
+@media(prefers-reduced-motion:reduce){.formal-invitation.is-revealed .formal-kicker,.formal-invitation.is-revealed .formal-copy,.formal-invitation.is-revealed .formal-seal,.formal-invitation.is-revealed:before,.formal-invitation.is-revealed:after{animation:none!important}}
 @media(min-width:700px){
  .bismillah-veil{-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,transparent 81%);mask-image:linear-gradient(to bottom,#000 0%,#000 70%,transparent 81%)}
  .scene video{object-position:center center}
@@ -123,6 +140,11 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
     <span class="ampersand" aria-hidden="true">&amp;</span>
     <h2 class="names">Fabbiha Akther Shama</h2>
     <p class="family">Beloved eldest daughter of<br><strong>Mohammed Helal Miah and Fatima Begum</strong></p>
+    <section class="formal-invitation" id="formal-invitation" aria-label="Formal wedding invitation">
+      <span class="formal-seal" aria-hidden="true">✧</span>
+      <p class="formal-kicker">Together with our families</p>
+      <p class="formal-copy">They request the honour of your presence as they celebrate their <em>wedding</em>.</p>
+    </section>
     <div class="ornament" aria-hidden="true"><span>✧</span></div>
     <p class="date">Wednesday · 31 March 2027</p>
     <p class="arrival">Guest arrival · 5:00 PM · UK time</p>
@@ -170,6 +192,21 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
     return true;
   }
   if(tick()){const timer=setInterval(()=>{if(!tick())clearInterval(timer)},1000);}
+
+  // Optional one-time reveal, independent of the cinematic video and page scroll.
+  // The formal text is visible by default even when JS or observers are unavailable.
+  const formal=document.getElementById('formal-invitation');
+  if(formal && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const formalObserver=new IntersectionObserver((entries,observer)=>{
+      for(const entry of entries){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      }
+    },{rootMargin:'0px 0px -8% 0px',threshold:.2});
+    formalObserver.observe(formal);
+  }
 
   const root=document.documentElement, film=document.getElementById('film');
   // One continuous, slow rise. It begins halfway through the video and
