@@ -18,51 +18,19 @@ a{-webkit-tap-highlight-color:transparent}
 /* Preserve the real final Bismillah frame behind the film, not duplicate typed calligraphy. */
 .afterglow{position:absolute;inset:0;z-index:0;display:block;opacity:0;transition:opacity 1700ms ease;will-change:opacity}
 .afterglow img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center}
-html.video-complete .afterglow{opacity:.50}
+html.video-complete .afterglow{opacity:.38}
 .scene video{z-index:1}
 /* The lower half is blended into the exact same deep olive as the invitation. */
 .scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,14,9,.03) 0%,rgba(7,14,9,.04) 27%,rgba(8,15,10,.12) 44%,rgba(8,15,10,.35) 58%,rgba(8,14,11,.73) 84%,#080e0b 100%);pointer-events:none}
 .scene .gold-haze{position:absolute;z-index:2;inset:36% 0 -18%;background:radial-gradient(ellipse 85% 43% at 50% 50%,rgba(113,94,44,.115),transparent 70%);mix-blend-mode:screen}
 html.video-complete .scene video{opacity:0}
-/* The retained image is a protected foreground layer, not just a background.
-   Its opaque upper area prevents scrolling text from ever crossing the calligraphy.
-   The lower edge dissolves into the invitation. Both pictures use the actual video frame. */
-.bismillah-veil{
-  position:fixed; inset:0; z-index:2; width:100%; height:100vh; height:100svh;
-  pointer-events:none; opacity:0; transition:opacity 1250ms ease;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 35%,transparent 48%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 35%,transparent 48%);
-}
-.bismillah-veil img{
-  display:block; width:100%; height:100%; object-fit:cover; object-position:center;
-  filter:brightness(.72);
-}
-html.video-complete .bismillah-veil{opacity:1}
-/* AFTER THE FILM: the Bismillah stays softly visible in the top scene,
-   while invitation copy has its OWN scroll region below it. Text can never
-   move behind the calligraphy veil or disappear under a fixed mask. */
-html.video-complete body{overflow:hidden}
-html.video-complete .invitation{
-  position:fixed; z-index:4; left:0; right:0;
-  top:43vh; top:43svh; bottom:0;
-  overflow-y:auto; overflow-x:hidden; overscroll-behavior-y:contain;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:thin; scrollbar-color:rgba(221,195,141,.35) transparent;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,black 13px,black 100%);
-  mask-image:linear-gradient(to bottom,transparent 0,black 13px,black 100%);
-}
-html.video-complete .content{
-  padding-top:19px;
-  padding-bottom:max(85px,env(safe-area-inset-bottom) + 50px);
-}
-html.video-complete .story{opacity:1!important;transform:none!important;filter:none!important}
-@media(min-width:700px){
-  html.video-complete .invitation{top:67vh;top:67svh}
-  html.video-complete .content{padding-top:23px}
-}
-@media(max-height:580px) and (orientation:landscape){
-  html.video-complete .invitation{top:62vh;top:62svh}
-}
+/* The cinematic still remains faintly in the fixed scene behind the text.
+   IMPORTANT: The document itself is the only scrolling surface. */
+.bismillah-veil{display:none!important}
+html.video-complete body{overflow-x:hidden;overflow-y:auto}
+html.video-complete .invitation{position:relative;inset:auto;overflow:visible;min-height:100svh}
+html.video-complete .content{padding-top:100svh;padding-bottom:max(90px,env(safe-area-inset-bottom) + 45px)}
+html.video-complete .story{opacity:1;transform:none;filter:none}
 /* The video remains behind invitation text while playing; the retained still rises over text only when the film ends. */
 /* Subtle border stays on screen while the video is open, then fades away. */
 .frame{position:fixed;z-index:3;inset:12px 12px auto;height:calc(100vh - 24px);height:calc(100svh - 24px);border:1px solid rgba(213,181,113,.30);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(9,15,11,.14);transition:opacity 1300ms ease}
@@ -123,7 +91,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
  .frame{inset:22px 22px auto;height:calc(100vh - 44px);height:calc(100svh - 44px)}
 }
 @media(max-width:370px){.content{padding-left:18px;padding-right:18px}.frame{inset:8px 8px auto;height:calc(100vh - 16px);height:calc(100svh - 16px)}}
-@media(prefers-reduced-motion:reduce){.story,.scene,.scene video,.bismillah-veil,.frame,.cue{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}html.video-complete .afterglow{opacity:.5}}
+@media(prefers-reduced-motion:reduce){.story,.scene,.scene video,.bismillah-veil,.frame,.cue{transition:none!important}.cue span{animation:none!important}html.pending .story{opacity:1;transform:none;filter:none}html.video-complete .afterglow{opacity:.38}}
 </style>
 <script>document.documentElement.classList.add('pending');</script>
 </head>
@@ -217,17 +185,15 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
     const top=story.getBoundingClientRect().top+window.scrollY;
     // Let the first line settle beneath the existing calligraphy in the retained film frame.
     // Retained calligraphy is protected by the foreground veil; text stops below its faded edge.
-    const fraction=window.innerWidth<700 ? .53 : .86;
+    const fraction=window.innerWidth<700 ? .60 : .80;
     return Math.max(0,top - window.innerHeight*fraction);
   }
   function finish(){
     if(completeIntro)return;
     completeIntro=true;
     startReveal();root.classList.add('video-complete');
-    // The completed invitation scrolls independently beneath the original Bismillah.
-    // Do not scroll the document after switching to the protected reading area.
-    window.scrollTo(0,0);
-    document.querySelector('.invitation').scrollTop=0;
+    // Do not reset scroll position: keep the text exactly where it settled.
+    // The whole document remains scrollable right down to ENTER INVITATION.
   }
   function frame(){
     if(cancelled||reduce||completeIntro)return;
@@ -248,6 +214,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
     cancelled=true;
     startReveal();
     root.classList.add('video-complete');
+    film.pause();
   }
   for(const ev of ['touchstart','wheel','keydown'])window.addEventListener(ev,userInterrupt,{passive:true,once:true});
   cue.addEventListener('click',()=>{userInterrupt();});
