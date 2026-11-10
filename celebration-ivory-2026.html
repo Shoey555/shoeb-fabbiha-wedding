@@ -574,6 +574,22 @@ main section[id]{scroll-margin-top:95px!important}
   #rsvp .rsvp-deadline-date{font-size:13px}
 }
 </style>
+
+<style id="safari-inline-maroon-arrows-20261110-v4">
+/* Real vector arrows: identical on desktop and iPhone; don't depend on arrow glyph fonts. */
+.maroon-arrow-wrap{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;width:19px!important;height:19px!important;vertical-align:middle!important;color:#70263f!important;background:transparent!important;line-height:0!important}
+.maroon-arrow-wrap .thin-maroon-arrow{display:block!important;width:18px!important;height:18px!important;min-width:18px!important;min-height:18px!important;fill:none!important;overflow:visible!important;opacity:1!important;stroke:none!important;transform:none!important;filter:none!important}
+.maroon-arrow-wrap .thin-maroon-arrow path{fill:none!important;stroke:#70263f!important;stroke-width:1.45!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+/* Light surround ensures the maroon arrow stands out on the burgundy Explore and Directions buttons. */
+.hero-copy .btn .maroon-arrow-wrap,.directions-launch .maroon-arrow-wrap{background:#fff5e4!important;border-radius:50%!important;width:25px!important;height:25px!important}
+.hero-rsvp-link .maroon-arrow-wrap,#rsvp .rsvp-primary-button .maroon-arrow-wrap{width:22px!important;height:22px!important}
+.map-choice-option .maroon-arrow-wrap{width:19px!important;height:19px!important}
+@media(max-width:660px){
+ .maroon-arrow-wrap{width:19px!important;height:19px!important;flex-shrink:0!important}
+ .maroon-arrow-wrap .thin-maroon-arrow{width:17px!important;height:17px!important;min-width:17px!important;min-height:17px!important}
+ .hero-copy .btn .maroon-arrow-wrap,.directions-launch .maroon-arrow-wrap{width:24px!important;height:24px!important}
+}
+</style>
 </head>
 <body>
 <div class="drape-stage" aria-hidden="true" data-drape="ivory">
@@ -607,8 +623,8 @@ main section[id]{scroll-margin-top:95px!important}
         <p class="intro">Together with our families, we look forward to sharing a special evening of love, joy and togetherness with you.</p>
         <div class="hero-date"><span>Wednesday, 31 March 2027</span><span class="separator" aria-hidden="true">✦</span><span>5:00 pm</span></div>
         <div class="hero-quick-links">
-          <a class="btn" href="#celebration">Explore the celebration <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="hero-rsvp-link" href="#rsvp" aria-label="RSVP required to help us reserve seating; go to RSVP section">RSVP REQUIRED · CONFIRM ATTENDANCE <span aria-hidden="true">↗</span></a>
+          <a class="btn" href="#celebration">Explore the celebration <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <a class="hero-rsvp-link" href="#rsvp" aria-label="RSVP required to help us reserve seating; go to RSVP section">RSVP REQUIRED · CONFIRM ATTENDANCE <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
@@ -617,7 +633,7 @@ main section[id]{scroll-margin-top:95px!important}
           <svg class="arch-flourish" viewBox="0 0 130 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 37C24 35 28 18 44 19C54 19 56 27 65 29C74 27 77 19 86 19C101 18 107 35 127 37" stroke="#9B7947" stroke-width="1.2"/><path d="M65 27C63 12 68 10 65 2C62 10 67 12 65 27ZM44 20C39 8 31 9 29 3C34 20 35 17 44 20ZM86 20C91 8 99 9 101 3C96 20 95 17 86 20Z" fill="#A78652" fill-opacity=".58"/><path d="M11 37L26 31M119 37L104 31" stroke="#9B7947" stroke-width=".8"/></svg>
           <div class="arch-top">THE WEDDING CELEBRATION</div>
           <span class="arch-decoration">✧</span>
-          <img class="hero-couple" src="couple-maroon-straighter-hair-v3.png" alt="Bride wearing a maroon lehenga with a long gold-embroidered train beside the groom in a black embroidered sherwani and plain black shawl, seen from behind">
+          <img class="hero-couple" src="couple-maroon-slimmer-bride-v4.png" alt="Bride wearing a maroon lehenga with a long gold-embroidered train beside the groom in a black embroidered sherwani and plain black shawl, seen from behind">
           <div class="arch-bottom">Shoeb &amp; Fabbiha · 31 · 03 · 2027</div>
         </div>
         <div class="vertical-rule"></div>
@@ -674,7 +690,7 @@ main section[id]{scroll-margin-top:95px!important}
           <p>We look forward to welcoming you to White Abbey Ballroom. Please allow enough time to arrive and park before the celebration.</p>
           <address class="address">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL<br>United Kingdom</address>
           <div class="map-directions" aria-label="Directions to White Abbey Ballroom">
-            <button class="btn directions-launch" type="button" id="open-map-choices" aria-haspopup="dialog" aria-controls="map-choice-dialog">GET DIRECTIONS <span class="arrow" aria-hidden="true">↗</span></button>
+            <button class="btn directions-launch" type="button" id="open-map-choices" aria-haspopup="dialog" aria-controls="map-choice-dialog">GET DIRECTIONS <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
           </div>
         </div>
       </div>
@@ -698,7 +714,7 @@ main section[id]{scroll-margin-top:95px!important}
         <h2 id="rsvp-heading">Your RSVP matters.</h2>
         <p class="rsvp-intro">We would love to celebrate with you. Please confirm your attendance so we can arrange seating for our guests.</p>
         <p class="rsvp-deadline"><span class="rsvp-deadline-label">RSVP by</span> <time class="rsvp-deadline-date" datetime="2027-03-01">Monday, 1 March 2027</time></p>
-        <a class="btn rsvp-primary-button" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" rel="noopener noreferrer">COMPLETE YOUR RSVP <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn rsvp-primary-button" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" rel="noopener noreferrer">COMPLETE YOUR RSVP <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <p class="rsvp-warning"><span class="warning-symbol" aria-hidden="true">!</span><span><strong>Important — seating is limited.</strong> Guests who do not complete an RSVP by 1 March 2027 may not be guaranteed a seat. Please submit your response by the deadline.</span></p>
         <p class="rsvp-footnote">The RSVP form opens on our Joy wedding website.</p>
       </div>
@@ -754,9 +770,9 @@ main section[id]{scroll-margin-top:95px!important}
  <h2 class="map-choice-title" id="map-choice-title">Choose your maps app</h2>
  <p class="map-choice-address" id="map-choice-description">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL</p>
  <div class="map-choice-links">
-  <a class="map-choice-option" href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;travelmode=driving" target="_blank" rel="noopener noreferrer"><span>Google Maps</span><span aria-hidden="true">↗</span></a>
-  <a class="map-choice-option" href="https://www.waze.com/ul?q=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;navigate=yes" target="_blank" rel="noopener noreferrer"><span>Waze</span><span aria-hidden="true">↗</span></a>
-  <a class="map-choice-option" href="https://maps.apple.com/?daddr=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;dirflg=d" target="_blank" rel="noopener noreferrer"><span>Apple Maps</span><span aria-hidden="true">↗</span></a>
+  <a class="map-choice-option" href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;travelmode=driving" target="_blank" rel="noopener noreferrer"><span>Google Maps</span><span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+  <a class="map-choice-option" href="https://www.waze.com/ul?q=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;navigate=yes" target="_blank" rel="noopener noreferrer"><span>Waze</span><span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+  <a class="map-choice-option" href="https://maps.apple.com/?daddr=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;dirflg=d" target="_blank" rel="noopener noreferrer"><span>Apple Maps</span><span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 12h15m-6-6 6 6-6 6" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
  </div>
  <p class="map-choice-note">Opens your chosen maps app or its website.</p>
 </dialog>
