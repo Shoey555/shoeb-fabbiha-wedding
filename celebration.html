@@ -524,6 +524,128 @@ html,body,.page,main{background-color:#fff9f0!important}
 .rsvp-wrap .btn{background:#754252!important;color:#fff8ef!important;border-color:#754252!important}
 .rsvp-wrap:before,.rsvp-wrap:after{border-color:rgba(166,123,67,.35)!important}
 </style>
+<style id="cross-browser-safari-compat">
+
+/* Cross-browser photographic drapes; CSS transforms only, with -webkit prefixed animations. */
+.wedding-curtain {
+ position:fixed!important;left:0!important;top:0!important;right:0!important;bottom:0!important;
+ width:100%!important;height:100vh!important;max-height:none!important;
+ z-index:99999!important;overflow:hidden!important;
+ background:transparent!important;isolation:auto;
+ -webkit-transform:none!important;transform:none!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+.wedding-curtain__panel {
+ position:absolute!important;top:0!important;bottom:0!important;
+ height:100%!important;width:50.6%!important;overflow:hidden!important;
+ background-repeat:no-repeat!important;background-position:center center!important;
+ background-size:100% 100%!important;
+ border:0!important;box-shadow:none!important;filter:none!important;
+ -webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);
+ -webkit-backface-visibility:hidden!important;backface-visibility:hidden!important;
+ -webkit-transform-origin:center center!important;transform-origin:center center!important;
+}
+.wedding-curtain__panel--left {left:0!important;right:auto!important;}
+.wedding-curtain__panel--right {left:auto!important;right:0!important;}
+.wedding-curtain__panel svg,.wedding-curtain__panel:after,.wedding-curtain__panel:before,
+.wedding-curtain:before,.wedding-curtain:after {display:none!important;content:none!important;}
+html:not(.curtain-exit):not(.curtain-arrive) .wedding-curtain {
+ display:none!important;visibility:hidden!important;pointer-events:none!important;
+}
+html.curtain-exit .wedding-curtain,html.curtain-arrive .wedding-curtain {
+ display:block!important;visibility:visible!important;pointer-events:auto!important;
+}
+html.curtain-exit .wedding-curtain__panel--left {
+ -webkit-animation:luxuryCloseLeft 1.03s cubic-bezier(.57,.04,.27,1) both!important;
+ animation:luxuryCloseLeft 1.03s cubic-bezier(.57,.04,.27,1) both!important;
+}
+html.curtain-exit .wedding-curtain__panel--right {
+ -webkit-animation:luxuryCloseRight 1.03s cubic-bezier(.57,.04,.27,1) both!important;
+ animation:luxuryCloseRight 1.03s cubic-bezier(.57,.04,.27,1) both!important;
+}
+html.curtain-arrive .wedding-curtain__panel--left {
+ -webkit-animation:luxuryOpenLeft 2.7s cubic-bezier(.4,.01,.16,1) both!important;
+ animation:luxuryOpenLeft 2.7s cubic-bezier(.4,.01,.16,1) both!important;
+}
+html.curtain-arrive .wedding-curtain__panel--right {
+ -webkit-animation:luxuryOpenRight 2.7s cubic-bezier(.4,.01,.16,1) both!important;
+ animation:luxuryOpenRight 2.7s cubic-bezier(.4,.01,.16,1) both!important;
+}
+@-webkit-keyframes luxuryCloseLeft {
+ 0%{-webkit-transform:translate3d(-105%,0,0) scaleX(.74)}
+ 63%{-webkit-transform:translate3d(-28%,0,0) scaleX(.88)}
+ 88%{-webkit-transform:translate3d(1.2%,0,0) scaleX(1.018)}
+ 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
+}
+@keyframes luxuryCloseLeft {
+ 0%{transform:translate3d(-105%,0,0) scaleX(.74)}
+ 63%{transform:translate3d(-28%,0,0) scaleX(.88)}
+ 88%{transform:translate3d(1.2%,0,0) scaleX(1.018)}
+ 100%{transform:translate3d(0,0,0) scaleX(1)}
+}
+@-webkit-keyframes luxuryCloseRight {
+ 0%{-webkit-transform:translate3d(105%,0,0) scaleX(.74)}
+ 63%{-webkit-transform:translate3d(28%,0,0) scaleX(.88)}
+ 88%{-webkit-transform:translate3d(-1.2%,0,0) scaleX(1.018)}
+ 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
+}
+@keyframes luxuryCloseRight {
+ 0%{transform:translate3d(105%,0,0) scaleX(.74)}
+ 63%{transform:translate3d(28%,0,0) scaleX(.88)}
+ 88%{transform:translate3d(-1.2%,0,0) scaleX(1.018)}
+ 100%{transform:translate3d(0,0,0) scaleX(1)}
+}
+@-webkit-keyframes luxuryOpenLeft {
+ 0%,11%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 20%{-webkit-transform:translate3d(1.0%,0,0) scaleX(1.02);opacity:1}
+ 36%{-webkit-transform:translate3d(-26%,0,0) scaleX(.88);opacity:1}
+ 54%{-webkit-transform:translate3d(-61%,0,0) scaleX(.68);opacity:1}
+ 76%{-webkit-transform:translate3d(-88%,0,0) scaleX(.47);opacity:1}
+ 95%{-webkit-transform:translate3d(-103%,0,0) scaleX(.36);opacity:1}
+ 100%{-webkit-transform:translate3d(-105%,0,0) scaleX(.35);opacity:0}
+}
+@keyframes luxuryOpenLeft {
+ 0%,11%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 20%{transform:translate3d(1.0%,0,0) scaleX(1.02);opacity:1}
+ 36%{transform:translate3d(-26%,0,0) scaleX(.88);opacity:1}
+ 54%{transform:translate3d(-61%,0,0) scaleX(.68);opacity:1}
+ 76%{transform:translate3d(-88%,0,0) scaleX(.47);opacity:1}
+ 95%{transform:translate3d(-103%,0,0) scaleX(.36);opacity:1}
+ 100%{transform:translate3d(-105%,0,0) scaleX(.35);opacity:0}
+}
+@-webkit-keyframes luxuryOpenRight {
+ 0%,11%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 20%{-webkit-transform:translate3d(-1.0%,0,0) scaleX(1.02);opacity:1}
+ 36%{-webkit-transform:translate3d(26%,0,0) scaleX(.88);opacity:1}
+ 54%{-webkit-transform:translate3d(61%,0,0) scaleX(.68);opacity:1}
+ 76%{-webkit-transform:translate3d(88%,0,0) scaleX(.47);opacity:1}
+ 95%{-webkit-transform:translate3d(103%,0,0) scaleX(.36);opacity:1}
+ 100%{-webkit-transform:translate3d(105%,0,0) scaleX(.35);opacity:0}
+}
+@keyframes luxuryOpenRight {
+ 0%,11%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 20%{transform:translate3d(-1.0%,0,0) scaleX(1.02);opacity:1}
+ 36%{transform:translate3d(26%,0,0) scaleX(.88);opacity:1}
+ 54%{transform:translate3d(61%,0,0) scaleX(.68);opacity:1}
+ 76%{transform:translate3d(88%,0,0) scaleX(.47);opacity:1}
+ 95%{transform:translate3d(103%,0,0) scaleX(.36);opacity:1}
+ 100%{transform:translate3d(105%,0,0) scaleX(.35);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){.wedding-curtain{display:none!important}}
+
+/* Page 2 always has an ivory canvas, including Safari without modern CSS support. */
+html,body,body>.page,main,main>.hero,main>.section,.hero,.notes,.site-footer {background-color:#fff9f0!important}
+body>.page {background-image:none!important}
+.schedule-section {background:#fffaf3!important}
+.venue-section {background:#f7efe4!important}
+.band {background:#f3e8dd!important;color:#754252!important}
+.rsvp-wrap {background:#f4e7df!important;color:#67394b!important}
+.rsvp-wrap h2,.rsvp-wrap p:not(.small-label) {color:#67394b!important}
+.venue-panel {background:#754252!important}
+.wedding-curtain__panel {background-color:#fff9f0!important}
+.wedding-curtain__panel--left {background-image:url('ivory-drape-left-safari.jpg')!important}
+.wedding-curtain__panel--right {background-image:url('ivory-drape-right-safari.jpg')!important}
+</style>
 </head>
 <body>
 
@@ -704,6 +826,19 @@ html,body,.page,main{background-color:#fff9f0!important}
       try{window.history.replaceState(window.history.state,'',window.location.pathname+window.location.hash);}catch(ignore){}
     }
   },3200);
+})();
+</script>
+<script>
+(function(){
+  function clearCurtain(){
+    if(document.documentElement && document.documentElement.classList){
+      document.documentElement.classList.remove('curtain-arrive');
+      document.documentElement.classList.remove('curtain-exit');
+    }
+  }
+  window.addEventListener('pageshow',function(event){if(event.persisted)clearCurtain();},false);
+  window.addEventListener('pagehide',clearCurtain,false);
+  window.setTimeout(clearCurtain,3500);
 })();
 </script>
 </body>
