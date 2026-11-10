@@ -253,69 +253,80 @@ html.video-complete .play-gate{display:none}
 @media(prefers-reduced-motion:reduce){.play-gate{transition:none}}
 
 
-/* Velvet curtains: two physical-looking panels with gold seams and pleats.
-   Animations use basic transforms for older iOS Safari and Android browsers. */
-.wedding-curtain{position:fixed;z-index:99999;left:0;right:0;top:0;bottom:0;
- height:100vh;height:100dvh;overflow:hidden;visibility:hidden;pointer-events:none;
- -webkit-transform:translateZ(0);transform:translateZ(0)}
-.wedding-curtain__panel{position:absolute;top:0;bottom:0;width:50.8%;height:100%;
- background:linear-gradient(180deg,rgba(24,7,17,.20) 0%,transparent 17%,transparent 80%,rgba(27,9,17,.32) 100%),
- repeating-linear-gradient(90deg,rgba(13,4,11,.36) 0px,rgba(211,135,150,.19) 14px,rgba(255,213,195,.10) 26px,rgba(26,6,16,.34) 47px,rgba(184,106,127,.12) 63px,rgba(22,6,14,.33) 81px),
- linear-gradient(90deg,#4a1d30,#9a5663 47%,#62293d 100%);
- background-color:#713648;-webkit-backface-visibility:hidden;backface-visibility:hidden;
- -webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);will-change:transform}
-.wedding-curtain__panel--left{left:0;border-right:2px solid rgba(232,194,130,.95);box-shadow:inset -18px 0 30px rgba(23,4,17,.42),inset 1px 0 2px rgba(238,201,153,.24)}
-.wedding-curtain__panel--right{right:0;border-left:2px solid rgba(232,194,130,.95);box-shadow:inset 18px 0 30px rgba(23,4,17,.42),inset -1px 0 2px rgba(238,201,153,.24)}
-.wedding-curtain__panel::before{content:"";position:absolute;inset:0;pointer-events:none;
- background:repeating-linear-gradient(90deg,rgba(238,190,140,.07) 0px,transparent 2px,transparent 49px,rgba(0,0,0,.13) 53px,transparent 57px)}
-.wedding-curtain__top{position:absolute;z-index:2;top:0;left:0;right:0;height:54px;height:min(10vh,76px);
- background:linear-gradient(180deg,#3e1628 0%,#7c3e4f 55%,#552536 100%);
- border-bottom:2px solid #c8a46f;box-shadow:0 9px 16px rgba(35,9,19,.3),inset 0 -6px 8px rgba(31,8,18,.35);
- opacity:0;pointer-events:none}
-.wedding-curtain__top::after{content:"";position:absolute;bottom:-6px;left:0;right:0;height:4px;
- background:repeating-linear-gradient(90deg,#c19d68 0 5px,#ead09c 5px 7px,#a7804a 7px 12px)}
-.wedding-curtain__seal{position:absolute;z-index:3;left:50%;top:50%;width:104px;height:104px;
- margin-left:-52px;margin-top:-52px;display:-webkit-box;display:-ms-flexbox;display:flex;
- align-items:center;justify-content:center;border:1px solid rgba(232,200,147,.88);border-radius:50%;
- background:radial-gradient(circle,rgba(89,40,55,.95),rgba(63,22,37,.95));
- color:#f1d6a3;font:400 28px/1 Georgia,serif;letter-spacing:.01em;
- box-shadow:0 0 0 7px rgba(112,54,69,.65),0 0 0 8px rgba(235,199,139,.36),0 8px 35px rgba(19,3,11,.32);
- opacity:0;pointer-events:none}
-.wedding-curtain__seal span{font-size:14px;color:#dfbd83;padding:0 8px}
-/* Leaving the film: the curtains meet at the centre before navigating. */
-html.curtain-exit .wedding-curtain{visibility:visible;pointer-events:auto}
-html.curtain-exit .wedding-curtain__panel--left{
- -webkit-animation:velvetCloseLeft .84s cubic-bezier(.65,.04,.25,1) both;animation:velvetCloseLeft .84s cubic-bezier(.65,.04,.25,1) both}
-html.curtain-exit .wedding-curtain__panel--right{
- -webkit-animation:velvetCloseRight .84s cubic-bezier(.65,.04,.25,1) both;animation:velvetCloseRight .84s cubic-bezier(.65,.04,.25,1) both}
-html.curtain-exit .wedding-curtain__top{-webkit-animation:valanceEnter .55s .2s both;animation:valanceEnter .55s .2s both}
-html.curtain-exit .wedding-curtain__seal{-webkit-animation:sealEnter .4s .48s both;animation:sealEnter .4s .48s both}
-@-webkit-keyframes velvetCloseLeft{from{-webkit-transform:translate3d(-102%,0,0)}to{-webkit-transform:translate3d(0,0,0)}}
-@keyframes velvetCloseLeft{from{transform:translate3d(-102%,0,0)}to{transform:translate3d(0,0,0)}}
-@-webkit-keyframes velvetCloseRight{from{-webkit-transform:translate3d(102%,0,0)}to{-webkit-transform:translate3d(0,0,0)}}
-@keyframes velvetCloseRight{from{transform:translate3d(102%,0,0)}to{transform:translate3d(0,0,0)}}
-@-webkit-keyframes valanceEnter{from{opacity:0}to{opacity:1}}
-@keyframes valanceEnter{from{opacity:0}to{opacity:1}}
-@-webkit-keyframes sealEnter{from{opacity:0;-webkit-transform:scale(.86)}to{opacity:1;-webkit-transform:scale(1)}}
-@keyframes sealEnter{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
-/* Arriving at the ballroom page: start closed, then sweep both panels outward. */
-html.curtain-arrive .wedding-curtain{visibility:visible}
-html.curtain-arrive .wedding-curtain__panel--left{
- -webkit-animation:velvetOpenLeft 1.52s .42s cubic-bezier(.69,0,.18,1) both;animation:velvetOpenLeft 1.52s .42s cubic-bezier(.69,0,.18,1) both}
-html.curtain-arrive .wedding-curtain__panel--right{
- -webkit-animation:velvetOpenRight 1.52s .42s cubic-bezier(.69,0,.18,1) both;animation:velvetOpenRight 1.52s .42s cubic-bezier(.69,0,.18,1) both}
-html.curtain-arrive .wedding-curtain__top{
- -webkit-animation:valanceLeave 1.3s .55s both;animation:valanceLeave 1.3s .55s both}
-html.curtain-arrive .wedding-curtain__seal{
- -webkit-animation:sealLeave .75s .2s both;animation:sealLeave .75s .2s both}
-@-webkit-keyframes velvetOpenLeft{from{-webkit-transform:translate3d(0,0,0)}to{-webkit-transform:translate3d(-103%,0,0)}}
-@keyframes velvetOpenLeft{from{transform:translate3d(0,0,0)}to{transform:translate3d(-103%,0,0)}}
-@-webkit-keyframes velvetOpenRight{from{-webkit-transform:translate3d(0,0,0)}to{-webkit-transform:translate3d(103%,0,0)}}
-@keyframes velvetOpenRight{from{transform:translate3d(0,0,0)}to{transform:translate3d(103%,0,0)}}
-@-webkit-keyframes valanceLeave{0%,15%{opacity:1}100%{opacity:0}}
-@keyframes valanceLeave{0%,15%{opacity:1}100%{opacity:0}}
-@-webkit-keyframes sealLeave{0%,30%{opacity:1;-webkit-transform:scale(1)}100%{opacity:0;-webkit-transform:scale(.94)}}
-@keyframes sealLeave{0%,30%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.94)}}
+
+/* Ivory silk wedding drapes, inspired by the submitted reference.
+   SVG texture is inline: no network, image download, or new assets required. */
+.wedding-curtain {
+ position:fixed; inset:0; top:0; left:0; right:0; bottom:0;
+ height:100vh; height:100dvh; z-index:99999; overflow:hidden;
+ visibility:hidden; pointer-events:none;
+ -webkit-transform:translateZ(0); transform:translateZ(0);
+}
+.wedding-curtain__panel {
+ position:absolute; top:0; bottom:0; width:54%; height:100%;
+ overflow:visible; -webkit-backface-visibility:hidden; backface-visibility:hidden;
+ -webkit-transform:translate3d(0,0,0); transform:translate3d(0,0,0);
+ will-change:transform,opacity;
+ filter:drop-shadow(4px 3px 7px rgba(62,39,37,.18));
+}
+.wedding-curtain__panel--left { left:0; }
+.wedding-curtain__panel--right { right:0; -webkit-transform:scaleX(-1); transform:scaleX(-1); }
+.wedding-curtain__panel svg { width:100%; height:100%; display:block; overflow:visible; }
+/* A narrow, fabric-like seam appears where the two curtains meet. */
+.wedding-curtain__panel--left::after,
+.wedding-curtain__panel--right::after {
+ content:""; position:absolute; z-index:2; right:0; top:0; width:5%; height:100%;
+ background:linear-gradient(90deg,transparent,rgba(136,105,83,.10),rgba(251,246,231,.75));
+ pointer-events:none;
+}
+/* First page: sweep cream drapes over the Bismillah before changing pages. */
+html.curtain-exit .wedding-curtain {visibility:visible;pointer-events:auto}
+html.curtain-exit .wedding-curtain__panel--left {
+ -webkit-animation:ivoryCloseLeft .74s cubic-bezier(.65,.06,.31,1) both;
+ animation:ivoryCloseLeft .74s cubic-bezier(.65,.06,.31,1) both;
+}
+html.curtain-exit .wedding-curtain__panel--right {
+ -webkit-animation:ivoryCloseRight .74s cubic-bezier(.65,.06,.31,1) both;
+ animation:ivoryCloseRight .74s cubic-bezier(.65,.06,.31,1) both;
+}
+@-webkit-keyframes ivoryCloseLeft {from{-webkit-transform:translate3d(-103%,0,0)}to{-webkit-transform:translate3d(0,0,0)}}
+@keyframes ivoryCloseLeft {from{transform:translate3d(-103%,0,0)}to{transform:translate3d(0,0,0)}}
+@-webkit-keyframes ivoryCloseRight {from{-webkit-transform:translate3d(103%,0,0) scaleX(-1)}to{-webkit-transform:translate3d(0,0,0) scaleX(-1)}}
+@keyframes ivoryCloseRight {from{transform:translate3d(103%,0,0) scaleX(-1)}to{transform:translate3d(0,0,0) scaleX(-1)}}
+/* Second page: slower, gently eased silk curtain reveal, like the video. */
+html.curtain-arrive .wedding-curtain {visibility:visible;pointer-events:auto}
+html.curtain-arrive .wedding-curtain__panel--left {
+ -webkit-animation:ivoryOpenLeft 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
+ animation:ivoryOpenLeft 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
+}
+html.curtain-arrive .wedding-curtain__panel--right {
+ -webkit-animation:ivoryOpenRight 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
+ animation:ivoryOpenRight 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
+}
+@-webkit-keyframes ivoryOpenLeft {
+ 0%,10%{-webkit-transform:translate3d(0,0,0);opacity:1}
+ 72%{-webkit-transform:translate3d(-71%,0,0) scaleX(.94);opacity:1}
+ 87%{-webkit-transform:translate3d(-77%,0,0) scaleX(.93);opacity:1}
+ 100%{-webkit-transform:translate3d(-81%,0,0) scaleX(.93);opacity:0}
+}
+@keyframes ivoryOpenLeft {
+ 0%,10%{transform:translate3d(0,0,0);opacity:1}
+ 72%{transform:translate3d(-71%,0,0) scaleX(.94);opacity:1}
+ 87%{transform:translate3d(-77%,0,0) scaleX(.93);opacity:1}
+ 100%{transform:translate3d(-81%,0,0) scaleX(.93);opacity:0}
+}
+@-webkit-keyframes ivoryOpenRight {
+ 0%,10%{-webkit-transform:translate3d(0,0,0) scaleX(-1);opacity:1}
+ 72%{-webkit-transform:translate3d(71%,0,0) scaleX(-.94);opacity:1}
+ 87%{-webkit-transform:translate3d(77%,0,0) scaleX(-.93);opacity:1}
+ 100%{-webkit-transform:translate3d(81%,0,0) scaleX(-.93);opacity:0}
+}
+@keyframes ivoryOpenRight {
+ 0%,10%{transform:translate3d(0,0,0) scaleX(-1);opacity:1}
+ 72%{transform:translate3d(71%,0,0) scaleX(-.94);opacity:1}
+ 87%{transform:translate3d(77%,0,0) scaleX(-.93);opacity:1}
+ 100%{transform:translate3d(81%,0,0) scaleX(-.93);opacity:0}
+}
 @media(prefers-reduced-motion:reduce){.wedding-curtain{display:none!important}}
 
 </style>
@@ -734,13 +745,151 @@ html.curtain-arrive .wedding-curtain__seal{
 </script>
 
 
-<!-- Cinematic velvet curtain overlay: purely decorative; normal links still work. -->
+
+<!-- Ivory silk drapes tied with bows: an animated reveal inspired by the supplied video. -->
 <div class="wedding-curtain" aria-hidden="true">
- <div class="wedding-curtain__panel wedding-curtain__panel--left"></div>
- <div class="wedding-curtain__panel wedding-curtain__panel--right"></div>
- <div class="wedding-curtain__top"></div>
- <div class="wedding-curtain__seal">S<span>✦</span>F</div>
+ <div class="wedding-curtain__panel wedding-curtain__panel--left">
+<svg viewBox="0 0 600 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+ <defs>
+  <linearGradient id="lft-base" x1="0" y1="0" x2="1" y2="0">
+   <stop offset="0" stop-color="#d9c7ad"/><stop offset=".08" stop-color="#f7f1e8"/>
+   <stop offset=".24" stop-color="#eee2d2"/><stop offset=".42" stop-color="#fffdf5"/>
+   <stop offset=".58" stop-color="#eadbc7"/><stop offset=".77" stop-color="#fffaf0"/>
+   <stop offset="1" stop-color="#e1ceba"/>
+  </linearGradient>
+  <linearGradient id="lft-fold" x1="0" y1="0" x2="1" y2="0">
+   <stop offset="0" stop-color="#725741" stop-opacity=".21"/>
+   <stop offset=".16" stop-color="#fff" stop-opacity=".47"/>
+   <stop offset=".43" stop-color="#aa886e" stop-opacity=".16"/>
+   <stop offset=".65" stop-color="#fff" stop-opacity=".49"/>
+   <stop offset="1" stop-color="#b09676" stop-opacity=".18"/>
+  </linearGradient>
+  <linearGradient id="lft-bow" x1="0" y1=".2" x2="1" y2=".8">
+   <stop offset="0" stop-color="#f9f4e9"/><stop offset=".35" stop-color="#fffef9"/>
+   <stop offset=".6" stop-color="#dfcdb8"/><stop offset=".85" stop-color="#fcf7ed"/>
+   <stop offset="1" stop-color="#bd9f84"/>
+  </linearGradient>
+  <linearGradient id="lft-shadow" x1="0" y1="0" x2="1" y2="0">
+   <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".81" stop-color="#fff" stop-opacity="0"/>
+   <stop offset="1" stop-color="#785b42" stop-opacity=".23"/>
+  </linearGradient>
+  <linearGradient id="lft-shine" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+   <stop offset="1" stop-color="#a8866d" stop-opacity=".12"/>
+  </linearGradient>
+ </defs>
+ <!-- Satin folds with wide, softly lit creases. -->
+ <rect x="0" y="0" width="600" height="1000" fill="url(#lft-base)"/>
+ <path d="M23 -25 C38 230 265 445 532 572 C305 709 115 861 30 1040 L125 1040 C295 780 448 641 556 572 C270 360 144 123 94 -25 Z" fill="url(#lft-fold)" opacity=".89"/>
+ <path d="M115 -30 C163 244 359 462 552 570 C421 728 288 847 217 1040 L301 1040 C358 789 480 650 568 575 C329 368 246 129 202 -30 Z" fill="url(#lft-fold)" opacity=".72"/>
+ <path d="M255 -30 C282 234 435 446 561 565 C505 732 435 850 392 1040 L458 1040 C489 839 531 693 579 573 C404 355 390 140 367 -30 Z" fill="url(#lft-fold)" opacity=".85"/>
+ <path d="M405 -30 C406 230 491 453 573 565 C565 770 538 879 525 1030 L589 1030 C584 867 598 687 594 560 C513 365 526 114 534 -30 Z" fill="url(#lft-fold)" opacity=".56"/>
+ <!-- Long curved seams gathered naturally into a central tie. -->
+ <g fill="none" stroke-linecap="round">
+  <path d="M45 -12 C75 260 320 470 535 570" stroke="#bca88d" stroke-width="19" opacity=".28"/>
+  <path d="M69 -12 C105 261 342 476 535 570" stroke="#fffdf6" stroke-width="14" opacity=".52"/>
+  <path d="M177 -12 C198 232 386 460 541 569" stroke="#ad9072" stroke-width="13" opacity=".17"/>
+  <path d="M193 -12 C217 232 396 463 547 569" stroke="#fffdf8" stroke-width="13" opacity=".68"/>
+  <path d="M322 -12 C344 254 461 453 560 570" stroke="#98775f" stroke-width="16" opacity=".17"/>
+  <path d="M344 -12 C367 255 474 463 564 570" stroke="#fffef9" stroke-width="12" opacity=".64"/>
+  <path d="M468 -12 C460 218 524 457 578 576" stroke="#b49980" stroke-width="13" opacity=".16"/>
+  <path d="M478 -12 C481 235 529 453 581 576" stroke="#fff" stroke-width="9" opacity=".7"/>
+  <path d="M530 590 C312 702 173 862 107 1025" stroke="#b3987e" stroke-width="18" opacity=".25"/>
+  <path d="M545 591 C358 757 278 900 241 1025" stroke="#fff" stroke-width="14" opacity=".57"/>
+  <path d="M551 594 C466 764 427 902 411 1025" stroke="#a78d76" stroke-width="13" opacity=".16"/>
+  <path d="M567 592 C535 741 531 873 530 1025" stroke="#fff" stroke-width="13" opacity=".55"/>
+ </g>
+ <rect x="0" y="0" width="600" height="1000" fill="url(#lft-shine)"/>
+ <rect x="0" y="0" width="600" height="1000" fill="url(#lft-shadow)"/>
+ <!-- An ivory bow ties the drape at its gathered point. -->
+ <g transform="translate(510 570)" stroke-linejoin="round">
+  <path d="M5 12 C17 61 8 144 -12 236 C28 204 53 127 49 36 Z" fill="url(#lft-bow)" stroke="#d9c8b3" stroke-width="2"/>
+  <path d="M-5 13 C-24 69 -68 127 -120 188 C-77 183 -34 165 21 42 Z" fill="url(#lft-bow)" stroke="#dfcbb0" stroke-width="2"/>
+  <path d="M8 18 C10 72 -6 125 -20 199" stroke="#fffaf0" stroke-width="7" fill="none" opacity=".75"/>
+  <path d="M-10 18 C-40 100 -73 145 -106 177" stroke="#fff" stroke-width="6" fill="none" opacity=".6"/>
+  <path d="M-10 -3 C-55 -48 -103 -56 -125 -31 C-139 -13 -123 12 -96 19 C-66 26 -37 15 -9 13 C-40 8 -64 -4 -86 -21 C-59 -15 -33 0 -10 -3 Z" fill="url(#lft-bow)" stroke="#d9c6af" stroke-width="3"/>
+  <path d="M21 -5 C57 -48 111 -52 125 -30 C138 -6 115 16 87 22 C56 29 34 15 13 12 C43 6 68 -3 93 -19 C62 -18 39 -2 21 -5 Z" fill="url(#lft-bow)" stroke="#dfcbb5" stroke-width="3"/>
+  <path d="M-113 -29 C-79 -35 -46 -18 -21 3" stroke="#fff" stroke-width="10" fill="none" opacity=".76"/>
+  <path d="M116 -28 C85 -28 48 -14 24 1" stroke="#fff" stroke-width="9" fill="none" opacity=".75"/>
+  <path d="M-17 -12 C0 -27 20 -21 31 -6 C33 10 19 25 -2 21 C-17 15 -23 2 -17 -12 Z" fill="url(#lft-bow)" stroke="#baa288" stroke-width="3"/>
+  <path d="M-4 -16 C7 -8 6 10 -2 20" fill="none" stroke="#fff" stroke-width="6" opacity=".75"/>
+  <ellipse cx="8" cy="3" rx="6" ry="7" fill="#c5aa7b" opacity=".75"/>
+  <circle cx="7" cy="1" r="2.5" fill="#fff9e3"/>
+ </g>
+</svg>
 </div>
+ <div class="wedding-curtain__panel wedding-curtain__panel--right">
+<svg viewBox="0 0 600 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+ <defs>
+  <linearGradient id="rgt-base" x1="0" y1="0" x2="1" y2="0">
+   <stop offset="0" stop-color="#d9c7ad"/><stop offset=".08" stop-color="#f7f1e8"/>
+   <stop offset=".24" stop-color="#eee2d2"/><stop offset=".42" stop-color="#fffdf5"/>
+   <stop offset=".58" stop-color="#eadbc7"/><stop offset=".77" stop-color="#fffaf0"/>
+   <stop offset="1" stop-color="#e1ceba"/>
+  </linearGradient>
+  <linearGradient id="rgt-fold" x1="0" y1="0" x2="1" y2="0">
+   <stop offset="0" stop-color="#725741" stop-opacity=".21"/>
+   <stop offset=".16" stop-color="#fff" stop-opacity=".47"/>
+   <stop offset=".43" stop-color="#aa886e" stop-opacity=".16"/>
+   <stop offset=".65" stop-color="#fff" stop-opacity=".49"/>
+   <stop offset="1" stop-color="#b09676" stop-opacity=".18"/>
+  </linearGradient>
+  <linearGradient id="rgt-bow" x1="0" y1=".2" x2="1" y2=".8">
+   <stop offset="0" stop-color="#f9f4e9"/><stop offset=".35" stop-color="#fffef9"/>
+   <stop offset=".6" stop-color="#dfcdb8"/><stop offset=".85" stop-color="#fcf7ed"/>
+   <stop offset="1" stop-color="#bd9f84"/>
+  </linearGradient>
+  <linearGradient id="rgt-shadow" x1="0" y1="0" x2="1" y2="0">
+   <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".81" stop-color="#fff" stop-opacity="0"/>
+   <stop offset="1" stop-color="#785b42" stop-opacity=".23"/>
+  </linearGradient>
+  <linearGradient id="rgt-shine" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+   <stop offset="1" stop-color="#a8866d" stop-opacity=".12"/>
+  </linearGradient>
+ </defs>
+ <!-- Satin folds with wide, softly lit creases. -->
+ <rect x="0" y="0" width="600" height="1000" fill="url(#rgt-base)"/>
+ <path d="M23 -25 C38 230 265 445 532 572 C305 709 115 861 30 1040 L125 1040 C295 780 448 641 556 572 C270 360 144 123 94 -25 Z" fill="url(#rgt-fold)" opacity=".89"/>
+ <path d="M115 -30 C163 244 359 462 552 570 C421 728 288 847 217 1040 L301 1040 C358 789 480 650 568 575 C329 368 246 129 202 -30 Z" fill="url(#rgt-fold)" opacity=".72"/>
+ <path d="M255 -30 C282 234 435 446 561 565 C505 732 435 850 392 1040 L458 1040 C489 839 531 693 579 573 C404 355 390 140 367 -30 Z" fill="url(#rgt-fold)" opacity=".85"/>
+ <path d="M405 -30 C406 230 491 453 573 565 C565 770 538 879 525 1030 L589 1030 C584 867 598 687 594 560 C513 365 526 114 534 -30 Z" fill="url(#rgt-fold)" opacity=".56"/>
+ <!-- Long curved seams gathered naturally into a central tie. -->
+ <g fill="none" stroke-linecap="round">
+  <path d="M45 -12 C75 260 320 470 535 570" stroke="#bca88d" stroke-width="19" opacity=".28"/>
+  <path d="M69 -12 C105 261 342 476 535 570" stroke="#fffdf6" stroke-width="14" opacity=".52"/>
+  <path d="M177 -12 C198 232 386 460 541 569" stroke="#ad9072" stroke-width="13" opacity=".17"/>
+  <path d="M193 -12 C217 232 396 463 547 569" stroke="#fffdf8" stroke-width="13" opacity=".68"/>
+  <path d="M322 -12 C344 254 461 453 560 570" stroke="#98775f" stroke-width="16" opacity=".17"/>
+  <path d="M344 -12 C367 255 474 463 564 570" stroke="#fffef9" stroke-width="12" opacity=".64"/>
+  <path d="M468 -12 C460 218 524 457 578 576" stroke="#b49980" stroke-width="13" opacity=".16"/>
+  <path d="M478 -12 C481 235 529 453 581 576" stroke="#fff" stroke-width="9" opacity=".7"/>
+  <path d="M530 590 C312 702 173 862 107 1025" stroke="#b3987e" stroke-width="18" opacity=".25"/>
+  <path d="M545 591 C358 757 278 900 241 1025" stroke="#fff" stroke-width="14" opacity=".57"/>
+  <path d="M551 594 C466 764 427 902 411 1025" stroke="#a78d76" stroke-width="13" opacity=".16"/>
+  <path d="M567 592 C535 741 531 873 530 1025" stroke="#fff" stroke-width="13" opacity=".55"/>
+ </g>
+ <rect x="0" y="0" width="600" height="1000" fill="url(#rgt-shine)"/>
+ <rect x="0" y="0" width="600" height="1000" fill="url(#rgt-shadow)"/>
+ <!-- An ivory bow ties the drape at its gathered point. -->
+ <g transform="translate(510 570)" stroke-linejoin="round">
+  <path d="M5 12 C17 61 8 144 -12 236 C28 204 53 127 49 36 Z" fill="url(#rgt-bow)" stroke="#d9c8b3" stroke-width="2"/>
+  <path d="M-5 13 C-24 69 -68 127 -120 188 C-77 183 -34 165 21 42 Z" fill="url(#rgt-bow)" stroke="#dfcbb0" stroke-width="2"/>
+  <path d="M8 18 C10 72 -6 125 -20 199" stroke="#fffaf0" stroke-width="7" fill="none" opacity=".75"/>
+  <path d="M-10 18 C-40 100 -73 145 -106 177" stroke="#fff" stroke-width="6" fill="none" opacity=".6"/>
+  <path d="M-10 -3 C-55 -48 -103 -56 -125 -31 C-139 -13 -123 12 -96 19 C-66 26 -37 15 -9 13 C-40 8 -64 -4 -86 -21 C-59 -15 -33 0 -10 -3 Z" fill="url(#rgt-bow)" stroke="#d9c6af" stroke-width="3"/>
+  <path d="M21 -5 C57 -48 111 -52 125 -30 C138 -6 115 16 87 22 C56 29 34 15 13 12 C43 6 68 -3 93 -19 C62 -18 39 -2 21 -5 Z" fill="url(#rgt-bow)" stroke="#dfcbb5" stroke-width="3"/>
+  <path d="M-113 -29 C-79 -35 -46 -18 -21 3" stroke="#fff" stroke-width="10" fill="none" opacity=".76"/>
+  <path d="M116 -28 C85 -28 48 -14 24 1" stroke="#fff" stroke-width="9" fill="none" opacity=".75"/>
+  <path d="M-17 -12 C0 -27 20 -21 31 -6 C33 10 19 25 -2 21 C-17 15 -23 2 -17 -12 Z" fill="url(#rgt-bow)" stroke="#baa288" stroke-width="3"/>
+  <path d="M-4 -16 C7 -8 6 10 -2 20" fill="none" stroke="#fff" stroke-width="6" opacity=".75"/>
+  <ellipse cx="8" cy="3" rx="6" ry="7" fill="#c5aa7b" opacity=".75"/>
+  <circle cx="7" cy="1" r="2.5" fill="#fff9e3"/>
+ </g>
+</svg>
+</div>
+</div>
+
 
 <script>
 (function(){
@@ -756,7 +905,7 @@ html.curtain-arrive .wedding-curtain__seal{
     event.preventDefault();busy=true;
     document.documentElement.classList.add('curtain-exit');
     var destination=link.href;
-    window.setTimeout(function(){window.location.href=destination;},860);
+    window.setTimeout(function(){window.location.href=destination;},790);
   });
   // Safari back-forward cache must never leave a closed curtain over the intro.
   window.addEventListener('pageshow',function(){
