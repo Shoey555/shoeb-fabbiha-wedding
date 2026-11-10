@@ -49,13 +49,13 @@ html.video-complete .particles{opacity:1}
 }
 @keyframes cinematicGoldFall{
   0%{transform:translate3d(0,-3vh,0);opacity:0}
-  9%{opacity:calc(var(--alpha) * .84)}
-  28%{opacity:calc(var(--alpha) * 1.12)}
-  65%{opacity:calc(var(--alpha) * .98)}
-  88%{opacity:calc(var(--alpha) * .72)}
+  9%{opacity:calc(var(--alpha) * .92)}
+  28%{opacity:calc(var(--alpha) * 1.24)}
+  65%{opacity:calc(var(--alpha) * 1.08)}
+  88%{opacity:calc(var(--alpha) * .78)}
   100%{transform:translate3d(var(--drift),112svh,0);opacity:0}
 }
-@media(max-width:480px){.particle:nth-child(n+37){display:none}}
+@media(max-width:480px){.particle:nth-child(n+51){display:none}}
 @media(prefers-reduced-motion:reduce){
   .particles{transition:none!important;opacity:0!important}
   .particle{animation:none!important}
@@ -268,54 +268,72 @@ html.video-complete .play-gate{display:none}
 <div class="particles" aria-hidden="true">
  <span class="particle highlight" style="--x:27.2%;--size:1.5px;--alpha:0.73;--shade:#f1d89e;--duration:18.3s;--delay:-4.3s;--drift:17.7px"></span>
  <span class="particle" style="--x:42.7%;--size:1.0px;--alpha:0.50;--shade:#d8b46e;--duration:21.5s;--delay:-19.4s;--drift:-14.5px"></span>
+ <span class="particle" style="--x:59.9%;--size:1.2px;--alpha:0.49;--shade:#e7c487;--duration:16.1s;--delay:-6.0s;--drift:4.7px"></span>
  <span class="particle" style="--x:64.0%;--size:1.0px;--alpha:0.34;--shade:#d8b46e;--duration:21.0s;--delay:-3.9s;--drift:-16.6px"></span>
  <span class="particle" style="--x:58.9%;--size:1.0px;--alpha:0.52;--shade:#d8b46e;--duration:17.2s;--delay:-6.2s;--drift:-9.2px"></span>
  <span class="particle" style="--x:23.9%;--size:1.2px;--alpha:0.53;--shade:#e7c487;--duration:20.7s;--delay:-7.3s;--drift:-4.8px"></span>
+ <span class="particle" style="--x:71.6%;--size:1.0px;--alpha:0.51;--shade:#d8b46e;--duration:17.4s;--delay:-12.7s;--drift:14.4px"></span>
  <span class="particle" style="--x:31.2%;--size:1.0px;--alpha:0.35;--shade:#d8b46e;--duration:20.1s;--delay:-10.5s;--drift:-6.8px"></span>
  <span class="particle" style="--x:86.2%;--size:1.0px;--alpha:0.37;--shade:#d8b46e;--duration:14.2s;--delay:-8.3s;--drift:17.3px"></span>
  <span class="particle highlight" style="--x:35.3%;--size:1.5px;--alpha:0.58;--shade:#f1d89e;--duration:13.9s;--delay:-6.0s;--drift:-0.4px"></span>
+ <span class="particle" style="--x:92.4%;--size:1.0px;--alpha:0.39;--shade:#d8b46e;--duration:17.3s;--delay:-10.6s;--drift:11.6px"></span>
  <span class="particle" style="--x:35.9%;--size:1.2px;--alpha:0.50;--shade:#e7c487;--duration:16.6s;--delay:-9.0s;--drift:-17.8px"></span>
  <span class="particle" style="--x:32.6%;--size:1.0px;--alpha:0.53;--shade:#d8b46e;--duration:18.2s;--delay:-10.2s;--drift:-15.4px"></span>
  <span class="particle" style="--x:21.0%;--size:1.0px;--alpha:0.37;--shade:#d8b46e;--duration:18.0s;--delay:-9.1s;--drift:4.9px"></span>
+ <span class="particle highlight" style="--x:7.8%;--size:1.5px;--alpha:0.57;--shade:#f1d89e;--duration:15.7s;--delay:-4.1s;--drift:15.2px"></span>
  <span class="particle" style="--x:92.6%;--size:1.0px;--alpha:0.35;--shade:#d8b46e;--duration:16.7s;--delay:-2.4s;--drift:5.4px"></span>
  <span class="particle" style="--x:46.3%;--size:1.2px;--alpha:0.41;--shade:#e7c487;--duration:18.5s;--delay:-17.5s;--drift:14.1px"></span>
  <span class="particle" style="--x:31.2%;--size:1.0px;--alpha:0.40;--shade:#d8b46e;--duration:20.4s;--delay:-4.8s;--drift:-12.1px"></span>
+ <span class="particle" style="--x:43.6%;--size:1.2px;--alpha:0.43;--shade:#e7c487;--duration:15.1s;--delay:-12.8s;--drift:11.5px"></span>
  <span class="particle highlight" style="--x:30.1%;--size:1.5px;--alpha:0.63;--shade:#f1d89e;--duration:15.2s;--delay:-0.4s;--drift:3.4px"></span>
  <span class="particle" style="--x:29.6%;--size:1.0px;--alpha:0.48;--shade:#d8b46e;--duration:19.4s;--delay:-13.5s;--drift:-10.4px"></span>
  <span class="particle" style="--x:7.7%;--size:1.2px;--alpha:0.59;--shade:#e7c487;--duration:21.3s;--delay:-19.1s;--drift:16.0px"></span>
+ <span class="particle" style="--x:88.7%;--size:1.0px;--alpha:0.49;--shade:#d8b46e;--duration:20.0s;--delay:-14.1s;--drift:14.9px"></span>
  <span class="particle" style="--x:66.6%;--size:1.0px;--alpha:0.37;--shade:#d8b46e;--duration:21.3s;--delay:-14.2s;--drift:11.1px"></span>
  <span class="particle" style="--x:26.2%;--size:1.0px;--alpha:0.39;--shade:#d8b46e;--duration:17.4s;--delay:-16.4s;--drift:6.1px"></span>
  <span class="particle" style="--x:17.3%;--size:1.0px;--alpha:0.53;--shade:#d8b46e;--duration:19.6s;--delay:-18.2s;--drift:9.0px"></span>
+ <span class="particle" style="--x:24.5%;--size:1.0px;--alpha:0.48;--shade:#d8b46e;--duration:15.5s;--delay:-3.5s;--drift:-11.7px"></span>
  <span class="particle" style="--x:90.4%;--size:1.2px;--alpha:0.39;--shade:#e7c487;--duration:20.4s;--delay:-12.1s;--drift:-2.3px"></span>
  <span class="particle highlight" style="--x:64.1%;--size:1.5px;--alpha:0.66;--shade:#f1d89e;--duration:20.7s;--delay:-20.0s;--drift:10.6px"></span>
  <span class="particle" style="--x:60.6%;--size:1.0px;--alpha:0.34;--shade:#d8b46e;--duration:16.5s;--delay:-12.5s;--drift:1.9px"></span>
+ <span class="particle" style="--x:42.9%;--size:1.0px;--alpha:0.41;--shade:#d8b46e;--duration:17.1s;--delay:-8.3s;--drift:2.3px"></span>
  <span class="particle" style="--x:41.1%;--size:1.0px;--alpha:0.45;--shade:#d8b46e;--duration:22.0s;--delay:-7.3s;--drift:-5.6px"></span>
  <span class="particle" style="--x:47.6%;--size:1.2px;--alpha:0.40;--shade:#e7c487;--duration:20.7s;--delay:-16.1s;--drift:17.9px"></span>
  <span class="particle" style="--x:20.4%;--size:1.0px;--alpha:0.44;--shade:#d8b46e;--duration:19.8s;--delay:-19.5s;--drift:-8.7px"></span>
+ <span class="particle" style="--x:31.9%;--size:1.2px;--alpha:0.44;--shade:#e7c487;--duration:18.7s;--delay:-10.5s;--drift:-16.4px"></span>
  <span class="particle" style="--x:32.5%;--size:1.0px;--alpha:0.35;--shade:#d8b46e;--duration:20.4s;--delay:-18.2s;--drift:-3.7px"></span>
  <span class="particle" style="--x:89.5%;--size:1.0px;--alpha:0.52;--shade:#d8b46e;--duration:19.6s;--delay:-15.8s;--drift:4.1px"></span>
  <span class="particle highlight" style="--x:69.3%;--size:1.5px;--alpha:0.74;--shade:#f1d89e;--duration:15.1s;--delay:-9.8s;--drift:2.1px"></span>
+ <span class="particle" style="--x:82.8%;--size:1.0px;--alpha:0.52;--shade:#d8b46e;--duration:19.0s;--delay:-2.5s;--drift:2.3px"></span>
  <span class="particle" style="--x:57.4%;--size:1.0px;--alpha:0.54;--shade:#d8b46e;--duration:18.1s;--delay:-10.8s;--drift:-10.0px"></span>
  <span class="particle" style="--x:45.2%;--size:1.0px;--alpha:0.48;--shade:#d8b46e;--duration:13.8s;--delay:-3.4s;--drift:5.0px"></span>
  <span class="particle" style="--x:27.3%;--size:1.0px;--alpha:0.38;--shade:#d8b46e;--duration:19.1s;--delay:-16.0s;--drift:15.4px"></span>
+ <span class="particle highlight" style="--x:49.5%;--size:1.5px;--alpha:0.64;--shade:#f1d89e;--duration:21.8s;--delay:-20.2s;--drift:-9.6px"></span>
  <span class="particle" style="--x:70.4%;--size:1.2px;--alpha:0.59;--shade:#e7c487;--duration:15.5s;--delay:-4.1s;--drift:-11.0px"></span>
  <span class="particle" style="--x:21.2%;--size:1.0px;--alpha:0.41;--shade:#d8b46e;--duration:20.3s;--delay:-15.2s;--drift:-10.4px"></span>
  <span class="particle" style="--x:14.6%;--size:1.0px;--alpha:0.53;--shade:#d8b46e;--duration:16.5s;--delay:-0.5s;--drift:2.3px"></span>
+ <span class="particle" style="--x:89.0%;--size:1.0px;--alpha:0.44;--shade:#d8b46e;--duration:17.0s;--delay:-10.5s;--drift:9.2px"></span>
  <span class="particle highlight" style="--x:80.8%;--size:1.5px;--alpha:0.74;--shade:#f1d89e;--duration:17.0s;--delay:-3.8s;--drift:-10.3px"></span>
  <span class="particle" style="--x:24.0%;--size:1.2px;--alpha:0.48;--shade:#e7c487;--duration:19.7s;--delay:-0.1s;--drift:9.3px"></span>
  <span class="particle" style="--x:84.9%;--size:1.0px;--alpha:0.34;--shade:#d8b46e;--duration:21.3s;--delay:-1.7s;--drift:12.1px"></span>
+ <span class="particle" style="--x:39.2%;--size:1.2px;--alpha:0.52;--shade:#e7c487;--duration:16.1s;--delay:-2.7s;--drift:-5.4px"></span>
  <span class="particle" style="--x:44.2%;--size:1.0px;--alpha:0.40;--shade:#d8b46e;--duration:21.3s;--delay:-0.5s;--drift:-14.4px"></span>
  <span class="particle" style="--x:27.6%;--size:1.0px;--alpha:0.48;--shade:#d8b46e;--duration:16.4s;--delay:-8.5s;--drift:-0.4px"></span>
  <span class="particle" style="--x:45.9%;--size:1.2px;--alpha:0.53;--shade:#e7c487;--duration:14.2s;--delay:-10.4s;--drift:-15.0px"></span>
+ <span class="particle" style="--x:73.1%;--size:1.0px;--alpha:0.36;--shade:#d8b46e;--duration:19.9s;--delay:-6.4s;--drift:-13.6px"></span>
  <span class="particle" style="--x:74.0%;--size:1.0px;--alpha:0.50;--shade:#d8b46e;--duration:14.7s;--delay:-5.5s;--drift:8.6px"></span>
  <span class="particle highlight" style="--x:53.5%;--size:1.5px;--alpha:0.64;--shade:#f1d89e;--duration:14.8s;--delay:-8.4s;--drift:10.9px"></span>
  <span class="particle" style="--x:28.9%;--size:1.0px;--alpha:0.52;--shade:#d8b46e;--duration:16.9s;--delay:-9.0s;--drift:-13.6px"></span>
+ <span class="particle" style="--x:65.1%;--size:1.0px;--alpha:0.36;--shade:#d8b46e;--duration:21.2s;--delay:-19.9s;--drift:-16.0px"></span>
  <span class="particle" style="--x:66.9%;--size:1.2px;--alpha:0.44;--shade:#e7c487;--duration:15.9s;--delay:-7.1s;--drift:12.3px"></span>
  <span class="particle" style="--x:87.9%;--size:1.0px;--alpha:0.38;--shade:#d8b46e;--duration:19.3s;--delay:-16.7s;--drift:-16.5px"></span>
  <span class="particle" style="--x:46.4%;--size:1.0px;--alpha:0.33;--shade:#d8b46e;--duration:13.7s;--delay:-10.4s;--drift:4.0px"></span>
+ <span class="particle" style="--x:45.2%;--size:1.0px;--alpha:0.42;--shade:#d8b46e;--duration:14.8s;--delay:-8.8s;--drift:8.7px"></span>
  <span class="particle" style="--x:92.0%;--size:1.0px;--alpha:0.45;--shade:#d8b46e;--duration:19.9s;--delay:-11.2s;--drift:4.8px"></span>
  <span class="particle" style="--x:94.3%;--size:1.2px;--alpha:0.44;--shade:#e7c487;--duration:21.5s;--delay:-14.0s;--drift:-9.6px"></span>
  <span class="particle highlight" style="--x:66.3%;--size:1.5px;--alpha:0.76;--shade:#f1d89e;--duration:13.9s;--delay:-10.2s;--drift:17.4px"></span>
+ <span class="particle highlight" style="--x:81.9%;--size:1.5px;--alpha:0.61;--shade:#f1d89e;--duration:19.4s;--delay:-17.6s;--drift:12.0px"></span>
+ <span class="particle" style="--x:70.8%;--size:1.0px;--alpha:0.40;--shade:#d8b46e;--duration:20.7s;--delay:-12.4s;--drift:8.2px"></span>
 </div>
 <picture class="bismillah-veil" aria-hidden="true">
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile.jpg">
