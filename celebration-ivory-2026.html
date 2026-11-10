@@ -85,7 +85,7 @@ h1 em{font-style:italic;color:var(--gold);font-weight:400}
 .art-halo{position:absolute;inset:13% 0 0 0;background:radial-gradient(ellipse at 50% 52%,rgba(204,150,159,.26),transparent 66%);filter:blur(5px)}
 .arch{position:relative;width:min(100%,405px);height:100%;max-height:575px;border-radius:195px 195px 5px 5px;border:1px solid rgba(153,116,62,.55);background:radial-gradient(ellipse at 50% 28%,#fffaf7,#f5e5e2 54%,#e6d0ce 100%);box-shadow:0 20px 70px rgba(106,54,72,.13),inset 0 0 0 12px rgba(255,255,255,.57),inset 0 0 0 13px rgba(174,139,87,.2);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:27px;text-align:center}
 .arch:before{content:"";position:absolute;inset:21px;border-radius:180px 180px 1px 1px;border:1px solid rgba(151,113,58,.29);pointer-events:none}
-.arch:after{content:"";position:absolute;left:15%;right:15%;bottom:37px;height:1px;background:linear-gradient(90deg,transparent,rgba(163,123,64,.64),transparent)}
+.arch:after{display:none!important}
 .arch-top{position:relative;font:700 10px/1.5 var(--sans);letter-spacing:.31em;color:#a18455;margin-bottom:46px}
 .arch-decoration{position:relative;display:block;margin-bottom:18px;color:var(--gold);font:400 28px/1 var(--serif)}
 .arch-monogram{position:relative;font:400 clamp(66px,8vw,105px)/1 var(--serif);color:#744454;letter-spacing:-.085em;margin-right:.08em}
@@ -304,8 +304,8 @@ html.curtain-exit .drape-stage,html.curtain-arrive .drape-stage{display:block;po
 .drape-half{position:absolute;top:0;height:100%;width:50.5%;overflow:hidden;
  background-repeat:no-repeat;background-size:100% 100%;background-position:center center;
  -webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform,opacity}
-.drape-left{left:0;background-color:#fff9f0;background-image:url('curtain-ivory-v4-left.jpg')}
-.drape-right{right:0;background-color:#fff9f0;background-image:url('curtain-ivory-v4-right.jpg')}
+.drape-left{left:0;background-color:#fff9f0;background-image:url('curtain-ivory-satin-left-v5.png')}
+.drape-right{right:0;background-color:#fff9f0;background-image:url('curtain-ivory-satin-right-v5.png')}
 .drape-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;pointer-events:none}
 .drape-stage.canvas-ready .drape-canvas{opacity:1}
 .drape-stage.canvas-ready .drape-half{opacity:0}
@@ -336,6 +336,20 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 .site-header .nav .nav-rsvp{padding:5px 1px!important}
 }
 @media(max-width:355px){.site-header .nav a{font-size:8px!important;letter-spacing:-.065em!important}.site-header .nav .nav-home svg{display:none!important}}
+</style>
+
+<style id="caption-line-no-overlap">
+/* Separate the decorative gold rule from the couple caption on every screen size. */
+.arch:after{display:none!important;}
+.arch-bottom{position:relative!important;top:auto!important;transform:none!important;margin:12px 0 0!important;padding:0 0 8px!important;z-index:2!important;line-height:1.5!important;}
+.arch-bottom:after{content:"";display:block;width:90px;max-width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(163,123,64,.8),transparent);margin:9px auto 0;}
+@media(max-width:660px){
+ .arch{padding:20px 20px 17px!important;}
+ .hero-couple{width:min(100%,195px)!important;max-height:218px!important;}
+ .hero-art .arch-top{margin-bottom:10px!important;}
+ .arch-bottom{font-size:9px!important;margin-top:10px!important;padding-bottom:0!important;}
+ .arch-bottom:after{margin-top:8px;}
+}
 </style>
 </head>
 <body>
@@ -377,7 +391,7 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
           <svg class="arch-flourish" viewBox="0 0 130 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 37C24 35 28 18 44 19C54 19 56 27 65 29C74 27 77 19 86 19C101 18 107 35 127 37" stroke="#9B7947" stroke-width="1.2"/><path d="M65 27C63 12 68 10 65 2C62 10 67 12 65 27ZM44 20C39 8 31 9 29 3C34 20 35 17 44 20ZM86 20C91 8 99 9 101 3C96 20 95 17 86 20Z" fill="#A78652" fill-opacity=".58"/><path d="M11 37L26 31M119 37L104 31" stroke="#9B7947" stroke-width=".8"/></svg>
           <div class="arch-top">THE WEDDING CELEBRATION</div>
           <span class="arch-decoration">✧</span>
-          <img class="hero-couple" src="couple-maroon-lehenga-sharp-hair-v2.png" alt="Bride wearing a maroon lehenga with a long gold-embroidered train beside the groom in a black embroidered sherwani and plain black shawl, seen from behind">
+          <img class="hero-couple" src="couple-maroon-straighter-hair-v3.png" alt="Bride wearing a maroon lehenga with a long gold-embroidered train beside the groom in a black embroidered sherwani and plain black shawl, seen from behind">
           <div class="arch-bottom">Shoeb &amp; Fabbiha · 31 · 03 · 2027</div>
         </div>
         <div class="vertical-rule"></div>
@@ -506,6 +520,6 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 </script>
 
 
-<script src="curtain-motion.js?v=4" defer></script>
+<script src="curtain-motion-page2-v5.js" defer></script>
 </body>
 </html>
