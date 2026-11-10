@@ -254,8 +254,8 @@ html.video-complete .play-gate{display:none}
 
 
 
-/* Emerald wedding drapes with gold accents.
-   SVG texture is inline: no network, image download, or new assets required. */
+/* Page 1: rich emerald-green folded silk with fine gold trim and tied-back bows.
+   Closes over the Bismillah before opening Page 2's separate ivory curtains. */
 .wedding-curtain {
  position:fixed; inset:0; top:0; left:0; right:0; bottom:0;
  height:100vh; height:100dvh; z-index:99999; overflow:hidden;
@@ -293,7 +293,7 @@ html.curtain-exit .wedding-curtain__panel--right {
 @keyframes ivoryCloseLeft {from{transform:translate3d(-103%,0,0)}to{transform:translate3d(0,0,0)}}
 @-webkit-keyframes ivoryCloseRight {from{-webkit-transform:translate3d(103%,0,0) scaleX(-1)}to{-webkit-transform:translate3d(0,0,0) scaleX(-1)}}
 @keyframes ivoryCloseRight {from{transform:translate3d(103%,0,0) scaleX(-1)}to{transform:translate3d(0,0,0) scaleX(-1)}}
-/* Second page: slower, gently eased emerald curtain reveal. */
+/* Inactive on Page 1; Page 2 uses its own ivory SVG curtains. */
 html.curtain-arrive .wedding-curtain {visibility:visible;pointer-events:auto}
 html.curtain-arrive .wedding-curtain__panel--left {
  -webkit-animation:ivoryOpenLeft 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
