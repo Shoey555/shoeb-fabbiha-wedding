@@ -332,6 +332,23 @@ html.curtain-arrive .wedding-curtain__panel--right {
 </style>
 <script>if(document.documentElement.classList)document.documentElement.classList.add('pending');</script>
 <noscript><style>.story{opacity:1!important;transform:none!important;filter:none!important}.cue{display:none!important}</style></noscript>
+
+<style id="realistic-curtain-override">
+/* Realistic fabric-based curtain styling for Page 1 close transition */
+.wedding-curtain__panel{
+  background-image:url('emerald-curtain-realistic.jpg');
+  background-repeat:no-repeat;
+  background-size:200% 100%;
+  box-shadow:0 0 24px rgba(0,0,0,.18);
+}
+.wedding-curtain__panel--left{background-position:left center;}
+.wedding-curtain__panel--right{background-position:right center;}
+.wedding-curtain__panel svg{display:none!important;}
+.wedding-curtain__panel::after{display:none!important;}
+.wedding-curtain::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.10) 0%, rgba(255,255,255,.04) 16%, rgba(255,255,255,0) 32%, rgba(0,0,0,0) 68%, rgba(255,255,255,.04) 84%, rgba(0,0,0,.10) 100%);}
+</style>
+
 </head>
 <body>
 <div class="scene" aria-hidden="true">

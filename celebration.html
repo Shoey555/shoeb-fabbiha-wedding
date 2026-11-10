@@ -344,6 +344,23 @@ html.curtain-arrive .wedding-curtain__panel--right {
 @media(prefers-reduced-motion:reduce){.wedding-curtain{display:none!important}}
 
 </style>
+
+<style id="realistic-curtain-override">
+/* Realistic fabric-based curtain styling for Page 2 opening transition */
+.wedding-curtain__panel{
+  background-image:url('ivory-curtain-realistic.jpg');
+  background-repeat:no-repeat;
+  background-size:200% 100%;
+  box-shadow:0 0 24px rgba(0,0,0,.12);
+}
+.wedding-curtain__panel--left{background-position:left center;}
+.wedding-curtain__panel--right{background-position:right center;}
+.wedding-curtain__panel svg{display:none!important;}
+.wedding-curtain__panel::after{display:none!important;}
+.wedding-curtain::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.08) 0%, rgba(255,255,255,.06) 16%, rgba(255,255,255,0) 32%, rgba(0,0,0,0) 68%, rgba(255,255,255,.05) 84%, rgba(0,0,0,.08) 100%);}
+</style>
+
 </head>
 <body>
 
