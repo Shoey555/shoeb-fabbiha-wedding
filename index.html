@@ -14,7 +14,7 @@ body{margin:0;background:var(--ink);color:var(--ivory);font-family:Georgia,'Time
 a{-webkit-tap-highlight-color:transparent}
 /* ONE CONTINUOUS FULL-SCREEN SCENE, never a rectangular header or embedded player. */
 .scene{position:fixed;inset:0;z-index:0;width:100%;height:100vh;min-height:100vh;height:100svh;min-height:100svh;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 90% 80% at 50% 27%,#223025 0%,#102018 45%,var(--ink) 100%)}
-.scene video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;opacity:1;transition:opacity 1700ms ease;will-change:opacity}
+.scene video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;opacity:1;transition:opacity 1700ms ease;-webkit-transform:translateZ(0);transform:translateZ(0)}
 /* Preserve the real final Bismillah frame behind the film, not duplicate typed calligraphy. */
 .afterglow{position:absolute;inset:0;z-index:0;display:block;opacity:0;transition:opacity 1700ms ease;will-change:opacity}
 .afterglow img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;filter:brightness(.42) saturate(.72) contrast(.9)}
@@ -61,6 +61,18 @@ html.video-complete .particles{opacity:.94}
   .particle{animation:none!important}
 }
 html.video-complete .scene video{opacity:0}
+html.needs-play .scene video,html.play-failed .scene video{opacity:0}
+html.needs-play .afterglow,html.play-failed .afterglow{opacity:.85}
+html.needs-play .afterglow img,html.play-failed .afterglow img{filter:brightness(.88) saturate(.92) contrast(1)}
+/* If a legacy browser cannot play the MP4, use the film's own still frame as
+   a timed cinematic fallback rather than a blank player or frozen page. */
+html.fallback-playing .scene video{opacity:0}
+html.fallback-playing:not(.video-complete) .afterglow{opacity:.86}
+html.fallback-playing:not(.video-complete) .afterglow img{filter:brightness(.9) saturate(.95) contrast(1);animation:stillDrift 6s ease-out both}
+html.video-complete.fallback-playing .afterglow{opacity:.21}
+html.video-complete.fallback-playing .afterglow img{filter:brightness(.42) saturate(.72) contrast(.9);animation:none}
+@keyframes stillDrift{0%{transform:scale(1.035);opacity:.65}35%{transform:scale(1.017);opacity:1}100%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){html.fallback-playing .afterglow img{animation:none!important}}
 /* The cinematic still remains faintly in the fixed scene behind the text.
    IMPORTANT: The document itself is the only scrolling surface. */
 .bismillah-veil{display:none!important}
@@ -80,10 +92,10 @@ html.pending .story{opacity:0;transform:translateY(35px);filter:blur(3px)}
 .bismillah-translation,.eyebrow,.date,.arrival,.venue,.count-title,.unit-label,.scripture-ref,.next-note,.footnote{font-family:Arial,Helvetica,sans-serif}
 .eyebrow{font-size:10px;line-height:1.7;letter-spacing:.27em;color:var(--gold);text-transform:uppercase;margin:0 0 15px;text-shadow:0 2px 16px #080e0b}
 .eyebrow::before{content:"";display:block;height:1px;width:26px;margin:0 auto 15px;background:rgba(221,195,141,.75)}
-.names{margin:0;font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(36px,9.4vw,62px);line-height:1.08;letter-spacing:.045em;text-shadow:0 3px 26px #080e0b;color:#f5e6c5}
+.names{margin:0;font-weight:400;font-size:clamp(32px,9.1vw,53px);line-height:1.18;letter-spacing:.035em;text-shadow:0 3px 26px #080e0b}
 .family{margin:12px auto 0;max-width:405px;color:#d8c6a0;font-size:clamp(13px,3.55vw,16px);line-height:1.7;text-shadow:0 2px 18px #080e0b}
 .family strong{font-weight:400;color:var(--ivory)}
-.ampersand{display:block;color:#d7b87b;margin:15px 0;font-family:"Great Vibes","Apple Chancery","URW Chancery L",cursive;font-size:38px;font-style:normal;line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+.ampersand{display:block;color:#cfac72;margin:15px 0;font-size:29px;font-style:italic;line-height:1}
 .ornament{display:flex;gap:10px;align-items:center;justify-content:center;width:150px;margin:37px auto 24px;color:#c5a86f}
 .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,#a78c54)}
 .ornament::after{transform:rotate(180deg)}
@@ -145,7 +157,7 @@ html.revealing .cue,html.video-complete .cue{opacity:0;pointer-events:none}
  .scene video{object-position:center center}
  .content{padding-left:45px;padding-right:45px}
  .eyebrow{font-size:11px}
- .names{font-size:62px}
+ .names{font-size:53px}
  .family{font-size:15px}
  .frame{inset:22px 22px auto;height:calc(100vh - 44px);height:calc(100svh - 44px)}
 }
@@ -170,6 +182,8 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
 
 
 /* Three-map directions selector, styled to match the invitation. */
+.map-choice-dialog:not([open]){display:none}
+.map-choice-dialog[open]{display:block;z-index:25}
 .directions{cursor:pointer;font-family:Arial,Helvetica,sans-serif}
 .directions:focus-visible,.map-choice-dialog :focus-visible{outline:2px solid #ead7a5;outline-offset:4px}
 .map-choice-dialog{
@@ -204,11 +218,30 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
 .map-choice-note{color:#ab9b7a;font:normal 11px/1.65 Arial,Helvetica,sans-serif;margin:17px 0 0}
 @media(prefers-reduced-motion:reduce){.map-choice-option{transition:none}}
 
+
+/* iOS Low Power Mode and older browsers can refuse autoplay.
+   A real touch target is outside the video (the background film is pointer-events:none). */
+.play-gate{position:fixed;z-index:12;left:50%;bottom:max(58px,calc(env(safe-area-inset-bottom) + 42px));
+ transform:translateX(-50%);width:min(330px,calc(100% - 54px));
+ text-align:center;opacity:0;visibility:hidden;pointer-events:none;
+ transition:opacity .35s ease,visibility .35s ease}
+html.needs-play .play-gate,html.play-failed .play-gate{opacity:1;visibility:visible;pointer-events:auto}
+.play-gate button{width:100%;min-height:54px;padding:14px 19px;border:1px solid #d8bd83;
+ background:rgba(10,22,14,.92);color:#f3e5c6;font:600 12px/1.4 Arial,Helvetica,sans-serif;
+ letter-spacing:.15em;cursor:pointer;-webkit-appearance:none;appearance:none}
+.play-gate button:active{background:rgba(52,58,35,.98)}
+.play-gate button:focus{outline:2px solid #f4e4ba;outline-offset:3px}
+.play-gate p{font:11px/1.7 Arial,Helvetica,sans-serif;color:#d9c69e;margin:8px 0 0;
+ text-shadow:0 1px 12px #040705}
+.play-gate .continue-fallback{display:none;margin-top:9px;background:rgba(14,23,16,.78);font-size:11px}
+html.play-failed .play-gate .continue-fallback{display:block}
+html.play-failed .play-gate .start-film{display:none}
+html.video-complete .play-gate{display:none}
+@media(prefers-reduced-motion:reduce){.play-gate{transition:none}}
+
 </style>
-<script>document.documentElement.classList.add('pending');</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<script>if(document.documentElement.classList)document.documentElement.classList.add('pending');</script>
+<noscript><style>.story{opacity:1!important;transform:none!important;filter:none!important}.cue{display:none!important}</style></noscript>
 </head>
 <body>
 <div class="scene" aria-hidden="true">
@@ -216,10 +249,7 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile.jpg">
   <img src="bismillah-frame-desktop.jpg" alt="" decoding="async">
  </picture>
- <video id="film" muted autoplay playsinline webkit-playsinline preload="metadata" disablepictureinpicture poster="poster-mobile.jpg">
-    <source media="(max-width:699px)" src="intro-mobile.mp4" type="video/mp4">
-    <source src="intro.mp4" type="video/mp4">
-  </video>
+ <video id="film" src="intro-mobile-compatible.mp4" muted autoplay playsinline webkit-playsinline preload="metadata" poster="poster-mobile.jpg" aria-label="Bismillah cinematic introduction"></video>
   <div class="gold-haze"></div>
 </div>
 <div class="particles" aria-hidden="true">
@@ -279,6 +309,12 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
   <img src="bismillah-frame-desktop.jpg" alt="" decoding="async">
 </picture>
 <div class="frame" aria-hidden="true"></div>
+<div id="play-gate" class="play-gate" aria-live="polite">
+ <button type="button" class="start-film" id="start-film">▶ PLAY WEDDING INTRO</button>
+ <button type="button" class="continue-fallback" id="continue-fallback">VIEW CINEMATIC FALLBACK</button>
+ <p id="play-note">Tap to watch the opening cinematic</p>
+</div>
+
 <!-- Decorative ballroom reveal: appears only after the cinematic, with no effect on scrolling. -->
 <div class="ballroom-frame" aria-hidden="true">
   <div class="outline">
@@ -347,170 +383,252 @@ html.video-complete .ballroom-frame{opacity:1;transform:scale(1)}
 </dialog>
 
 <script>
-(()=>{
-  // Date is British Summer Time (BST, UTC+1) in March 2027.
-  const weddingAt=Date.parse('2027-03-31T17:00:00+01:00');
-  const ids=['days','hours','minutes','seconds'];
-  const nodes=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
-  const count=document.getElementById('countdown');
-  const complete=document.getElementById('countdown-complete');
-  const pad=n=>String(n).padStart(2,'0');
+(function(){
+  /* ES5-compatible script: no arrow functions, destructuring or Object.fromEntries,
+     so older Safari / Android browsers can run the countdown and cinematic logic. */
+  var root=document.documentElement;
+  var film=document.getElementById('film');
+  var story=document.getElementById('invitation-start');
+  var cue=document.getElementById('scroll-cue');
+  var invitation=document.querySelector('main.invitation');
+  var gatePlay=document.getElementById('start-film');
+  var gateContinue=document.getElementById('continue-fallback');
+  var gateNote=document.getElementById('play-note');
+  var raf=window.requestAnimationFrame ? function(fn){return window.requestAnimationFrame(fn);} : function(fn){return window.setTimeout(function(){fn(Date.now());},16);};
+  var now=function(){return window.performance && performance.now?performance.now():Date.now();};
+  var hasClass=function(c){return root.classList.contains(c);};
+  var mobile=window.innerWidth ? window.innerWidth < 700 : document.documentElement.clientWidth < 700;
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var startAt=2.85, endAt=5.95, followTime=2.4;
+  var totalRise=endAt-startAt+followTime;
+  var progress=0, done=false, finalClock=null, playing=false, retrying=false;
+  var fallbackActive=false, mediaStartedAt=0;
+
+  /* Countdown: 5pm British Summer Time, 31 March 2027. */
+  var eventAt=new Date('2027-03-31T16:00:00Z').getTime();
+  var ids=['days','hours','minutes','seconds'];
+  var count=document.getElementById('countdown');
+  var complete=document.getElementById('countdown-complete');
+  var timer;
+  function pad(number){return number<10?'0'+number:String(number);}
   function tick(){
-    const seconds=Math.max(0,Math.floor((weddingAt-Date.now())/1000));
-    if(seconds<=0){count.hidden=true;complete.hidden=false;return false;}
-    const values={days:Math.floor(seconds/86400),hours:Math.floor(seconds/3600)%24,minutes:Math.floor(seconds/60)%60,seconds:seconds%60};
-    for(const id of ids)nodes[id].textContent=pad(values[id]);
+    var remaining=Math.max(0,Math.floor((eventAt-Date.now())/1000));
+    if(remaining===0){count.hidden=true;complete.hidden=false;return false;}
+    var values=[Math.floor(remaining/86400),Math.floor(remaining/3600)%24,Math.floor(remaining/60)%60,remaining%60];
+    for(var i=0;i<ids.length;i++)document.getElementById(ids[i]).textContent=pad(values[i]);
     return true;
   }
-  if(tick()){const timer=setInterval(()=>{if(!tick())clearInterval(timer)},1000);}
+  if(tick()){timer=window.setInterval(function(){if(!tick())window.clearInterval(timer);},1000);}
 
-  // Optional one-time reveal, independent of the cinematic video and page scroll.
-  // The formal text is visible by default even when JS or observers are unavailable.
-  const formal=document.getElementById('formal-invitation');
-  if(formal && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const formalObserver=new IntersectionObserver((entries,observer)=>{
-      for(const entry of entries){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target);
-        }
+  /* Formal reveal is cosmetic; invite text stays visible without JS. */
+  var formal=document.getElementById('formal-invitation');
+  if(formal && window.IntersectionObserver && !reduce){
+    var obs=new IntersectionObserver(function(entries){
+      for(var i=0;i<entries.length;i++)if(entries[i].isIntersecting){
+        entries[i].target.classList.add('is-revealed');obs.unobserve(entries[i].target);
       }
     },{rootMargin:'0px 0px -8% 0px',threshold:.2});
-    formalObserver.observe(formal);
+    obs.observe(formal);
   }
 
-  const root=document.documentElement, film=document.getElementById('film');
-  // One continuous, slow rise. It begins halfway through the video and
-  // continues for 2.4 seconds after the cinematic has faded to its still.
-  const story=document.getElementById('invitation-start'),cue=document.getElementById('scroll-cue');
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const START_AT=2.85; // halfway through the ~6-second Bismillah film
-  const END_AT=5.95;
-  const FOLLOW_THROUGH=2.4; // extra gentle scroll after the film ends
-  const TOTAL_RISE=END_AT-START_AT+FOLLOW_THROUGH;
-  let cancelled=false,completeIntro=false,playAttempted=false,lastProgress=0;
-  const invitation=document.querySelector('main.invitation');
-  const lock=()=>{root.classList.add('cinematic-active');if(invitation)invitation.inert=true;};
-  const unlock=()=>{root.classList.remove('cinematic-active');if(invitation)invitation.inert=false;};
-  // Touch/wheel/keyboard scroll should not fast-forward the film. Manual
-  // scrolling comes back automatically once the gentle follow-through ends.
-  function blockSkipping(e){
-    if(!root.classList.contains('cinematic-active'))return;
-    if(e.cancelable)e.preventDefault();
+  function lock(){root.classList.add('cinematic-active');if(invitation && 'inert' in invitation)invitation.inert=true;}
+  function unlock(){root.classList.remove('cinematic-active');if(invitation && 'inert' in invitation)invitation.inert=false;}
+  function hideGate(){root.classList.remove('needs-play');root.classList.remove('play-failed');}
+  function reveal(){root.classList.remove('pending');root.classList.add('revealing');}
+  function clamp(v){return Math.max(0,Math.min(1,v));}
+  function ease(v){return (1-Math.cos(Math.PI*v))/2;}
+  function target(){
+    var top=0,node=story;
+    while(node){top+=node.offsetTop;node=node.offsetParent;}
+    return Math.max(0,top-(mobile?24:40));
   }
-  const scrollKeys=new Set(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' ']);
-  window.addEventListener('wheel',blockSkipping,{passive:false,capture:true});
-  window.addEventListener('touchmove',blockSkipping,{passive:false,capture:true});
-  window.addEventListener('keydown',e=>{if(scrollKeys.has(e.key))blockSkipping(e);},{capture:true});
-  document.addEventListener('click',e=>{
-    if(!root.classList.contains('cinematic-active'))return;
-    const link=e.target.closest('a');
-    if(link){e.preventDefault();e.stopPropagation();}
-  },true);
-  function failOpen(){
-    if(completeIntro)return;
-    cancelled=true;
-    unlock();
-    startReveal();
-    root.classList.add('video-complete');
-  }
-  let filmEndClock=null;
-  const clamp=(v,min=0,max=1)=>Math.min(max,Math.max(min,v));
-  const ease=p=>(1-Math.cos(Math.PI*p))/2; // one curve, no abrupt second animation
-  function startReveal(){root.classList.remove('pending');root.classList.add('revealing');}
-  function scrollTarget(){
-    // Layout position rather than getBoundingClientRect(): unaffected by
-    // the heading's fading/translation and independent of current scroll.
-    let top=0;
-    for(let node=story;node;node=node.offsetParent)top+=node.offsetTop;
-    const margin=window.innerWidth<700?24:40;
-    return Math.max(0,top-margin);
-  }
-  function advanceRise(secondsElapsed){
-    const eased=ease(clamp(secondsElapsed/TOTAL_RISE));
-    if(eased<=lastProgress)return;
-    lastProgress=eased;
-    window.scrollTo(0,Math.round(scrollTarget()*eased));
+  function advance(elapsed){
+    var p=ease(clamp(elapsed/totalRise));
+    if(p<=progress)return;
+    progress=p;
+    var desired=Math.round(target()*p);
+    window.scrollTo(0,desired);
+    // Older iOS WebKit can ignore programmatic window scrolling during media.
+    var current=window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if(Math.abs(current-desired)>3){
+      var scroller=document.scrollingElement || document.documentElement || document.body;
+      scroller.scrollTop=desired;
+    }
   }
   function finish(){
-    if(completeIntro||filmEndClock!==null||cancelled)return;
-    startReveal();
-    // The original film becomes its softly faded still while the SAME
-    // upward movement continues. No separate scrollTo(... smooth) jump.
-    root.classList.add('video-complete');
-    filmEndClock=performance.now();
-    requestAnimationFrame(followThrough);
+    if(done || finalClock!==null)return;
+    reveal();hideGate();root.classList.add('video-complete');
+    finalClock=now();raf(followThrough);
   }
-  function followThrough(now){
-    if(cancelled||completeIntro)return;
-    const postSeconds=Math.min(FOLLOW_THROUGH,(now-filmEndClock)/1000);
-    advanceRise(END_AT-START_AT+postSeconds);
-    if(postSeconds>=FOLLOW_THROUGH){
-      completeIntro=true;
-      advanceRise(TOTAL_RISE);
-      unlock();
-      return; // normal manual page scrolling from this point on
+  function followThrough(t){
+    if(done)return;
+    var seconds=Math.min(followTime,(t-finalClock)/1000);
+    advance(endAt-startAt+seconds);
+    if(seconds>=followTime){done=true;advance(totalRise);unlock();return;}
+    raf(followThrough);
+  }
+  function openWithoutFilm(){
+    if(done)return;
+    hideGate();done=true;reveal();root.classList.add('video-complete');unlock();
+    try{film.pause();}catch(ignore){}
+  }
+  function stillCinematic(){
+    if(done || fallbackActive || finalClock!==null)return;
+    // A progressive visual fallback uses frames taken from this SAME film.
+    // It does not require autoplay permission or a working video decoder.
+    fallbackActive=true;
+    playing=false;
+    try{film.pause();}catch(ignore){}
+    hideGate();root.classList.add('fallback-playing');
+    var began=now()-Math.max(0,film.currentTime||0)*1000;
+    function step(t){
+      if(done || finalClock!==null)return;
+      var elapsed=(t-began)/1000;
+      if(elapsed>=startAt){reveal();advance(Math.min(elapsed,endAt)-startAt);}
+      if(elapsed>=endAt){finish();return;}
+      raf(step);
     }
-    requestAnimationFrame(followThrough);
+    raf(step);
   }
-  function frame(){
-    if(cancelled||reduce||completeIntro||filmEndClock!==null)return;
-    const t=film.currentTime;
-    if(t>=START_AT){
-      startReveal();
-      advanceRise(Math.min(t,END_AT)-START_AT);
+  function showPlay(reason){
+    if(done || hasClass('video-complete') || playing)return;
+    root.classList.add('needs-play');
+    if(gateNote)gateNote.textContent=reason||'Tap to watch the opening cinematic';
+  }
+  function showFailure(){
+    if(done)return;
+    root.classList.remove('needs-play');root.classList.add('play-failed');
+    if(gateNote)gateNote.textContent='Video unavailable on this device. The invitation is still ready.';
+  }
+  function animate(){
+    if(done || finalClock!==null || fallbackActive)return;
+    var t=film.currentTime || 0;
+    // iOS Safari may report a playing event without regular frame updates.
+    // A wall clock keeps the invitation moving if the media timeline stalls.
+    if(playing && mediaStartedAt>0){
+      var wall=(now()-mediaStartedAt)/1000;
+      if(wall>t+.22)t=wall-.22;
     }
-    if(film.ended||t>=END_AT){finish();return;}
-    requestAnimationFrame(frame);
+    if(t>=startAt){reveal();advance(Math.min(t,endAt)-startAt);}
+    if(film.ended || t>=endAt){finish();return;}
+    raf(animate);
   }
-  // The scroll cue cannot skip the film; the lock is removed at the end.
-  function startPlayback(){
-    if(playAttempted)return;
-    playAttempted=true;
-    const result=film.play();
-    if(result&&result.catch)result.catch(failOpen);
+  function play(userInitiated){
+    if(done)return;
+    retrying=!!userInitiated;
+    hideGate();
+    // Must run directly inside the click handler when autoplay is blocked.
+    try{
+      film.muted=true;
+      film.setAttribute('muted','');
+      film.setAttribute('playsinline','');
+      film.setAttribute('webkit-playsinline','');
+      var result=film.play();
+      if(result && typeof result.then==='function'){
+        result.then(function(){
+          playing=true;
+          if(!mediaStartedAt)mediaStartedAt=now()-(film.currentTime||0)*1000;
+          hideGate();
+        },function(){
+          if(userInitiated)stillCinematic();else showPlay('Tap to watch the opening cinematic');
+        });
+      }
+    }catch(err){if(userInitiated)stillCinematic();else showPlay('Tap to watch the opening cinematic');}
+    window.setTimeout(function(){
+      if(!done && !fallbackActive && film.currentTime<.12){
+        if(userInitiated)stillCinematic();
+        else if(film.paused)showPlay('Tap to watch the opening cinematic');
+      }
+    },1600);
   }
+  function blockSkipping(e){
+    if(!hasClass('cinematic-active'))return;
+    if(e.cancelable)e.preventDefault();
+  }
+  // Film cannot be skipped by swiping; fallback Continue only when playback fails.
+  window.addEventListener('wheel',blockSkipping,{passive:false,capture:true});
+  window.addEventListener('touchmove',blockSkipping,{passive:false,capture:true});
+  window.addEventListener('keydown',function(e){
+    var key=e.key||e.keyCode;
+    if(key==='ArrowDown'||key==='ArrowUp'||key==='PageDown'||key==='PageUp'||key==='Home'||key==='End'||key===' '||key===32||key===34||key===33||key===35||key===36||key===38||key===40)blockSkipping(e);
+  },true);
+  document.addEventListener('click',function(e){
+    if(!hasClass('cinematic-active'))return;
+    var el=e.target;
+    while(el && el!==document){
+      if(el.tagName==='A'){e.preventDefault();e.stopPropagation();return;}
+      el=el.parentNode;
+    }
+  },true);
+
+  gatePlay.addEventListener('click',function(){play(true);});
+  gateContinue.addEventListener('click',stillCinematic);
+  film.addEventListener('playing',function(){
+    playing=true;
+    mediaStartedAt=now()-(film.currentTime||0)*1000;
+    hideGate();
+  });
   film.addEventListener('ended',finish);
-  film.addEventListener('error',failOpen);
-  // If video has no playable source, still reveal the complete invitation.
-  film.addEventListener('stalled',()=>{if(film.currentTime<.1&&film.paused){failOpen();}});
+  film.addEventListener('error',function(){if(!done)stillCinematic();});
+  film.addEventListener('stalled',function(){
+    if(!done && !fallbackActive && !playing && film.currentTime<.1)showPlay('Tap to play the opening cinematic');
+  });
+  film.addEventListener('pause',function(){
+    if(!done && !fallbackActive && !film.ended && finalClock===null){
+      playing=false;
+      showPlay('Tap to resume the opening cinematic');
+    }
+  });
+
   if(reduce){
-    film.pause();root.classList.remove('pending');root.classList.add('video-complete');unlock();
+    openWithoutFilm();
   }else{
-    if(matchMedia('(min-width:700px)').matches)film.poster='poster.jpg';
+    /* Select an actual src (rather than <source media>) for older Safari. */
+    var asset=mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4';
+    if(!mobile)film.poster='poster.jpg';
+    if(film.getAttribute('src')!==asset){film.setAttribute('src',asset);}
+    film.muted=true;
+    try{film.load();}catch(ignore){}
     lock();
-    startPlayback();
-    requestAnimationFrame(frame);
-    // Battery-saving iPhone modes may block autoplay: never hide the invitation indefinitely.
-    setTimeout(()=>{
-      if(!completeIntro&&!cancelled&&film.paused&&film.currentTime<.1)failOpen();
-    },2500);
-    // Do not trap anyone on a weak connection or a suspended video.
-    setTimeout(()=>{if(!completeIntro&&!cancelled)failOpen();},12000);
+    raf(animate);
+    play(false);
+    // A paused or slow first frame gets a visible Play button, not a blank screen.
+    window.setTimeout(function(){
+      if(!done && !fallbackActive && !playing && film.currentTime<.15)
+        showPlay('Tap to watch the opening cinematic');
+    },2300);
+    // If autoplay is forbidden, leave TAP TO PLAY available (do not replace it
+    // with a dead end after a few seconds). The button starts playback directly.
+    // If a decoder stalls after playback begins, animate the genuine still.
+    window.setTimeout(function(){
+      if(!done && !fallbackActive && finalClock===null && playing && film.currentTime<.3)
+        stillCinematic();
+    },6500);
+    window.setTimeout(function(){
+      if(!done && !fallbackActive && finalClock===null && playing){
+        if(film.currentTime>=endAt-1)finish();else stillCinematic();
+      }
+    },17000);
   }
-  window.addEventListener('pageshow',e=>{if(e.persisted)failOpen();});
+  window.addEventListener('pageshow',function(e){if(e.persisted && !done)openWithoutFilm();});
 })();
 </script>
 
 <script>
-(() => {
-  const chooser = document.getElementById('map-choice-dialog');
-  const trigger = document.getElementById('open-map-choices');
-  const dismiss = document.getElementById('close-map-choices');
-  if (!chooser || !trigger || !dismiss) return;
-  const close = () => {
-    if (typeof chooser.close === 'function') chooser.close();
-    else chooser.removeAttribute('open');
-  };
-  trigger.addEventListener('click', () => {
-    if (typeof chooser.showModal === 'function') chooser.showModal();
-    else chooser.setAttribute('open', '');
-  });
-  dismiss.addEventListener('click', close);
-  chooser.addEventListener('click', e => {
-    if (e.target === chooser) close();
-  });
-  chooser.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+(function(){
+ var box=document.getElementById('map-choice-dialog');
+ var trigger=document.getElementById('open-map-choices');
+ var closeButton=document.getElementById('close-map-choices');
+ if(!box||!trigger||!closeButton)return;
+ function close(){try{if(box.close)box.close();else box.removeAttribute('open');}catch(e){box.removeAttribute('open');}}
+ trigger.addEventListener('click',function(){
+   try{if(box.showModal)box.showModal();else box.setAttribute('open','');}
+   catch(e){box.setAttribute('open','');}
+ });
+ closeButton.addEventListener('click',close);
+ box.addEventListener('click',function(e){if(e.target===box)close();});
+ var links=box.getElementsByTagName('a');
+ for(var i=0;i<links.length;i++)links[i].addEventListener('click',close);
 })();
 </script>
 
