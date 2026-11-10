@@ -411,6 +411,74 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 .map-choice-option span:last-child{font-size:17px;color:#9b743c}
 .map-choice-note{font:400 11px/1.7 Arial,Helvetica,sans-serif;color:#947f85;margin:18px 0 0}
 </style>
+
+<style id="wedding-mobile-venue-rsvp-20261110">
+/* Keep the fixed glass navigation clear of the welcoming heading on phones. */
+.hero{padding-top:112px}
+main section[id]{scroll-margin-top:95px!important}
+@media(max-width:660px){
+  .hero{padding-top:calc(120px + env(safe-area-inset-top))!important}
+  .hero-copy .kicker{position:relative;z-index:1}
+  .hero-date{flex-wrap:wrap;justify-content:center}
+}
+/* A second discreet call to RSVP where guests first enter page two. */
+.hero-quick-links{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:18px}
+.hero-rsvp-link{display:inline-flex;align-items:center;gap:7px;font:700 11px/1.55 Arial,Helvetica,sans-serif;letter-spacing:.12em;text-decoration:none;color:#783e4f;border-bottom:1px solid #b48a57;padding:11px 0 7px;transition:color .2s ease,border-color .2s ease}
+.hero-rsvp-link:hover{color:#a17a44;border-color:#a17a44}
+@media(max-width:660px){.hero-quick-links{flex-direction:column;align-items:center;gap:8px}.hero-rsvp-link{font-size:10px;justify-content:center}}
+/* Animated venue picture: gentle camera drift and a slow light pass, not a flat static card. */
+.venue-grid{align-items:center}
+.venue-panel.venue-photo{
+  position:relative;isolation:isolate;display:block;margin:0;padding:0;
+  height:clamp(370px,39vw,485px);min-height:370px;
+  overflow:hidden;border:1px solid rgba(179,134,72,.7);
+  background:#233c5c;box-shadow:0 18px 42px rgba(92,47,61,.20);
+}
+.venue-photo:before{content:"";position:absolute!important;inset:11px!important;border:1px solid rgba(245,215,152,.66)!important;z-index:3!important;pointer-events:none}
+.venue-photo:after{content:""!important;display:block!important;position:absolute!important;z-index:2!important;
+  inset:0!important;width:auto!important;height:auto!important;border:0!important;border-radius:0!important;left:0!important;top:0!important;transform:none!important;
+  background:linear-gradient(112deg,transparent 28%,rgba(255,232,168,.10) 47%,transparent 65%);
+  pointer-events:none;animation:venueGoldGlint 12s ease-in-out infinite alternate;
+}
+.venue-photo-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 54%;max-width:none;
+  transform:scale(1.045);animation:venueSlowPan 17s ease-in-out infinite alternate}
+.venue-photo-caption{position:absolute;z-index:4;bottom:0;left:0;right:0;padding:64px 24px 23px;
+  background:linear-gradient(180deg,transparent,rgba(29,27,39,.7));color:#fff4df;text-align:center;text-shadow:0 2px 15px rgba(0,0,0,.46)}
+.venue-photo-caption span,.venue-photo-caption small{display:block;font:600 9px/1.4 Arial,Helvetica,sans-serif;letter-spacing:.23em;color:#f0d8a1}
+.venue-photo-caption strong{display:block;font:500 clamp(30px,3.2vw,39px)/1.15 'Cormorant Garamond',Georgia,serif;color:#fff9ee;margin:5px 0}
+@keyframes venueSlowPan{0%{transform:scale(1.04) translateY(8px)}100%{transform:scale(1.09) translateY(-8px)}}
+@keyframes venueGoldGlint{0%{opacity:.2}100%{opacity:.8}}
+@media(max-width:660px){
+ .venue-panel.venue-photo{height:440px;min-height:0;order:1}
+ .venue-photo-image{object-position:center 49%}
+ .venue-photo-caption{padding:53px 14px 22px}
+ .venue-photo-caption strong{font-size:34px}
+}
+/* RSVP receives the strongest maroon and champagne-gold treatment on page two. */
+#rsvp.rsvp-feature{background:linear-gradient(135deg,#5a182e 0%,#762b45 51%,#4f1b30 100%)!important;color:#fff6e8!important;border-top:3px solid #c5a56f;border-bottom:3px solid #c5a56f;padding:95px 20px 90px}
+#rsvp.rsvp-feature:before{border-color:rgba(232,202,141,.65)}
+#rsvp.rsvp-feature:after{border-color:rgba(232,202,141,.2)}
+#rsvp.rsvp-feature .rsvp-glow{background:radial-gradient(ellipse,rgba(246,204,125,.22),transparent 67%)}
+#rsvp.rsvp-feature .small-label{color:#e6c992!important;letter-spacing:.27em}
+#rsvp.rsvp-feature h2{color:#fff6e9!important;text-shadow:0 3px 18px rgba(0,0,0,.16)}
+#rsvp.rsvp-feature .rsvp-intro{color:#f3e3dc!important;max-width:540px;margin-bottom:26px}
+#rsvp.rsvp-feature .rsvp-primary-button{background:linear-gradient(180deg,#f6e1ad,#d5b278)!important;color:#58223a!important;border:1px solid #f8dfa8!important;box-shadow:0 8px 24px rgba(13,6,10,.22),inset 0 1px 0 rgba(255,255,255,.68);
+ border-radius:999px;min-width:min(100%,285px);font:700 12px/1.5 Arial,Helvetica,sans-serif;letter-spacing:.11em;padding:17px 24px}
+#rsvp.rsvp-feature .rsvp-primary-button:hover{background:linear-gradient(180deg,#fff0c9,#dfbd88)!important;transform:translateY(-2px)}
+#rsvp.rsvp-feature .rsvp-warning{display:flex;align-items:center;text-align:left;gap:14px;max-width:550px;margin:29px auto 0;padding:17px 19px;
+ border:1px solid rgba(240,206,137,.65);border-radius:8px;background:rgba(41,11,24,.37);color:#fff2df!important;font:400 13px/1.7 Arial,Helvetica,sans-serif!important}
+#rsvp.rsvp-feature .rsvp-warning strong{display:block;color:#f9daa3;font-weight:700;margin-bottom:1px}
+#rsvp.rsvp-feature .warning-symbol{display:flex;align-items:center;justify-content:center;flex:none;width:31px;height:31px;border:2px solid #ead0a0;border-radius:50%;font:bold 18px/1 Arial,Helvetica,sans-serif;color:#f8e1b4}
+#rsvp.rsvp-feature .rsvp-footnote{color:#ecddcd!important;margin-top:16px!important;opacity:.9}
+.site-header .nav .nav-rsvp{background:#70283e!important;color:#fff3dd!important;border-color:#bb985d!important;box-shadow:inset 0 0 0 1px rgba(239,197,124,.55),0 2px 10px rgba(88,29,50,.16)}
+@media(max-width:660px){
+ #rsvp.rsvp-feature{padding:77px 22px 69px}
+ #rsvp.rsvp-feature h2{font-size:clamp(50px,12vw,67px)}
+ #rsvp.rsvp-feature .rsvp-warning{padding:14px 13px;font-size:12px!important;gap:10px}
+ #rsvp.rsvp-feature .rsvp-primary-button{font-size:11px;letter-spacing:.09em}
+}
+@media(prefers-reduced-motion:reduce){.venue-photo-image,.venue-photo:after{animation:none!important}.venue-photo-image{transform:none!important}}
+</style>
 </head>
 <body>
 <div class="drape-stage" aria-hidden="true" data-drape="ivory">
@@ -443,7 +511,10 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
         <h1>Let us<br><em>celebrate.</em></h1>
         <p class="intro">Together with our families, we look forward to sharing a special evening of love, joy and togetherness with you.</p>
         <div class="hero-date"><span>Wednesday, 31 March 2027</span><span class="separator" aria-hidden="true">✦</span><span>5:00 pm</span></div>
-        <a class="btn" href="#celebration">Explore the celebration <span class="arrow" aria-hidden="true">↗</span></a>
+        <div class="hero-quick-links">
+          <a class="btn" href="#celebration">Explore the celebration <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="hero-rsvp-link" href="#rsvp">RSVP · CONFIRM ATTENDANCE <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="art-halo"></div>
@@ -498,11 +569,10 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
     </section>
     <section class="venue-section" id="location">
       <div class="venue-grid wrap">
-        <div class="venue-panel reveal" aria-label="White Abbey Ballroom venue panel">
-          <span class="flourish" aria-hidden="true">✧</span>
-          <strong>White Abbey<br>Ballroom</strong>
-          <p class="panel-label">Bradford · West Yorkshire</p>
-        </div>
+        <figure class="venue-panel venue-photo reveal" aria-label="Illustration of White Abbey Ballroom at twilight">
+          <img class="venue-photo-image" src="white-abbey-twilight-flowers.jpg" loading="lazy" decoding="async" alt="Illustrated view of White Abbey Ballroom at twilight, with illuminated entrance steps and flowers on both sides">
+          <figcaption class="venue-photo-caption"><span>THE VENUE</span><strong>White Abbey Ballroom</strong><small>BRADFORD · WEST YORKSHIRE</small></figcaption>
+        </figure>
         <div class="venue-info reveal">
           <p class="small-label">Where we'll celebrate</p>
           <h2>Find your way<br>to us.</h2>
@@ -525,14 +595,15 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
         <article class="note reveal"><span class="note-symbol" aria-hidden="true">✧</span><div><h3>Prayer facilities</h3><p>Prayer facilities will be available at the venue for guests who wish to use them.</p></div></article>
       </div>
     </section>
-    <section class="rsvp-wrap" id="rsvp">
+    <section class="rsvp-wrap rsvp-feature" id="rsvp" aria-labelledby="rsvp-heading">
       <div class="rsvp-glow" aria-hidden="true"></div>
-      <div class="wrap reveal">
-        <p class="small-label">We would love to celebrate with you</p>
-        <h2>Kindly RSVP.</h2>
-        <p>Please let us know whether you'll be joining us. Your attendance response will be collected securely through our Joy wedding website.</p>
-        <a class="btn" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" rel="noopener">Confirm your attendance <span class="arrow" aria-hidden="true">↗</span></a>
-        <p class="rsvp-footnote">You'll continue to Joy to submit your response.</p>
+      <div class="wrap reveal rsvp-feature-inner">
+        <p class="small-label">Your response matters</p>
+        <h2 id="rsvp-heading">Kindly RSVP.</h2>
+        <p class="rsvp-intro">We would love to celebrate with you. Please confirm your attendance so we can arrange seating for our guests.</p>
+        <a class="btn rsvp-primary-button" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" rel="noopener noreferrer">COMPLETE YOUR RSVP <span class="arrow" aria-hidden="true">↗</span></a>
+        <p class="rsvp-warning"><span class="warning-symbol" aria-hidden="true">!</span><span><strong>Important — seating is limited.</strong> Guests who do not complete an RSVP may not be guaranteed a seat.</span></p>
+        <p class="rsvp-footnote">The RSVP form opens on our Joy wedding website.</p>
       </div>
     </section>
   </main>
