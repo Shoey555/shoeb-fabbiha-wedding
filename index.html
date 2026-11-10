@@ -45,14 +45,14 @@ html.video-complete .particles{opacity:1}
   will-change:transform,opacity;
 }
 .particle.highlight{
-  box-shadow:0 0 2px rgba(248,215,138,.28);
+  box-shadow:0 0 2px rgba(248,215,138,.36);
 }
 @keyframes cinematicGoldFall{
   0%{transform:translate3d(0,-3vh,0);opacity:0}
-  9%{opacity:calc(var(--alpha) * .75)}
-  28%{opacity:var(--alpha)}
-  65%{opacity:calc(var(--alpha) * .87)}
-  88%{opacity:calc(var(--alpha) * .62)}
+  9%{opacity:calc(var(--alpha) * .84)}
+  28%{opacity:calc(var(--alpha) * 1.12)}
+  65%{opacity:calc(var(--alpha) * .98)}
+  88%{opacity:calc(var(--alpha) * .72)}
   100%{transform:translate3d(var(--drift),112svh,0);opacity:0}
 }
 @media(max-width:480px){.particle:nth-child(n+37){display:none}}
@@ -67,11 +67,22 @@ html.needs-play .afterglow img,html.play-failed .afterglow img{filter:brightness
 /* If a legacy browser cannot play the MP4, use the film's own still frame as
    a timed cinematic fallback rather than a blank player or frozen page. */
 html.fallback-playing .scene video{opacity:0}
-html.fallback-playing:not(.video-complete) .afterglow{opacity:.86}
+html.fallback-playing:not(.video-complete) .afterglow{
+  opacity:.92;
+  background-image:url('poster-mobile.jpg');background-size:cover;
+  background-position:center center;
+}
+@media(min-width:700px){html.fallback-playing:not(.video-complete) .afterglow{background-image:url('poster.jpg')}}
+html.fallback-playing:not(.video-complete) .particles{opacity:.62}
 html.fallback-playing:not(.video-complete) .afterglow img{filter:brightness(.9) saturate(.95) contrast(1);animation:stillDrift 6s ease-out both}
 html.video-complete.fallback-playing .afterglow{opacity:.21}
 html.video-complete.fallback-playing .afterglow img{filter:brightness(.42) saturate(.72) contrast(.9);animation:none}
-@keyframes stillDrift{0%{transform:scale(1.035);opacity:.65}35%{transform:scale(1.017);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes stillDrift{
+  0%{transform:scale(1.035);opacity:0}
+  25%{transform:scale(1.024);opacity:.12}
+  55%{transform:scale(1.012);opacity:1}
+  100%{transform:scale(1);opacity:1}
+}
 @media(prefers-reduced-motion:reduce){html.fallback-playing .afterglow img{animation:none!important}}
 /* The cinematic still remains faintly in the fixed scene behind the text.
    IMPORTANT: The document itself is the only scrolling surface. */
@@ -237,6 +248,8 @@ html.needs-play .play-gate,html.play-failed .play-gate{opacity:1;visibility:visi
 html.play-failed .play-gate .continue-fallback{display:block}
 html.play-failed .play-gate .start-film{display:none}
 html.video-complete .play-gate{display:none}
+/* No user-tap gate: blocked autoplay automatically runs the artwork animation. */
+.play-gate{display:none!important}
 @media(prefers-reduced-motion:reduce){.play-gate{transition:none}}
 
 </style>
@@ -490,16 +503,20 @@ html.video-complete .play-gate{display:none}
     }
     raf(step);
   }
+  var fallbackCheck=null;
   function showPlay(reason){
-    if(done || hasClass('video-complete') || playing)return;
-    root.classList.add('needs-play');
-    if(gateNote)gateNote.textContent=reason||'Tap to watch the opening cinematic';
+    // Browsers can reject muted autoplay (notably older iOS + Low Power Mode).
+    // Don't strand the guest at a PLAY button: use the same artwork automatically.
+    if(done || hasClass('video-complete') || playing || fallbackActive)return;
+    if(fallbackCheck!==null)return;
+    fallbackCheck=window.setTimeout(function(){
+      fallbackCheck=null;
+      if(!done && !playing && !fallbackActive && finalClock===null && (film.currentTime||0)<.25){
+        stillCinematic();
+      }
+    },800);
   }
-  function showFailure(){
-    if(done)return;
-    root.classList.remove('needs-play');root.classList.add('play-failed');
-    if(gateNote)gateNote.textContent='Video unavailable on this device. The invitation is still ready.';
-  }
+  function showFailure(){if(!done)stillCinematic();}
   function animate(){
     if(done || finalClock!==null || fallbackActive)return;
     var t=film.currentTime || 0;
@@ -530,14 +547,14 @@ html.video-complete .play-gate{display:none}
           if(!mediaStartedAt)mediaStartedAt=now()-(film.currentTime||0)*1000;
           hideGate();
         },function(){
-          if(userInitiated)stillCinematic();else showPlay('Tap to watch the opening cinematic');
+          if(userInitiated)stillCinematic();else showPlay('Automatic fallback');
         });
       }
-    }catch(err){if(userInitiated)stillCinematic();else showPlay('Tap to watch the opening cinematic');}
+    }catch(err){if(userInitiated)stillCinematic();else showPlay('Automatic fallback');}
     window.setTimeout(function(){
       if(!done && !fallbackActive && film.currentTime<.12){
         if(userInitiated)stillCinematic();
-        else if(film.paused)showPlay('Tap to watch the opening cinematic');
+        else if(film.paused)showPlay('Automatic fallback');
       }
     },1600);
   }
@@ -571,12 +588,12 @@ html.video-complete .play-gate{display:none}
   film.addEventListener('ended',finish);
   film.addEventListener('error',function(){if(!done)stillCinematic();});
   film.addEventListener('stalled',function(){
-    if(!done && !fallbackActive && !playing && film.currentTime<.1)showPlay('Tap to play the opening cinematic');
+    if(!done && !fallbackActive && !playing && film.currentTime<.1)showPlay('Automatic fallback');
   });
   film.addEventListener('pause',function(){
     if(!done && !fallbackActive && !film.ended && finalClock===null){
       playing=false;
-      showPlay('Tap to resume the opening cinematic');
+      showPlay('Automatic fallback');
     }
   });
 
@@ -588,18 +605,18 @@ html.video-complete .play-gate{display:none}
     if(!mobile)film.poster='poster.jpg';
     if(film.getAttribute('src')!==asset){film.setAttribute('src',asset);}
     film.muted=true;
-    try{film.load();}catch(ignore){}
+    // Assigning src already initiates resource selection; calling load() here
+    // can abort Safari's automatic play attempt.
     lock();
     raf(animate);
     play(false);
-    // A paused or slow first frame gets a visible Play button, not a blank screen.
+    // A paused or slow first frame automatically gets the artwork-based intro.
     window.setTimeout(function(){
       if(!done && !fallbackActive && !playing && film.currentTime<.15)
-        showPlay('Tap to watch the opening cinematic');
+        showPlay('Automatic fallback');
     },2300);
-    // If autoplay is forbidden, leave TAP TO PLAY available (do not replace it
-    // with a dead end after a few seconds). The button starts playback directly.
-    // If a decoder stalls after playback begins, animate the genuine still.
+    // Autoplay-disabled Safari automatically sees the film-artwork animation.
+    // If decoding stalls once playback begins, also use this visual fallback.
     window.setTimeout(function(){
       if(!done && !fallbackActive && finalClock===null && playing && film.currentTime<.3)
         stillCinematic();
