@@ -91,6 +91,15 @@ h1 em{font-style:italic;color:var(--gold);font-weight:400}
 .arch-bottom{font:600 10px/1.8 var(--sans);letter-spacing:.2em;color:#967b51;margin-top:36px;text-transform:uppercase}
 .arch-flourish{position:absolute;top:42px;left:50%;width:130px;height:52px;transform:translateX(-50%);opacity:.57}
 .vertical-rule{position:absolute;top:10%;bottom:10%;right:-18px;border-right:1px solid rgba(166,133,82,.27)}
+.hero-couple{display:block;width:min(100%,278px);max-height:356px;object-fit:contain;margin:8px auto 2px;filter:drop-shadow(0 12px 28px rgba(106,54,72,.16));animation:coupleFloat 2.3s ease-out both}
+@keyframes coupleFloat{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (max-width:699px){
+  .hero-couple{width:min(100%,202px);max-height:239px;margin:1px auto}
+  .hero-art .arch-top{margin-bottom:10px;font-size:8px;letter-spacing:.18em}
+  .hero-art .arch-decoration{font-size:18px;margin-bottom:6px}
+  .hero-art .arch-bottom{font-size:8px;line-height:1.5;letter-spacing:.12em;margin-top:8px}
+}
+
 /* Section transition */
 .band{background:var(--green-dark);color:#fff0df;padding:18px 0;text-align:center;border-top:1px solid rgba(197,155,86,.45);border-bottom:1px solid rgba(197,155,86,.45)}
 .band p{margin:0;font:500 10px/1.7 var(--sans);letter-spacing:.31em;text-transform:uppercase}
@@ -259,7 +268,7 @@ h1 em{font-style:italic;color:var(--gold);font-weight:400}
 .venue-section{border-color:rgba(165,97,112,.22)}
 
 
-/* Ivory silk wedding drapes, inspired by the submitted reference.
+/* Emerald wedding drapes with gold accents.
    SVG texture is inline: no network, image download, or new assets required. */
 .wedding-curtain {
  position:fixed; inset:0; top:0; left:0; right:0; bottom:0;
@@ -281,10 +290,10 @@ h1 em{font-style:italic;color:var(--gold);font-weight:400}
 .wedding-curtain__panel--left::after,
 .wedding-curtain__panel--right::after {
  content:""; position:absolute; z-index:2; right:0; top:0; width:5%; height:100%;
- background:linear-gradient(90deg,transparent,rgba(136,105,83,.10),rgba(251,246,231,.75));
+ background:linear-gradient(90deg,transparent,rgba(127,100,38,.16),rgba(239,223,164,.72));
  pointer-events:none;
 }
-/* First page: sweep cream drapes over the Bismillah before changing pages. */
+/* First page: sweep emerald drapes over the Bismillah before changing pages. */
 html.curtain-exit .wedding-curtain {visibility:visible;pointer-events:auto}
 html.curtain-exit .wedding-curtain__panel--left {
  -webkit-animation:ivoryCloseLeft .74s cubic-bezier(.65,.06,.31,1) both;
@@ -298,7 +307,7 @@ html.curtain-exit .wedding-curtain__panel--right {
 @keyframes ivoryCloseLeft {from{transform:translate3d(-103%,0,0)}to{transform:translate3d(0,0,0)}}
 @-webkit-keyframes ivoryCloseRight {from{-webkit-transform:translate3d(103%,0,0) scaleX(-1)}to{-webkit-transform:translate3d(0,0,0) scaleX(-1)}}
 @keyframes ivoryCloseRight {from{transform:translate3d(103%,0,0) scaleX(-1)}to{transform:translate3d(0,0,0) scaleX(-1)}}
-/* Second page: slower, gently eased silk curtain reveal, like the video. */
+/* Second page: slower, gently eased emerald curtain reveal. */
 html.curtain-arrive .wedding-curtain {visibility:visible;pointer-events:auto}
 html.curtain-arrive .wedding-curtain__panel--left {
  -webkit-animation:ivoryOpenLeft 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
@@ -344,30 +353,30 @@ html.curtain-arrive .wedding-curtain__panel--right {
 <svg viewBox="0 0 600 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
  <defs>
   <linearGradient id="lft-base" x1="0" y1="0" x2="1" y2="0">
-   <stop offset="0" stop-color="#d9c7ad"/><stop offset=".08" stop-color="#f7f1e8"/>
-   <stop offset=".24" stop-color="#eee2d2"/><stop offset=".42" stop-color="#fffdf5"/>
-   <stop offset=".58" stop-color="#eadbc7"/><stop offset=".77" stop-color="#fffaf0"/>
-   <stop offset="1" stop-color="#e1ceba"/>
+   <stop offset="0" stop-color="#0f3a33"/><stop offset=".08" stop-color="#1d5b50"/>
+   <stop offset=".24" stop-color="#134940"/><stop offset=".42" stop-color="#2f6d61"/>
+   <stop offset=".58" stop-color="#184f46"/><stop offset=".77" stop-color="#3d7e70"/>
+   <stop offset="1" stop-color="#103a33"/>
   </linearGradient>
   <linearGradient id="lft-fold" x1="0" y1="0" x2="1" y2="0">
-   <stop offset="0" stop-color="#725741" stop-opacity=".21"/>
-   <stop offset=".16" stop-color="#fff" stop-opacity=".47"/>
-   <stop offset=".43" stop-color="#aa886e" stop-opacity=".16"/>
-   <stop offset=".65" stop-color="#fff" stop-opacity=".49"/>
-   <stop offset="1" stop-color="#b09676" stop-opacity=".18"/>
+   <stop offset="0" stop-color="#8f7330" stop-opacity=".26"/>
+   <stop offset=".16" stop-color="#f3e7be" stop-opacity=".26"/>
+   <stop offset=".43" stop-color="#2f6e5f" stop-opacity=".22"/>
+   <stop offset=".65" stop-color="#fff6db" stop-opacity=".22"/>
+   <stop offset="1" stop-color="#c7a85b" stop-opacity=".20"/>
   </linearGradient>
   <linearGradient id="lft-bow" x1="0" y1=".2" x2="1" y2=".8">
-   <stop offset="0" stop-color="#f9f4e9"/><stop offset=".35" stop-color="#fffef9"/>
-   <stop offset=".6" stop-color="#dfcdb8"/><stop offset=".85" stop-color="#fcf7ed"/>
-   <stop offset="1" stop-color="#bd9f84"/>
+   <stop offset="0" stop-color="#d1ad5d"/><stop offset=".35" stop-color="#f7e8b7"/>
+   <stop offset=".6" stop-color="#c49a48"/><stop offset=".85" stop-color="#fff3cb"/>
+   <stop offset="1" stop-color="#a97a2c"/>
   </linearGradient>
   <linearGradient id="lft-shadow" x1="0" y1="0" x2="1" y2="0">
    <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".81" stop-color="#fff" stop-opacity="0"/>
-   <stop offset="1" stop-color="#785b42" stop-opacity=".23"/>
+   <stop offset="1" stop-color="#0c2722" stop-opacity=".36"/>
   </linearGradient>
   <linearGradient id="lft-shine" x1="0" y1="0" x2="0" y2="1">
-   <stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
-   <stop offset="1" stop-color="#a8866d" stop-opacity=".12"/>
+   <stop offset="0" stop-color="#fff7de" stop-opacity=".08"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+   <stop offset="1" stop-color="#c29b49" stop-opacity=".14"/>
   </linearGradient>
  </defs>
  <!-- Satin folds with wide, softly lit creases. -->
@@ -378,35 +387,35 @@ html.curtain-arrive .wedding-curtain__panel--right {
  <path d="M405 -30 C406 230 491 453 573 565 C565 770 538 879 525 1030 L589 1030 C584 867 598 687 594 560 C513 365 526 114 534 -30 Z" fill="url(#lft-fold)" opacity=".56"/>
  <!-- Long curved seams gathered naturally into a central tie. -->
  <g fill="none" stroke-linecap="round">
-  <path d="M45 -12 C75 260 320 470 535 570" stroke="#bca88d" stroke-width="19" opacity=".28"/>
+  <path d="M45 -12 C75 260 320 470 535 570" stroke="#b69147" stroke-width="19" opacity=".28"/>
   <path d="M69 -12 C105 261 342 476 535 570" stroke="#fffdf6" stroke-width="14" opacity=".52"/>
-  <path d="M177 -12 C198 232 386 460 541 569" stroke="#ad9072" stroke-width="13" opacity=".17"/>
+  <path d="M177 -12 C198 232 386 460 541 569" stroke="#8b6d32" stroke-width="13" opacity=".17"/>
   <path d="M193 -12 C217 232 396 463 547 569" stroke="#fffdf8" stroke-width="13" opacity=".68"/>
-  <path d="M322 -12 C344 254 461 453 560 570" stroke="#98775f" stroke-width="16" opacity=".17"/>
+  <path d="M322 -12 C344 254 461 453 560 570" stroke="#7a5d2a" stroke-width="16" opacity=".17"/>
   <path d="M344 -12 C367 255 474 463 564 570" stroke="#fffef9" stroke-width="12" opacity=".64"/>
-  <path d="M468 -12 C460 218 524 457 578 576" stroke="#b49980" stroke-width="13" opacity=".16"/>
+  <path d="M468 -12 C460 218 524 457 578 576" stroke="#9e8040" stroke-width="13" opacity=".16"/>
   <path d="M478 -12 C481 235 529 453 581 576" stroke="#fff" stroke-width="9" opacity=".7"/>
-  <path d="M530 590 C312 702 173 862 107 1025" stroke="#b3987e" stroke-width="18" opacity=".25"/>
+  <path d="M530 590 C312 702 173 862 107 1025" stroke="#a68543" stroke-width="18" opacity=".25"/>
   <path d="M545 591 C358 757 278 900 241 1025" stroke="#fff" stroke-width="14" opacity=".57"/>
-  <path d="M551 594 C466 764 427 902 411 1025" stroke="#a78d76" stroke-width="13" opacity=".16"/>
+  <path d="M551 594 C466 764 427 902 411 1025" stroke="#7f6531" stroke-width="13" opacity=".16"/>
   <path d="M567 592 C535 741 531 873 530 1025" stroke="#fff" stroke-width="13" opacity=".55"/>
  </g>
  <rect x="0" y="0" width="600" height="1000" fill="url(#lft-shine)"/>
  <rect x="0" y="0" width="600" height="1000" fill="url(#lft-shadow)"/>
  <!-- An ivory bow ties the drape at its gathered point. -->
  <g transform="translate(510 570)" stroke-linejoin="round">
-  <path d="M5 12 C17 61 8 144 -12 236 C28 204 53 127 49 36 Z" fill="url(#lft-bow)" stroke="#d9c8b3" stroke-width="2"/>
-  <path d="M-5 13 C-24 69 -68 127 -120 188 C-77 183 -34 165 21 42 Z" fill="url(#lft-bow)" stroke="#dfcbb0" stroke-width="2"/>
+  <path d="M5 12 C17 61 8 144 -12 236 C28 204 53 127 49 36 Z" fill="url(#lft-bow)" stroke="#d0ab58" stroke-width="2"/>
+  <path d="M-5 13 C-24 69 -68 127 -120 188 C-77 183 -34 165 21 42 Z" fill="url(#lft-bow)" stroke="#d7b96a" stroke-width="2"/>
   <path d="M8 18 C10 72 -6 125 -20 199" stroke="#fffaf0" stroke-width="7" fill="none" opacity=".75"/>
   <path d="M-10 18 C-40 100 -73 145 -106 177" stroke="#fff" stroke-width="6" fill="none" opacity=".6"/>
-  <path d="M-10 -3 C-55 -48 -103 -56 -125 -31 C-139 -13 -123 12 -96 19 C-66 26 -37 15 -9 13 C-40 8 -64 -4 -86 -21 C-59 -15 -33 0 -10 -3 Z" fill="url(#lft-bow)" stroke="#d9c6af" stroke-width="3"/>
-  <path d="M21 -5 C57 -48 111 -52 125 -30 C138 -6 115 16 87 22 C56 29 34 15 13 12 C43 6 68 -3 93 -19 C62 -18 39 -2 21 -5 Z" fill="url(#lft-bow)" stroke="#dfcbb5" stroke-width="3"/>
+  <path d="M-10 -3 C-55 -48 -103 -56 -125 -31 C-139 -13 -123 12 -96 19 C-66 26 -37 15 -9 13 C-40 8 -64 -4 -86 -21 C-59 -15 -33 0 -10 -3 Z" fill="url(#lft-bow)" stroke="#cda553" stroke-width="3"/>
+  <path d="M21 -5 C57 -48 111 -52 125 -30 C138 -6 115 16 87 22 C56 29 34 15 13 12 C43 6 68 -3 93 -19 C62 -18 39 -2 21 -5 Z" fill="url(#lft-bow)" stroke="#d7b56d" stroke-width="3"/>
   <path d="M-113 -29 C-79 -35 -46 -18 -21 3" stroke="#fff" stroke-width="10" fill="none" opacity=".76"/>
   <path d="M116 -28 C85 -28 48 -14 24 1" stroke="#fff" stroke-width="9" fill="none" opacity=".75"/>
-  <path d="M-17 -12 C0 -27 20 -21 31 -6 C33 10 19 25 -2 21 C-17 15 -23 2 -17 -12 Z" fill="url(#lft-bow)" stroke="#baa288" stroke-width="3"/>
+  <path d="M-17 -12 C0 -27 20 -21 31 -6 C33 10 19 25 -2 21 C-17 15 -23 2 -17 -12 Z" fill="url(#lft-bow)" stroke="#9f7c32" stroke-width="3"/>
   <path d="M-4 -16 C7 -8 6 10 -2 20" fill="none" stroke="#fff" stroke-width="6" opacity=".75"/>
-  <ellipse cx="8" cy="3" rx="6" ry="7" fill="#c5aa7b" opacity=".75"/>
-  <circle cx="7" cy="1" r="2.5" fill="#fff9e3"/>
+  <ellipse cx="8" cy="3" rx="6" ry="7" fill="#d4b463" opacity=".75"/>
+  <circle cx="7" cy="1" r="2.5" fill="#fff6db"/>
  </g>
 </svg>
 </div>
@@ -414,30 +423,30 @@ html.curtain-arrive .wedding-curtain__panel--right {
 <svg viewBox="0 0 600 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
  <defs>
   <linearGradient id="rgt-base" x1="0" y1="0" x2="1" y2="0">
-   <stop offset="0" stop-color="#d9c7ad"/><stop offset=".08" stop-color="#f7f1e8"/>
-   <stop offset=".24" stop-color="#eee2d2"/><stop offset=".42" stop-color="#fffdf5"/>
-   <stop offset=".58" stop-color="#eadbc7"/><stop offset=".77" stop-color="#fffaf0"/>
-   <stop offset="1" stop-color="#e1ceba"/>
+   <stop offset="0" stop-color="#0f3a33"/><stop offset=".08" stop-color="#1d5b50"/>
+   <stop offset=".24" stop-color="#134940"/><stop offset=".42" stop-color="#2f6d61"/>
+   <stop offset=".58" stop-color="#184f46"/><stop offset=".77" stop-color="#3d7e70"/>
+   <stop offset="1" stop-color="#103a33"/>
   </linearGradient>
   <linearGradient id="rgt-fold" x1="0" y1="0" x2="1" y2="0">
-   <stop offset="0" stop-color="#725741" stop-opacity=".21"/>
-   <stop offset=".16" stop-color="#fff" stop-opacity=".47"/>
-   <stop offset=".43" stop-color="#aa886e" stop-opacity=".16"/>
-   <stop offset=".65" stop-color="#fff" stop-opacity=".49"/>
-   <stop offset="1" stop-color="#b09676" stop-opacity=".18"/>
+   <stop offset="0" stop-color="#8f7330" stop-opacity=".26"/>
+   <stop offset=".16" stop-color="#f3e7be" stop-opacity=".26"/>
+   <stop offset=".43" stop-color="#2f6e5f" stop-opacity=".22"/>
+   <stop offset=".65" stop-color="#fff6db" stop-opacity=".22"/>
+   <stop offset="1" stop-color="#c7a85b" stop-opacity=".20"/>
   </linearGradient>
   <linearGradient id="rgt-bow" x1="0" y1=".2" x2="1" y2=".8">
-   <stop offset="0" stop-color="#f9f4e9"/><stop offset=".35" stop-color="#fffef9"/>
-   <stop offset=".6" stop-color="#dfcdb8"/><stop offset=".85" stop-color="#fcf7ed"/>
-   <stop offset="1" stop-color="#bd9f84"/>
+   <stop offset="0" stop-color="#d1ad5d"/><stop offset=".35" stop-color="#f7e8b7"/>
+   <stop offset=".6" stop-color="#c49a48"/><stop offset=".85" stop-color="#fff3cb"/>
+   <stop offset="1" stop-color="#a97a2c"/>
   </linearGradient>
   <linearGradient id="rgt-shadow" x1="0" y1="0" x2="1" y2="0">
    <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".81" stop-color="#fff" stop-opacity="0"/>
-   <stop offset="1" stop-color="#785b42" stop-opacity=".23"/>
+   <stop offset="1" stop-color="#0c2722" stop-opacity=".36"/>
   </linearGradient>
   <linearGradient id="rgt-shine" x1="0" y1="0" x2="0" y2="1">
-   <stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
-   <stop offset="1" stop-color="#a8866d" stop-opacity=".12"/>
+   <stop offset="0" stop-color="#fff7de" stop-opacity=".08"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+   <stop offset="1" stop-color="#c29b49" stop-opacity=".14"/>
   </linearGradient>
  </defs>
  <!-- Satin folds with wide, softly lit creases. -->
@@ -448,35 +457,35 @@ html.curtain-arrive .wedding-curtain__panel--right {
  <path d="M405 -30 C406 230 491 453 573 565 C565 770 538 879 525 1030 L589 1030 C584 867 598 687 594 560 C513 365 526 114 534 -30 Z" fill="url(#rgt-fold)" opacity=".56"/>
  <!-- Long curved seams gathered naturally into a central tie. -->
  <g fill="none" stroke-linecap="round">
-  <path d="M45 -12 C75 260 320 470 535 570" stroke="#bca88d" stroke-width="19" opacity=".28"/>
+  <path d="M45 -12 C75 260 320 470 535 570" stroke="#b69147" stroke-width="19" opacity=".28"/>
   <path d="M69 -12 C105 261 342 476 535 570" stroke="#fffdf6" stroke-width="14" opacity=".52"/>
-  <path d="M177 -12 C198 232 386 460 541 569" stroke="#ad9072" stroke-width="13" opacity=".17"/>
+  <path d="M177 -12 C198 232 386 460 541 569" stroke="#8b6d32" stroke-width="13" opacity=".17"/>
   <path d="M193 -12 C217 232 396 463 547 569" stroke="#fffdf8" stroke-width="13" opacity=".68"/>
-  <path d="M322 -12 C344 254 461 453 560 570" stroke="#98775f" stroke-width="16" opacity=".17"/>
+  <path d="M322 -12 C344 254 461 453 560 570" stroke="#7a5d2a" stroke-width="16" opacity=".17"/>
   <path d="M344 -12 C367 255 474 463 564 570" stroke="#fffef9" stroke-width="12" opacity=".64"/>
-  <path d="M468 -12 C460 218 524 457 578 576" stroke="#b49980" stroke-width="13" opacity=".16"/>
+  <path d="M468 -12 C460 218 524 457 578 576" stroke="#9e8040" stroke-width="13" opacity=".16"/>
   <path d="M478 -12 C481 235 529 453 581 576" stroke="#fff" stroke-width="9" opacity=".7"/>
-  <path d="M530 590 C312 702 173 862 107 1025" stroke="#b3987e" stroke-width="18" opacity=".25"/>
+  <path d="M530 590 C312 702 173 862 107 1025" stroke="#a68543" stroke-width="18" opacity=".25"/>
   <path d="M545 591 C358 757 278 900 241 1025" stroke="#fff" stroke-width="14" opacity=".57"/>
-  <path d="M551 594 C466 764 427 902 411 1025" stroke="#a78d76" stroke-width="13" opacity=".16"/>
+  <path d="M551 594 C466 764 427 902 411 1025" stroke="#7f6531" stroke-width="13" opacity=".16"/>
   <path d="M567 592 C535 741 531 873 530 1025" stroke="#fff" stroke-width="13" opacity=".55"/>
  </g>
  <rect x="0" y="0" width="600" height="1000" fill="url(#rgt-shine)"/>
  <rect x="0" y="0" width="600" height="1000" fill="url(#rgt-shadow)"/>
  <!-- An ivory bow ties the drape at its gathered point. -->
  <g transform="translate(510 570)" stroke-linejoin="round">
-  <path d="M5 12 C17 61 8 144 -12 236 C28 204 53 127 49 36 Z" fill="url(#rgt-bow)" stroke="#d9c8b3" stroke-width="2"/>
-  <path d="M-5 13 C-24 69 -68 127 -120 188 C-77 183 -34 165 21 42 Z" fill="url(#rgt-bow)" stroke="#dfcbb0" stroke-width="2"/>
+  <path d="M5 12 C17 61 8 144 -12 236 C28 204 53 127 49 36 Z" fill="url(#rgt-bow)" stroke="#d0ab58" stroke-width="2"/>
+  <path d="M-5 13 C-24 69 -68 127 -120 188 C-77 183 -34 165 21 42 Z" fill="url(#rgt-bow)" stroke="#d7b96a" stroke-width="2"/>
   <path d="M8 18 C10 72 -6 125 -20 199" stroke="#fffaf0" stroke-width="7" fill="none" opacity=".75"/>
   <path d="M-10 18 C-40 100 -73 145 -106 177" stroke="#fff" stroke-width="6" fill="none" opacity=".6"/>
-  <path d="M-10 -3 C-55 -48 -103 -56 -125 -31 C-139 -13 -123 12 -96 19 C-66 26 -37 15 -9 13 C-40 8 -64 -4 -86 -21 C-59 -15 -33 0 -10 -3 Z" fill="url(#rgt-bow)" stroke="#d9c6af" stroke-width="3"/>
-  <path d="M21 -5 C57 -48 111 -52 125 -30 C138 -6 115 16 87 22 C56 29 34 15 13 12 C43 6 68 -3 93 -19 C62 -18 39 -2 21 -5 Z" fill="url(#rgt-bow)" stroke="#dfcbb5" stroke-width="3"/>
+  <path d="M-10 -3 C-55 -48 -103 -56 -125 -31 C-139 -13 -123 12 -96 19 C-66 26 -37 15 -9 13 C-40 8 -64 -4 -86 -21 C-59 -15 -33 0 -10 -3 Z" fill="url(#rgt-bow)" stroke="#cda553" stroke-width="3"/>
+  <path d="M21 -5 C57 -48 111 -52 125 -30 C138 -6 115 16 87 22 C56 29 34 15 13 12 C43 6 68 -3 93 -19 C62 -18 39 -2 21 -5 Z" fill="url(#rgt-bow)" stroke="#d7b56d" stroke-width="3"/>
   <path d="M-113 -29 C-79 -35 -46 -18 -21 3" stroke="#fff" stroke-width="10" fill="none" opacity=".76"/>
   <path d="M116 -28 C85 -28 48 -14 24 1" stroke="#fff" stroke-width="9" fill="none" opacity=".75"/>
-  <path d="M-17 -12 C0 -27 20 -21 31 -6 C33 10 19 25 -2 21 C-17 15 -23 2 -17 -12 Z" fill="url(#rgt-bow)" stroke="#baa288" stroke-width="3"/>
+  <path d="M-17 -12 C0 -27 20 -21 31 -6 C33 10 19 25 -2 21 C-17 15 -23 2 -17 -12 Z" fill="url(#rgt-bow)" stroke="#9f7c32" stroke-width="3"/>
   <path d="M-4 -16 C7 -8 6 10 -2 20" fill="none" stroke="#fff" stroke-width="6" opacity=".75"/>
-  <ellipse cx="8" cy="3" rx="6" ry="7" fill="#c5aa7b" opacity=".75"/>
-  <circle cx="7" cy="1" r="2.5" fill="#fff9e3"/>
+  <ellipse cx="8" cy="3" rx="6" ry="7" fill="#d4b463" opacity=".75"/>
+  <circle cx="7" cy="1" r="2.5" fill="#fff6db"/>
  </g>
 </svg>
 </div>
@@ -512,10 +521,8 @@ html.curtain-arrive .wedding-curtain__panel--right {
           <svg class="arch-flourish" viewBox="0 0 130 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 37C24 35 28 18 44 19C54 19 56 27 65 29C74 27 77 19 86 19C101 18 107 35 127 37" stroke="#9B7947" stroke-width="1.2"/><path d="M65 27C63 12 68 10 65 2C62 10 67 12 65 27ZM44 20C39 8 31 9 29 3C34 20 35 17 44 20ZM86 20C91 8 99 9 101 3C96 20 95 17 86 20Z" fill="#A78652" fill-opacity=".58"/><path d="M11 37L26 31M119 37L104 31" stroke="#9B7947" stroke-width=".8"/></svg>
           <div class="arch-top">THE WEDDING CELEBRATION</div>
           <span class="arch-decoration">✧</span>
-          <div class="arch-monogram">S</div>
-          <div class="arch-amp">&amp;</div>
-          <div class="arch-monogram">F</div>
-          <div class="arch-bottom">31 · 03 · 2027</div>
+          <img class="hero-couple" src="couple-maroon-black-embroidered.png" alt="Illustration of the bride in a maroon lehenga and the groom in a black sherwani from behind">
+          <div class="arch-bottom">Shoeb &amp; Fabbiha · 31 · 03 · 2027</div>
         </div>
         <div class="vertical-rule"></div>
       </div>
