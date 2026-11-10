@@ -13,7 +13,7 @@
   var raf=window.requestAnimationFrame||window.webkitRequestAnimationFrame;
   var reduced=false;
   try{reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);}catch(ignore){}
-  var prefix=mode==='emerald'?'curtain-emerald':'curtain-ivory';
+  var prefix=mode==='emerald'?'curtain-emerald':'curtain-ivory-v4';
   var images=[new Image(),new Image()];
   var loaded=[false,false];
   var W=0,H=0,dpr=1;
@@ -23,7 +23,7 @@
       (function(i){
         images[i].onload=function(){loaded[i]=true;};
         images[i].onerror=function(){loaded[i]=false;};
-        images[i].src=prefix+(i===0?'-left.jpg':'-right.jpg')+'?v=20261110b';
+        images[i].src=prefix+(i===0?'-left.jpg':'-right.jpg')+'?v=20261110d';
         if(images[i].complete&&images[i].naturalWidth>0)loaded[i]=true;
       })(i);
     }
@@ -60,10 +60,11 @@
       for(var y=0;y<H;y+=sliceH){
         var h=Math.min(sliceH+1,H-y);
         var norm=y/H;
-        var wave=Math.sin(norm*13+p*19+side*1.4)*ripple*2.4;
-        var wave2=Math.sin(norm*32-p*12+side)*ripple*.9;
-        var offset=sign*(wave+wave2);
-        var width=dw*(1+.010*Math.sin(norm*9+p*13)*ripple);
+        var wave=Math.sin(norm*11+p*17+side*1.4)*ripple*(mode==='ivory'?5.2:2.4);
+        var wave2=Math.sin(norm*27-p*9+side)*ripple*(mode==='ivory'?1.8:.9);
+        var lag=(mode==='ivory'?7:0)*Math.sin(Math.PI*norm)*ripple*Math.sin(p*7.5);
+        var offset=sign*(wave+wave2+lag);
+        var width=dw*(1+(mode==='ivory' ? 0.020 : 0.010)*Math.sin(norm*9+p*13)*ripple);
         var sy=norm*im.height;
         var sh=Math.min(im.height-sy,im.height*h/H+1);
         try{ctx.drawImage(im,0,sy,im.width,sh,base+offset,y,width,h);}catch(ignore){}
