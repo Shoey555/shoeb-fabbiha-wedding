@@ -254,362 +254,57 @@ html.video-complete .play-gate{display:none}
 
 
 
-/* Page 1: rich emerald-green folded silk with fine gold trim and tied-back bows.
-   Closes over the Bismillah before opening Page 2's separate ivory curtains. */
-.wedding-curtain {
- position:fixed; inset:0; top:0; left:0; right:0; bottom:0;
- height:100vh; height:100dvh; z-index:99999; overflow:hidden;
- visibility:hidden; pointer-events:none;
- -webkit-transform:translateZ(0); transform:translateZ(0);
-}
-.wedding-curtain__panel {
- position:absolute; top:0; bottom:0; width:54%; height:100%;
- overflow:visible; -webkit-backface-visibility:hidden; backface-visibility:hidden;
- -webkit-transform:translate3d(0,0,0); transform:translate3d(0,0,0);
- will-change:transform,opacity;
- filter:drop-shadow(4px 3px 7px rgba(62,39,37,.18));
-}
-.wedding-curtain__panel--left { left:0; }
-.wedding-curtain__panel--right { right:0; -webkit-transform:scaleX(-1); transform:scaleX(-1); }
-.wedding-curtain__panel svg { width:100%; height:100%; display:block; overflow:visible; }
-/* A narrow, fabric-like seam appears where the two curtains meet. */
-.wedding-curtain__panel--left::after,
-.wedding-curtain__panel--right::after {
- content:""; position:absolute; z-index:2; right:0; top:0; width:5%; height:100%;
- background:linear-gradient(90deg,transparent,rgba(127,100,38,.16),rgba(239,223,164,.72));
- pointer-events:none;
-}
-/* First page: sweep emerald drapes over the Bismillah before changing pages. */
-html.curtain-exit .wedding-curtain {visibility:visible;pointer-events:auto}
-html.curtain-exit .wedding-curtain__panel--left {
- -webkit-animation:ivoryCloseLeft .74s cubic-bezier(.65,.06,.31,1) both;
- animation:ivoryCloseLeft .74s cubic-bezier(.65,.06,.31,1) both;
-}
-html.curtain-exit .wedding-curtain__panel--right {
- -webkit-animation:ivoryCloseRight .74s cubic-bezier(.65,.06,.31,1) both;
- animation:ivoryCloseRight .74s cubic-bezier(.65,.06,.31,1) both;
-}
-@-webkit-keyframes ivoryCloseLeft {from{-webkit-transform:translate3d(-103%,0,0)}to{-webkit-transform:translate3d(0,0,0)}}
-@keyframes ivoryCloseLeft {from{transform:translate3d(-103%,0,0)}to{transform:translate3d(0,0,0)}}
-@-webkit-keyframes ivoryCloseRight {from{-webkit-transform:translate3d(103%,0,0) scaleX(-1)}to{-webkit-transform:translate3d(0,0,0) scaleX(-1)}}
-@keyframes ivoryCloseRight {from{transform:translate3d(103%,0,0) scaleX(-1)}to{transform:translate3d(0,0,0) scaleX(-1)}}
-/* Inactive on Page 1; Page 2 uses its own ivory SVG curtains. */
-html.curtain-arrive .wedding-curtain {visibility:visible;pointer-events:auto}
-html.curtain-arrive .wedding-curtain__panel--left {
- -webkit-animation:ivoryOpenLeft 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
- animation:ivoryOpenLeft 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
-}
-html.curtain-arrive .wedding-curtain__panel--right {
- -webkit-animation:ivoryOpenRight 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
- animation:ivoryOpenRight 2.25s .18s cubic-bezier(.55,.01,.17,1) both;
-}
-@-webkit-keyframes ivoryOpenLeft {
- 0%,10%{-webkit-transform:translate3d(0,0,0);opacity:1}
- 72%{-webkit-transform:translate3d(-71%,0,0) scaleX(.94);opacity:1}
- 87%{-webkit-transform:translate3d(-77%,0,0) scaleX(.93);opacity:1}
- 100%{-webkit-transform:translate3d(-81%,0,0) scaleX(.93);opacity:0}
-}
-@keyframes ivoryOpenLeft {
- 0%,10%{transform:translate3d(0,0,0);opacity:1}
- 72%{transform:translate3d(-71%,0,0) scaleX(.94);opacity:1}
- 87%{transform:translate3d(-77%,0,0) scaleX(.93);opacity:1}
- 100%{transform:translate3d(-81%,0,0) scaleX(.93);opacity:0}
-}
-@-webkit-keyframes ivoryOpenRight {
- 0%,10%{-webkit-transform:translate3d(0,0,0) scaleX(-1);opacity:1}
- 72%{-webkit-transform:translate3d(71%,0,0) scaleX(-.94);opacity:1}
- 87%{-webkit-transform:translate3d(77%,0,0) scaleX(-.93);opacity:1}
- 100%{-webkit-transform:translate3d(81%,0,0) scaleX(-.93);opacity:0}
-}
-@keyframes ivoryOpenRight {
- 0%,10%{transform:translate3d(0,0,0) scaleX(-1);opacity:1}
- 72%{transform:translate3d(71%,0,0) scaleX(-.94);opacity:1}
- 87%{transform:translate3d(77%,0,0) scaleX(-.93);opacity:1}
- 100%{transform:translate3d(81%,0,0) scaleX(-.93);opacity:0}
-}
-@media(prefers-reduced-motion:reduce){.wedding-curtain{display:none!important}}
-
+/* Curtain CSS moved to a single universal animation below. */
 </style>
 <script>if(document.documentElement.classList)document.documentElement.classList.add('pending');</script>
 <noscript><style>.story{opacity:1!important;transform:none!important;filter:none!important}.cue{display:none!important}</style></noscript>
-
-
-<style id="satin-ballroom-curtains">
-/* EMERALD • GOLD • CLOSE — photographic silk panels, not vector illustrations. */
-.wedding-curtain__panel{
-  width:50.15%;overflow:hidden;background-color:#133c33;
-  background-image:url('emerald-silk-curtain.jpg');background-repeat:no-repeat;
-  background-size:100% 100%;background-position:center center;
-  box-shadow:0 0 15px rgba(0,0,0,.26);
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;
-}
-.wedding-curtain__panel::before{
-  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,.10),transparent 15%,transparent 84%,rgba(0,0,0,.10));
-}
-.wedding-curtain__panel::after{
-  content:"";display:block!important;position:absolute;right:0;top:0;bottom:0;
-  z-index:2;width:2px;pointer-events:none;
-  background:linear-gradient(180deg,transparent 0%,rgba(216,181,105,.65) 12%,#e6c782 52%,rgba(216,181,105,.65) 90%,transparent 100%);
-  box-shadow:0 0 3px rgba(216,181,105,.65);
-}
-.wedding-curtain::before{display:none!important}
-/* No heavyweight filters: transform-only animation performs better on older Safari. */
-.wedding-curtain__panel{filter:none!important}
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<style id="dusty-grunge-name-font">
+/* Requested Dusty Grunge — provide your own licensed webfont file to use the exact face.
+   The public Google font is the readable distressed fallback, not a fake claim. */
+@font-face{font-family:"Dusty Grunge";src:local("Dusty Grunge"),url("dusty-grunge.woff2") format("woff2");font-display:swap}
+.names{font-family:"Dusty Grunge","Special Elite",Georgia,serif!important;font-weight:400;letter-spacing:.045em;text-transform:uppercase}
 </style>
-
-
-<style id="luxury-ruffle-curtain">
-
-/* Natural fabric movement: tension at the centre, a staggered pull, then
-   compressed folds as the silk gathers at the outside edges. */
-.wedding-curtain__panel {
-  width:50.5%!important; height:100%!important;
-  background-repeat:no-repeat!important;
-  background-position:center!important;
-  background-size:100% 100%!important;
-  -webkit-transform-origin:left center;
-  transform-origin:left center;
-  -webkit-backface-visibility:hidden;
-  backface-visibility:hidden;
-  filter:none!important;
-}
-.wedding-curtain__panel--left { left:0; right:auto; -webkit-transform-origin:left center;transform-origin:left center; }
-.wedding-curtain__panel--right { right:0; left:auto; -webkit-transform-origin:right center;transform-origin:right center; }
-.wedding-curtain__panel svg{display:none!important}
-.wedding-curtain__panel::after{display:none!important}
-.wedding-curtain__panel::before{
- content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
- background:repeating-linear-gradient(90deg,
-    rgba(0,0,0,.09) 0%,rgba(255,255,255,.025) 3%,
-    rgba(255,255,255,.09) 8%,rgba(0,0,0,.035) 12%,
-    rgba(0,0,0,.13) 17%,rgba(255,255,255,0) 23%);
- background-size:140% 100%;
- opacity:.32;
- animation:none;
-}
-html.curtain-arrive .wedding-curtain__panel::before {
- animation:curtainFabricLight 2.8s ease-out both;
-}
-html.curtain-exit .wedding-curtain__panel::before {
- animation:curtainFabricLight 1.15s ease-out both;
-}
-@keyframes curtainFabricLight{
- 0%{background-position:0% center;opacity:.18}
- 45%{background-position:75% center;opacity:.32}
- 100%{background-position:100% center;opacity:.48}
-}
-html.curtain-exit .wedding-curtain__panel--left {
- -webkit-animation:realCloseLeft 1.04s cubic-bezier(.55,.03,.25,1) both!important;
- animation:realCloseLeft 1.04s cubic-bezier(.55,.03,.25,1) both!important;
-}
-html.curtain-exit .wedding-curtain__panel--right {
- -webkit-animation:realCloseRight 1.04s cubic-bezier(.55,.03,.25,1) both!important;
- animation:realCloseRight 1.04s cubic-bezier(.55,.03,.25,1) both!important;
-}
-@-webkit-keyframes realCloseLeft {
- 0%{-webkit-transform:translate3d(-105%,0,0) scaleX(.72)}
- 44%{-webkit-transform:translate3d(-52%,0,0) scaleX(.82)}
- 76%{-webkit-transform:translate3d(2%,0,0) scaleX(1.035)}
- 91%{-webkit-transform:translate3d(-1%,0,0) scaleX(.99)}
- 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
-}
-@keyframes realCloseLeft {
- 0%{transform:translate3d(-105%,0,0) scaleX(.72)}
- 44%{transform:translate3d(-52%,0,0) scaleX(.82)}
- 76%{transform:translate3d(2%,0,0) scaleX(1.035)}
- 91%{transform:translate3d(-1%,0,0) scaleX(.99)}
- 100%{transform:translate3d(0,0,0) scaleX(1)}
-}
-@-webkit-keyframes realCloseRight {
- 0%{-webkit-transform:translate3d(105%,0,0) scaleX(.72)}
- 44%{-webkit-transform:translate3d(52%,0,0) scaleX(.82)}
- 76%{-webkit-transform:translate3d(-2%,0,0) scaleX(1.035)}
- 91%{-webkit-transform:translate3d(1%,0,0) scaleX(.99)}
- 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
-}
-@keyframes realCloseRight {
- 0%{transform:translate3d(105%,0,0) scaleX(.72)}
- 44%{transform:translate3d(52%,0,0) scaleX(.82)}
- 76%{transform:translate3d(-2%,0,0) scaleX(1.035)}
- 91%{transform:translate3d(1%,0,0) scaleX(.99)}
- 100%{transform:translate3d(0,0,0) scaleX(1)}
-}
-html.curtain-arrive .wedding-curtain__panel--left {
- -webkit-animation:realOpenLeft 2.85s cubic-bezier(.45,.02,.22,1) both!important;
- animation:realOpenLeft 2.85s cubic-bezier(.45,.02,.22,1) both!important;
-}
-html.curtain-arrive .wedding-curtain__panel--right {
- -webkit-animation:realOpenRight 2.85s cubic-bezier(.45,.02,.22,1) both!important;
- animation:realOpenRight 2.85s cubic-bezier(.45,.02,.22,1) both!important;
-}
-@-webkit-keyframes realOpenLeft {
- 0%,9%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 16%{-webkit-transform:translate3d(1%,0,0) scaleX(1.028);opacity:1}
- 28%{-webkit-transform:translate3d(-12%,0,0) scaleX(.94);opacity:1}
- 42%{-webkit-transform:translate3d(-40%,0,0) scaleX(.81);opacity:1}
- 62%{-webkit-transform:translate3d(-78%,0,0) scaleX(.57);opacity:1}
- 80%{-webkit-transform:translate3d(-96%,0,0) scaleX(.38);opacity:1}
- 93%{-webkit-transform:translate3d(-104%,0,0) scaleX(.33);opacity:1}
- 100%{-webkit-transform:translate3d(-104%,0,0) scaleX(.33);opacity:0}
-}
-@keyframes realOpenLeft {
- 0%,9%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 16%{transform:translate3d(1%,0,0) scaleX(1.028);opacity:1}
- 28%{transform:translate3d(-12%,0,0) scaleX(.94);opacity:1}
- 42%{transform:translate3d(-40%,0,0) scaleX(.81);opacity:1}
- 62%{transform:translate3d(-78%,0,0) scaleX(.57);opacity:1}
- 80%{transform:translate3d(-96%,0,0) scaleX(.38);opacity:1}
- 93%{transform:translate3d(-104%,0,0) scaleX(.33);opacity:1}
- 100%{transform:translate3d(-104%,0,0) scaleX(.33);opacity:0}
-}
-@-webkit-keyframes realOpenRight {
- 0%,9%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 16%{-webkit-transform:translate3d(-1%,0,0) scaleX(1.028);opacity:1}
- 28%{-webkit-transform:translate3d(12%,0,0) scaleX(.94);opacity:1}
- 42%{-webkit-transform:translate3d(40%,0,0) scaleX(.81);opacity:1}
- 62%{-webkit-transform:translate3d(78%,0,0) scaleX(.57);opacity:1}
- 80%{-webkit-transform:translate3d(96%,0,0) scaleX(.38);opacity:1}
- 93%{-webkit-transform:translate3d(104%,0,0) scaleX(.33);opacity:1}
- 100%{-webkit-transform:translate3d(104%,0,0) scaleX(.33);opacity:0}
-}
-@keyframes realOpenRight {
- 0%,9%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 16%{transform:translate3d(-1%,0,0) scaleX(1.028);opacity:1}
- 28%{transform:translate3d(12%,0,0) scaleX(.94);opacity:1}
- 42%{transform:translate3d(40%,0,0) scaleX(.81);opacity:1}
- 62%{transform:translate3d(78%,0,0) scaleX(.57);opacity:1}
- 80%{transform:translate3d(96%,0,0) scaleX(.38);opacity:1}
- 93%{transform:translate3d(104%,0,0) scaleX(.33);opacity:1}
- 100%{transform:translate3d(104%,0,0) scaleX(.33);opacity:0}
-}
-@media(prefers-reduced-motion:reduce){
- .wedding-curtain{display:none!important}
-}
-
-.wedding-curtain__panel{background-color:#103a33!important;background-image:url('emerald-silk-curtain.jpg')!important}
-</style>
-<style id="cross-browser-safari-compat">
-
-/* Cross-browser photographic drapes; CSS transforms only, with -webkit prefixed animations. */
-.wedding-curtain {
- position:fixed!important;left:0!important;top:0!important;right:0!important;bottom:0!important;
- width:100%!important;height:100vh!important;max-height:none!important;
- z-index:99999!important;overflow:hidden!important;
- background:transparent!important;isolation:auto;
- -webkit-transform:none!important;transform:none!important;
- -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-}
-.wedding-curtain__panel {
- position:absolute!important;top:0!important;bottom:0!important;
- height:100%!important;width:50.6%!important;overflow:hidden!important;
- background-repeat:no-repeat!important;background-position:center center!important;
- background-size:100% 100%!important;
- border:0!important;box-shadow:none!important;filter:none!important;
- -webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);
- -webkit-backface-visibility:hidden!important;backface-visibility:hidden!important;
- -webkit-transform-origin:center center!important;transform-origin:center center!important;
-}
-.wedding-curtain__panel--left {left:0!important;right:auto!important;}
-.wedding-curtain__panel--right {left:auto!important;right:0!important;}
-.wedding-curtain__panel svg,.wedding-curtain__panel:after,.wedding-curtain__panel:before,
-.wedding-curtain:before,.wedding-curtain:after {display:none!important;content:none!important;}
-html:not(.curtain-exit):not(.curtain-arrive) .wedding-curtain {
- display:none!important;visibility:hidden!important;pointer-events:none!important;
-}
-html.curtain-exit .wedding-curtain,html.curtain-arrive .wedding-curtain {
- display:block!important;visibility:visible!important;pointer-events:auto!important;
-}
-html.curtain-exit .wedding-curtain__panel--left {
- -webkit-animation:luxuryCloseLeft 1.03s cubic-bezier(.57,.04,.27,1) both!important;
- animation:luxuryCloseLeft 1.03s cubic-bezier(.57,.04,.27,1) both!important;
-}
-html.curtain-exit .wedding-curtain__panel--right {
- -webkit-animation:luxuryCloseRight 1.03s cubic-bezier(.57,.04,.27,1) both!important;
- animation:luxuryCloseRight 1.03s cubic-bezier(.57,.04,.27,1) both!important;
-}
-html.curtain-arrive .wedding-curtain__panel--left {
- -webkit-animation:luxuryOpenLeft 2.7s cubic-bezier(.4,.01,.16,1) both!important;
- animation:luxuryOpenLeft 2.7s cubic-bezier(.4,.01,.16,1) both!important;
-}
-html.curtain-arrive .wedding-curtain__panel--right {
- -webkit-animation:luxuryOpenRight 2.7s cubic-bezier(.4,.01,.16,1) both!important;
- animation:luxuryOpenRight 2.7s cubic-bezier(.4,.01,.16,1) both!important;
-}
-@-webkit-keyframes luxuryCloseLeft {
- 0%{-webkit-transform:translate3d(-105%,0,0) scaleX(.74)}
- 63%{-webkit-transform:translate3d(-28%,0,0) scaleX(.88)}
- 88%{-webkit-transform:translate3d(1.2%,0,0) scaleX(1.018)}
- 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
-}
-@keyframes luxuryCloseLeft {
- 0%{transform:translate3d(-105%,0,0) scaleX(.74)}
- 63%{transform:translate3d(-28%,0,0) scaleX(.88)}
- 88%{transform:translate3d(1.2%,0,0) scaleX(1.018)}
- 100%{transform:translate3d(0,0,0) scaleX(1)}
-}
-@-webkit-keyframes luxuryCloseRight {
- 0%{-webkit-transform:translate3d(105%,0,0) scaleX(.74)}
- 63%{-webkit-transform:translate3d(28%,0,0) scaleX(.88)}
- 88%{-webkit-transform:translate3d(-1.2%,0,0) scaleX(1.018)}
- 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
-}
-@keyframes luxuryCloseRight {
- 0%{transform:translate3d(105%,0,0) scaleX(.74)}
- 63%{transform:translate3d(28%,0,0) scaleX(.88)}
- 88%{transform:translate3d(-1.2%,0,0) scaleX(1.018)}
- 100%{transform:translate3d(0,0,0) scaleX(1)}
-}
-@-webkit-keyframes luxuryOpenLeft {
- 0%,11%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 20%{-webkit-transform:translate3d(1.0%,0,0) scaleX(1.02);opacity:1}
- 36%{-webkit-transform:translate3d(-26%,0,0) scaleX(.88);opacity:1}
- 54%{-webkit-transform:translate3d(-61%,0,0) scaleX(.68);opacity:1}
- 76%{-webkit-transform:translate3d(-88%,0,0) scaleX(.47);opacity:1}
- 95%{-webkit-transform:translate3d(-103%,0,0) scaleX(.36);opacity:1}
- 100%{-webkit-transform:translate3d(-105%,0,0) scaleX(.35);opacity:0}
-}
-@keyframes luxuryOpenLeft {
- 0%,11%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 20%{transform:translate3d(1.0%,0,0) scaleX(1.02);opacity:1}
- 36%{transform:translate3d(-26%,0,0) scaleX(.88);opacity:1}
- 54%{transform:translate3d(-61%,0,0) scaleX(.68);opacity:1}
- 76%{transform:translate3d(-88%,0,0) scaleX(.47);opacity:1}
- 95%{transform:translate3d(-103%,0,0) scaleX(.36);opacity:1}
- 100%{transform:translate3d(-105%,0,0) scaleX(.35);opacity:0}
-}
-@-webkit-keyframes luxuryOpenRight {
- 0%,11%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 20%{-webkit-transform:translate3d(-1.0%,0,0) scaleX(1.02);opacity:1}
- 36%{-webkit-transform:translate3d(26%,0,0) scaleX(.88);opacity:1}
- 54%{-webkit-transform:translate3d(61%,0,0) scaleX(.68);opacity:1}
- 76%{-webkit-transform:translate3d(88%,0,0) scaleX(.47);opacity:1}
- 95%{-webkit-transform:translate3d(103%,0,0) scaleX(.36);opacity:1}
- 100%{-webkit-transform:translate3d(105%,0,0) scaleX(.35);opacity:0}
-}
-@keyframes luxuryOpenRight {
- 0%,11%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
- 20%{transform:translate3d(-1.0%,0,0) scaleX(1.02);opacity:1}
- 36%{transform:translate3d(26%,0,0) scaleX(.88);opacity:1}
- 54%{transform:translate3d(61%,0,0) scaleX(.68);opacity:1}
- 76%{transform:translate3d(88%,0,0) scaleX(.47);opacity:1}
- 95%{transform:translate3d(103%,0,0) scaleX(.36);opacity:1}
- 100%{transform:translate3d(105%,0,0) scaleX(.35);opacity:0}
-}
-@media(prefers-reduced-motion:reduce){.wedding-curtain{display:none!important}}
-
-.wedding-curtain__panel {background-color:#103a33!important}
-.wedding-curtain__panel--left {background-image:url('emerald-drape-left-safari.jpg')!important}
-.wedding-curtain__panel--right {background-image:url('emerald-drape-right-safari.jpg')!important}
+<style id="universal-drape-system">
+.drape-stage{position:fixed;top:0;left:0;right:0;bottom:0;height:100vh;width:100%;
+ z-index:99999;overflow:hidden;display:none;pointer-events:none;background:transparent!important;
+ -webkit-transform:translateZ(0);transform:translateZ(0)}
+html.curtain-exit .drape-stage,html.curtain-arrive .drape-stage{display:block;pointer-events:auto}
+.drape-half{position:absolute;top:0;height:100%;width:50.5%;overflow:hidden;
+ background-repeat:no-repeat;background-size:100% 100%;background-position:center center;
+ -webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform,opacity}
+.drape-left{left:0;background-color:#123c33;background-image:url('curtain-emerald-left.jpg')}
+.drape-right{right:0;background-color:#123c33;background-image:url('curtain-emerald-right.jpg')}
+.drape-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;pointer-events:none}
+.drape-stage.canvas-ready .drape-canvas{opacity:1}
+.drape-stage.canvas-ready .drape-half{opacity:0}
+/* CSS-only fallback if 2D canvas or rAF is unavailable. */
+html.curtain-exit .drape-left{-webkit-animation:drapeCloseL 1.3s ease-out both;animation:drapeCloseL 1.3s ease-out both}
+html.curtain-exit .drape-right{-webkit-animation:drapeCloseR 1.3s ease-out both;animation:drapeCloseR 1.3s ease-out both}
+html.curtain-arrive .drape-left{-webkit-animation:drapeOpenL 2.9s cubic-bezier(.45,0,.14,1) both;animation:drapeOpenL 2.9s cubic-bezier(.45,0,.14,1) both}
+html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(.45,0,.14,1) both;animation:drapeOpenR 2.9s cubic-bezier(.45,0,.14,1) both}
+@-webkit-keyframes drapeCloseL{from{-webkit-transform:translateX(-103%) scaleX(.7)}to{-webkit-transform:translateX(0) scaleX(1)}}
+@keyframes drapeCloseL{from{transform:translateX(-103%) scaleX(.7)}to{transform:translateX(0) scaleX(1)}}
+@-webkit-keyframes drapeCloseR{from{-webkit-transform:translateX(103%) scaleX(.7)}to{-webkit-transform:translateX(0) scaleX(1)}}
+@keyframes drapeCloseR{from{transform:translateX(103%) scaleX(.7)}to{transform:translateX(0) scaleX(1)}}
+@-webkit-keyframes drapeOpenL{from{-webkit-transform:translateX(0) scaleX(1)}to{-webkit-transform:translateX(-104%) scaleX(.38)}}
+@keyframes drapeOpenL{from{transform:translateX(0) scaleX(1)}to{transform:translateX(-104%) scaleX(.38)}}
+@-webkit-keyframes drapeOpenR{from{-webkit-transform:translateX(0) scaleX(1)}to{-webkit-transform:translateX(104%) scaleX(.38)}}
+@keyframes drapeOpenR{from{transform:translateX(0) scaleX(1)}to{transform:translateX(104%) scaleX(.38)}}
+@media(prefers-reduced-motion:reduce){.drape-stage{display:none!important}}
 </style>
 </head>
 <body>
+<div class="drape-stage" aria-hidden="true" data-drape="emerald">
+  <div class="drape-half drape-left"></div><div class="drape-half drape-right"></div>
+  <canvas class="drape-canvas" aria-hidden="true"></canvas>
+</div>
 <div class="scene" aria-hidden="true">
   <picture class="afterglow" aria-hidden="true">
-  <source media="(max-width:699px)" srcset="bismillah-frame-mobile.jpg">
-  <img src="bismillah-frame-desktop.jpg" alt="" decoding="async">
+  <source media="(max-width:699px)" srcset="bismillah-frame-mobile-hd.jpg">
+  <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async">
  </picture>
- <video id="film" src="intro-mobile-compatible.mp4" muted autoplay playsinline webkit-playsinline preload="metadata" poster="poster-mobile.jpg" aria-label="Bismillah cinematic introduction"></video>
+ <video id="film" src="bismillah-mobile-hd.mp4" muted autoplay playsinline webkit-playsinline preload="metadata" poster="poster-mobile.jpg" aria-label="Bismillah cinematic introduction"></video>
   <div class="gold-haze"></div>
 </div>
 <div class="particles" aria-hidden="true">
@@ -683,8 +378,8 @@ html.curtain-arrive .wedding-curtain__panel--right {
  <span class="particle" style="--x:70.8%;--size:1.0px;--alpha:0.40;--shade:#d8b46e;--duration:20.7s;--delay:-12.4s;--drift:8.2px"></span>
 </div>
 <picture class="bismillah-veil" aria-hidden="true">
-  <source media="(max-width:699px)" srcset="bismillah-frame-mobile.jpg">
-  <img src="bismillah-frame-desktop.jpg" alt="" decoding="async">
+  <source media="(max-width:699px)" srcset="bismillah-frame-mobile-hd.jpg">
+  <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async">
 </picture>
 <div class="frame" aria-hidden="true"></div>
 <div id="play-gate" class="play-gate" aria-live="polite">
@@ -743,7 +438,7 @@ html.curtain-arrive .wedding-curtain__panel--right {
    <div class="end-ornament" aria-hidden="true">✧</div>
    <p class="next-note">With the blessings of Allah</p>
    <p class="footnote">Full celebration details and RSVP inside</p>
-   <a class="enter" href="celebration-ivory-safari.html?curtain=1">ENTER INVITATION <span class="arrow" aria-hidden="true">→</span></a>
+   <a class="enter" href="celebration-ivory-2026.html?curtain=1&amp;v=3">ENTER INVITATION <span class="arrow" aria-hidden="true">→</span></a>
   </div>
  </div>
 </main>
@@ -951,7 +646,15 @@ html.curtain-arrive .wedding-curtain__panel--right {
     hideGate();
   });
   film.addEventListener('ended',finish);
-  film.addEventListener('error',function(){if(!done)stillCinematic();});
+  film.addEventListener('error',function(){
+    if(done)return;
+    if(!film.getAttribute('data-lowres')){
+      film.setAttribute('data-lowres','1');
+      var legacy=mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4';
+      film.setAttribute('src',legacy);
+      try{film.load();play(false);}catch(ignore){stillCinematic();}
+    }else stillCinematic();
+  });
   film.addEventListener('stalled',function(){
     if(!done && !fallbackActive && !playing && film.currentTime<.1)showPlay('Automatic fallback');
   });
@@ -966,7 +669,7 @@ html.curtain-arrive .wedding-curtain__panel--right {
     openWithoutFilm();
   }else{
     /* Select an actual src (rather than <source media>) for older Safari. */
-    var asset=mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4';
+    var asset=mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4';
     if(!mobile)film.poster='poster.jpg';
     if(film.getAttribute('src')!==asset){film.setAttribute('src',asset);}
     film.muted=true;
@@ -1016,36 +719,10 @@ html.curtain-arrive .wedding-curtain__panel--right {
 
 
 
-<!-- Ivory silk drapes tied with bows: an animated reveal inspired by the supplied video. -->
-<div class="wedding-curtain" aria-hidden="true">
- <div class="wedding-curtain__panel wedding-curtain__panel--left">
-</div>
- <div class="wedding-curtain__panel wedding-curtain__panel--right">
-</div>
-</div>
 
 
-<script>
-(function(){
-  var link=document.querySelector('a.enter[href^="celebration.html"]');
-  if(!link || !link.addEventListener || !document.documentElement.classList)return;
-  var busy=false;
-  link.addEventListener('click',function(event){
-    if(busy){event.preventDefault();return;}
-    if(event.defaultPrevented || (typeof event.button==='number' && event.button!==0) ||
-       event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)return;
-    var reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduced)return;
-    event.preventDefault();busy=true;
-    document.documentElement.classList.add('curtain-exit');
-    var destination=link.href;
-    window.setTimeout(function(){window.location.href=destination;},1100);
-  });
-  // Safari back-forward cache must never leave a closed curtain over the intro.
-  window.addEventListener('pageshow',function(){
-    busy=false;document.documentElement.classList.remove('curtain-exit');
-  });
-})();
-</script>
+
+
+<script src="curtain-motion.js?v=3" defer></script>
 </body>
 </html>

@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff9f0">
+<meta name="description" content="The wedding celebration of Shoeb Ahmed and Fabbiha Akther Shama. Wednesday, 31 March 2027 at White Abbey Ballroom, Bradford.">
+<title>Shoeb & Fabbiha | The Celebration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try {
+    if(/(?:\?|&)curtain=1(?:&|$)/.test(window.location.search)){
+      var motion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(!motion)document.documentElement.className+=' curtain-arrive';
+    }
+  } catch(ignore) {}
+})();
+</script>
+<style>
+:root{--cream:#fff9f0;--paper:#fffaf7;--green:#8e5363;--green-dark:#67394b;--gold:#a67b43;--gold-soft:#dec49d;--ink:#4b333d;--muted:#796772;--line:rgba(161,110,120,.28);--emerald:#267460;--serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;--sans:'DM Sans',Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:108px}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:3px solid #b18b57;outline-offset:4px}
+::selection{background:#e8cfae;color:#653b4c}
+/* Rose-maroon, champagne-gold and restrained emerald palette. */
+/* Subtle background texture, no bulky images or autoplay dependencies. */
+.page{position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(90deg,transparent 0 98.7%,rgba(165,101,117,.032) 98.7% 100%),radial-gradient(ellipse at 5% 2%,rgba(220,187,141,.15),transparent 39%),var(--cream)}
+.page:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:radial-gradient(#b8a276 .55px,transparent .55px);background-size:27px 27px;mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 66%,transparent 100%)}
+.wrap{width:min(1130px,calc(100% - 48px));margin:0 auto;position:relative}
+/* Persistent glass navigation: works even within the page's overflow-hidden decorative layer. */
+.site-header{
+ position:fixed;top:max(12px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);
+ z-index:50;width:min(1080px,calc(100% - 28px));min-height:64px;
+ display:flex;align-items:center;justify-content:space-between;gap:24px;
+ padding:8px 12px 8px 20px;border:1px solid rgba(255,255,255,.77);
+ border-radius:999px;background:rgba(255,245,244,.82);
+ -webkit-backdrop-filter:blur(17px) saturate(1.3);backdrop-filter:blur(17px) saturate(1.3);
+ box-shadow:0 11px 38px rgba(93,48,64,.14),inset 0 1px rgba(255,255,255,.80);
+}
+.brand{text-decoration:none;display:flex;align-items:center;gap:10px;color:var(--green-dark);flex:none}
+.brand-mark{width:31px;height:31px;border:1px solid rgba(166,132,78,.6);display:grid;place-items:center;transform:rotate(45deg)}
+.brand-mark span{font:500 14px/1 var(--serif);transform:rotate(-45deg)}
+.brand-name{font:500 21px/1 var(--serif);letter-spacing:.01em;white-space:nowrap}
+.nav{display:flex;align-items:center;justify-content:flex-end;gap:3px;min-width:0}
+.nav a{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;min-height:42px;
+ font:700 10px/1.4 var(--sans);letter-spacing:.065em;text-decoration:none;
+ color:#684957;border:1px solid transparent;padding:11px 13px;border-radius:999px;
+ transition:background .22s ease,color .22s ease,border-color .22s ease}
+.nav a:hover,.nav a[aria-current="location"]{color:#5e3445;background:rgba(191,143,144,.22)}
+.nav .nav-home{gap:6px;color:#714356;border-color:rgba(166,123,67,.35);background:rgba(255,249,240,.48)}
+.nav .nav-home:hover{background:rgba(166,123,67,.14);border-color:rgba(166,123,67,.58)}
+.nav .nav-rsvp{background:#754252;color:#fff0da;border-color:rgba(102,53,70,.75);padding-inline:20px}
+.nav .nav-rsvp:hover,.nav .nav-rsvp[aria-current="location"]{background:#875261;color:#fff}
+/* Without blur support, the solid translucent colour remains readable. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ .site-header{background:#fff9f0}
+}
+main section[id]{scroll-margin-top:0}
+
+/* Initial page entrance suggests opening a new chapter. */
+@keyframes settleIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes archGlow{from{opacity:0;transform:translateY(13px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.hero{display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:min(5.6vw,74px);padding:70px 0 94px;min-height:630px}
+.hero-copy{animation:settleIn 1.3s cubic-bezier(.19,1,.22,1) both}
+.kicker{display:flex;align-items:center;gap:15px;text-transform:uppercase;color:var(--gold);font:700 10px/1.5 var(--sans);letter-spacing:.28em}
+.kicker:before{content:"";width:30px;height:1px;background:currentColor}
+h1,h2,h3,p{margin-top:0}
+h1{font:400 clamp(62px,7.9vw,110px)/.86 var(--serif);letter-spacing:-.045em;color:var(--green-dark);margin:26px 0 25px}
+h1 em{font-style:italic;color:var(--gold);font-weight:400}
+.intro{font:400 clamp(16px,1.3vw,19px)/1.85 var(--sans);color:#765e69;max-width:420px;margin:0 0 36px}
+.hero-date{display:flex;align-items:center;gap:15px;margin-bottom:31px;font:600 11px/1.6 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#6c4859}
+.hero-date .separator{color:var(--gold);font-size:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:16px;padding:17px 23px;min-height:53px;background:var(--green-dark);border:1px solid var(--green-dark);color:#fff2de;text-decoration:none;text-transform:uppercase;letter-spacing:.16em;font:600 10px/1.4 var(--sans);transition:background .2s ease,transform .2s ease}
+.btn:hover{background:#965d6b;transform:translateY(-2px)}
+.btn.outline{background:transparent;color:var(--green-dark);border-color:rgba(110,57,77,.54)}
+.btn.outline:hover{background:rgba(126,77,92,.08)}
+.btn .arrow{font-size:17px;font-family:Georgia,serif;line-height:1}
+.hero-art{position:relative;height:min(600px,45vw);min-height:480px;display:grid;place-items:center;animation:archGlow 1.65s .15s both}
+.art-halo{position:absolute;inset:13% 0 0 0;background:radial-gradient(ellipse at 50% 52%,rgba(204,150,159,.26),transparent 66%);filter:blur(5px)}
+.arch{position:relative;width:min(100%,405px);height:100%;max-height:575px;border-radius:195px 195px 5px 5px;border:1px solid rgba(153,116,62,.55);background:radial-gradient(ellipse at 50% 28%,#fffaf7,#f5e5e2 54%,#e6d0ce 100%);box-shadow:0 20px 70px rgba(106,54,72,.13),inset 0 0 0 12px rgba(255,255,255,.57),inset 0 0 0 13px rgba(174,139,87,.2);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:27px;text-align:center}
+.arch:before{content:"";position:absolute;inset:21px;border-radius:180px 180px 1px 1px;border:1px solid rgba(151,113,58,.29);pointer-events:none}
+.arch:after{content:"";position:absolute;left:15%;right:15%;bottom:37px;height:1px;background:linear-gradient(90deg,transparent,rgba(163,123,64,.64),transparent)}
+.arch-top{position:relative;font:700 10px/1.5 var(--sans);letter-spacing:.31em;color:#a18455;margin-bottom:46px}
+.arch-decoration{position:relative;display:block;margin-bottom:18px;color:var(--gold);font:400 28px/1 var(--serif)}
+.arch-monogram{position:relative;font:400 clamp(66px,8vw,105px)/1 var(--serif);color:#744454;letter-spacing:-.085em;margin-right:.08em}
+.arch-amp{font:italic 400 53px/1 var(--serif);color:#ba935e;margin:3px 0 4px}
+.arch-bottom{font:600 10px/1.8 var(--sans);letter-spacing:.2em;color:#967b51;margin-top:36px;text-transform:uppercase}
+.arch-flourish{position:absolute;top:42px;left:50%;width:130px;height:52px;transform:translateX(-50%);opacity:.57}
+.vertical-rule{position:absolute;top:10%;bottom:10%;right:-18px;border-right:1px solid rgba(166,133,82,.27)}
+.hero-couple{display:block;width:min(100%,278px);max-height:356px;object-fit:contain;margin:8px auto 2px;filter:drop-shadow(0 12px 28px rgba(106,54,72,.16));animation:coupleFloat 2.3s ease-out both}
+@keyframes coupleFloat{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (max-width:699px){
+  .hero-couple{width:min(100%,202px);max-height:239px;margin:1px auto}
+  .hero-art .arch-top{margin-bottom:10px;font-size:8px;letter-spacing:.18em}
+  .hero-art .arch-decoration{font-size:18px;margin-bottom:6px}
+  .hero-art .arch-bottom{font-size:8px;line-height:1.5;letter-spacing:.12em;margin-top:8px}
+}
+
+/* Section transition */
+.band{background:var(--green-dark);color:#fff0df;padding:18px 0;text-align:center;border-top:1px solid rgba(197,155,86,.45);border-bottom:1px solid rgba(197,155,86,.45)}
+.band p{margin:0;font:500 10px/1.7 var(--sans);letter-spacing:.31em;text-transform:uppercase}
+.band span{color:#c7aa76;padding:0 16px}
+.section{padding:110px 0}
+.section-lead{text-align:center;margin-bottom:48px}
+.small-label{font:700 10px/1.8 var(--sans);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin:0 0 13px}
+.section-title{font:400 clamp(44px,5.5vw,68px)/1.04 var(--serif);color:var(--green-dark);margin:0 0 15px;letter-spacing:-.03em}
+.section-subtitle{font:400 15px/1.85 var(--sans);color:#806d75;max-width:570px;margin:0 auto}
+.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.detail{background:rgba(255,250,247,.87);border:1px solid rgba(156,123,73,.26);padding:40px 30px;min-height:218px;text-align:center;position:relative;box-shadow:0 8px 20px rgba(64,60,42,.025)}
+.detail:before{content:"";position:absolute;left:17px;right:17px;top:17px;height:1px;background:linear-gradient(90deg,transparent,rgba(167,133,74,.31),transparent)}
+.detail-icon{display:block;color:var(--gold);font:400 29px/1 var(--serif);margin-bottom:24px}
+.detail-label{font:700 10px/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#a18352;margin:0 0 13px}
+.detail-value{font:500 28px/1.18 var(--serif);color:var(--green-dark);margin:0 0 8px}
+.detail-note{font:400 12px/1.6 var(--sans);color:#89747b;margin:0}
+/* Venue information */
+.venue-section{background:#f4e8e5;border-top:1px solid rgba(157,126,79,.22);border-bottom:1px solid rgba(157,126,79,.22);padding:85px 0}
+.venue-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:68px;align-items:center}
+.venue-panel{background:var(--green-dark);color:#ffebd5;min-height:380px;padding:55px 50px;position:relative;overflow:hidden;display:flex;justify-content:center;flex-direction:column;text-align:center;box-shadow:0 18px 42px rgba(92,47,61,.17)}
+.venue-panel:before{content:"";position:absolute;inset:14px;border:1px solid rgba(208,176,112,.39);pointer-events:none}
+.venue-panel:after{content:"";position:absolute;width:330px;height:330px;left:50%;top:-185px;transform:translateX(-50%);border:1px solid rgba(211,177,107,.24);border-radius:50%}
+.venue-panel .flourish{color:#d6bf91;font:normal 34px/1 var(--serif);margin-bottom:27px}
+.venue-panel strong{font:400 clamp(37px,4.6vw,55px)/1.02 var(--serif);letter-spacing:-.015em;display:block}
+.venue-panel .panel-label{font:600 9px/1.5 var(--sans);letter-spacing:.29em;color:#d7b77c;text-transform:uppercase;margin:21px 0 0}
+.venue-info h2{font:400 clamp(42px,5vw,63px)/1.05 var(--serif);letter-spacing:-.025em;color:var(--green-dark);margin:0 0 16px}
+.venue-info>p{font:400 14px/1.95 var(--sans);color:#78636c;max-width:460px;margin:0 0 22px}
+.address{font:500 14px/1.85 var(--sans);color:#6d4555;font-style:normal;margin-bottom:26px}
+.map-label{font:700 10px/1.5 var(--sans);letter-spacing:.18em;color:#937344;text-transform:uppercase;margin-bottom:14px}
+.map-options{display:flex;gap:10px;flex-wrap:wrap}
+.map-options a{padding:12px 14px;border:1px solid rgba(133,78,96,.48);text-decoration:none;background:rgba(255,255,255,.29);font:600 11px/1.4 var(--sans);color:#714354;transition:background .2s ease}
+.map-options a:hover{background:#fffaf7}
+/* Helpful details */
+.notes{padding:95px 0 110px}
+.note-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:890px;margin:0 auto}
+.note{display:flex;gap:22px;padding:25px 15px;border-top:1px solid var(--line)}
+.note-symbol{font:400 34px/1 var(--serif);color:#aa8b55}
+.note h3{font:500 29px/1.2 var(--serif);margin:0 0 8px;color:#673f50}
+.note p{font:400 13px/1.8 var(--sans);color:#806b74;margin:0}
+/* RSVP is intentionally kept on Joy, with no unverified in-house guest data storage. */
+.rsvp-wrap{background:var(--green-dark);color:#fff0db;position:relative;padding:108px 20px 100px;text-align:center;overflow:hidden}
+.rsvp-wrap:before{content:"";position:absolute;inset:15px;border:1px solid rgba(215,182,115,.34);pointer-events:none}
+.rsvp-wrap:after{content:"";position:absolute;inset:30px;border:1px solid rgba(215,182,115,.1);pointer-events:none}
+.rsvp-glow{position:absolute;left:50%;top:20%;transform:translateX(-50%);width:650px;height:350px;border-radius:50%;background:radial-gradient(ellipse,rgba(164,130,66,.12),transparent 66%);pointer-events:none}
+.rsvp-wrap .small-label{color:#c7ab75}
+.rsvp-wrap h2{font:400 clamp(52px,7vw,90px)/.95 var(--serif);letter-spacing:-.027em;margin:0 0 23px;color:#fff0df}
+.rsvp-wrap p:not(.small-label){font:400 15px/1.9 var(--sans);max-width:490px;margin:0 auto 30px;color:#f3dce0}
+.rsvp-wrap .btn{background:#e8d6ad;border-color:#e8d6ad;color:#6d4050;min-width:236px}
+.rsvp-wrap .btn:hover{background:#f9eaca}
+.rsvp-footnote{margin:18px auto 0!important;font-size:11px!important;opacity:.7;letter-spacing:.025em}
+.site-footer{padding:52px 0 45px;text-align:center}
+.footer-monogram{font:500 39px/1 var(--serif);color:#977a49;margin:0 0 14px}
+.site-footer p{font:500 10px/1.8 var(--sans);letter-spacing:.19em;color:#8a727c;text-transform:uppercase;margin:0}
+/* Graceful, lightweight section animation; content is visible if JS fails. */
+@keyframes comeIntoView{from{transform:translateY(18px);filter:blur(1px)}to{transform:translateY(0);filter:blur(0)}}
+.reveal.is-in-view{animation:comeIntoView .85s cubic-bezier(.16,1,.3,1) both}
+@media(max-width:880px){
+ .hero{grid-template-columns:1fr 1fr;gap:20px;min-height:530px}
+ .hero-art{min-height:390px;height:440px}
+ .arch{width:100%;height:100%}
+ .venue-grid{gap:35px}
+ .venue-panel{padding:46px 26px}
+ .nav{gap:2px}
+ .site-header{padding-left:14px}
+ .brand-name{font-size:19px}
+ .nav a{padding:10px 10px;font-size:9px}
+}
+@media(max-width:660px){
+ .wrap{width:calc(100% - 38px)}
+ .site-header{width:calc(100% - 18px);top:max(9px,env(safe-area-inset-top));min-height:58px;padding:6px 7px;border-radius:22px;gap:0}
+ .brand{display:none}
+ .nav{width:100%;justify-content:space-between;gap:2px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .nav::-webkit-scrollbar{display:none}
+ .nav a{font-size:10px;min-height:43px;padding:10px 8px;letter-spacing:0;flex-shrink:0}
+ .nav a[href="#celebration"]{display:none}
+ .nav .nav-rsvp{padding:10px 13px;font-size:10px}
+ main section[id]{scroll-margin-top:0}
+ .hero{grid-template-columns:1fr;gap:21px;text-align:center;padding:54px 0 70px;min-height:0}
+ .hero-copy{display:flex;flex-direction:column;align-items:center}
+ .kicker:before{display:none}
+ .kicker{letter-spacing:.19em;justify-content:center}
+ h1{font-size:clamp(62px,16vw,85px);margin:24px 0 20px}
+ .intro{font-size:14px;line-height:1.85;max-width:340px;margin-bottom:24px}
+ .hero-date{font-size:9px;gap:10px;margin-bottom:25px}
+ .hero-art{height:365px;min-height:0;width:min(100%,320px);margin:30px auto 0}
+ .arch{max-height:365px;width:100%;border-radius:165px 165px 3px 3px}
+ .arch:before{border-radius:145px 145px 1px 1px}
+ .arch-top{margin-bottom:23px;font-size:8px}
+ .arch-monogram{font-size:65px}
+ .arch-amp{font-size:35px}
+ .arch-decoration{margin-bottom:12px}
+ .arch-bottom{margin-top:18px;font-size:8px}
+ .vertical-rule{right:-10px}
+ .band{padding:16px 0}
+ .band p{font-size:8px;letter-spacing:.15em}
+ .band span{padding:0 6px}
+ .section{padding:76px 0}
+ .section-lead{margin-bottom:31px}
+ .section-title{font-size:53px}
+ .section-subtitle{font-size:13px}
+ .detail-grid{grid-template-columns:1fr;gap:11px}
+ .detail{min-height:0;padding:29px 17px}
+ .detail-icon{margin-bottom:13px;font-size:22px}
+ .detail-value{font-size:28px}
+ .venue-section{padding:68px 0}
+ .venue-grid{grid-template-columns:1fr;gap:35px}
+ .venue-panel{min-height:310px;order:1}
+ .venue-info{order:2;text-align:center}
+ .venue-info h2{font-size:50px}
+ .venue-info>p{margin:0 auto 20px;font-size:13px}
+ .address{font-size:13px}
+ .map-options{justify-content:center}
+ .map-options a{flex:1 1 auto;font-size:10px;padding:12px 11px}
+ .notes{padding:70px 0}
+ .note-grid{grid-template-columns:1fr;gap:0}
+ .note{padding:22px 5px}
+ .note h3{font-size:28px}
+ .rsvp-wrap{padding:80px 30px 75px}
+ .rsvp-wrap:before{inset:10px}
+ .rsvp-wrap:after{inset:17px}
+ .rsvp-wrap h2{font-size:62px}
+ .rsvp-wrap p:not(.small-label){font-size:13px}
+}
+@media(max-width:375px){.nav{justify-content:flex-start}.nav a{padding:10px 10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Quiet ballroom-style timeline rather than invented precise event times. */
+.schedule-section{padding:105px 0 112px;background:linear-gradient(180deg,#f9f0e5 0%,#fffaf4 100%);border-top:1px solid rgba(160,125,76,.18);border-bottom:1px solid rgba(160,125,76,.18)}
+.schedule-timeline{max-width:790px;margin:5px auto 0;padding:8px 0 0}
+.schedule-event{display:grid;grid-template-columns:165px 34px 1fr;gap:17px;min-height:120px;align-items:start}
+.schedule-when{padding:13px 2px 0;text-align:right;font:700 10px/1.65 var(--sans);letter-spacing:.14em;color:#967443;text-transform:uppercase}
+.schedule-marker{position:relative;display:flex;justify-content:center;min-height:100%;padding-top:16px}
+.schedule-marker:before{content:"";position:absolute;top:23px;bottom:-7px;left:50%;width:1px;transform:translateX(-50%);background:rgba(168,132,76,.34)}
+.schedule-event:last-child .schedule-marker:before{display:none}
+.schedule-marker span{position:relative;width:12px;height:12px;border:2px solid #af8d52;transform:rotate(45deg);background:#f7e8e8;box-shadow:0 0 0 5px #f7e8e8;z-index:1}
+.schedule-description{padding:8px 0 27px;border-bottom:1px solid rgba(168,132,76,.20)}
+.schedule-event:last-child .schedule-description{border-bottom:0}
+.schedule-description h3{margin:0 0 8px;font:500 29px/1.1 var(--serif);color:#643f50}
+.schedule-description p{font:400 13px/1.85 var(--sans);color:#826e77;margin:0;max-width:420px}
+@media(max-width:660px){
+ .schedule-section{padding:76px 0 78px}
+ .schedule-event{grid-template-columns:91px 22px 1fr;gap:9px;min-height:135px}
+ .schedule-when{font-size:9px;letter-spacing:.045em;padding-top:8px}
+ .schedule-marker{padding-top:13px}
+ .schedule-marker:before{top:20px}
+ .schedule-marker span{width:10px;height:10px}
+ .schedule-description{padding-top:4px}
+ .schedule-description h3{font-size:24px}
+ .schedule-description p{font-size:12px}
+}
+
+/* A few jewel-toned emerald details tie this chapter to the forest-green cinematic. */
+.brand-mark{border-color:rgba(38,116,96,.58)}
+.brand-mark span{color:var(--emerald)}
+.hero-date .separator{color:var(--emerald)}
+.arch-decoration{color:var(--emerald)}
+.detail:nth-child(2) .detail-icon{color:var(--emerald)}
+.schedule-marker span{border-color:var(--emerald)}
+.note:nth-child(2) .note-symbol{color:var(--emerald)}
+.map-options a:hover,.map-options a:focus-visible{border-color:var(--emerald)}
+.nav a[aria-current="location"]:not(.nav-rsvp){box-shadow:inset 0 -2px 0 rgba(38,116,96,.6)}
+/* Matching rose tint on glass header, while maintaining legible navigation. */
+.site-header{border-color:rgba(255,247,243,.84)}
+.arch{border-color:rgba(169,123,105,.50)}
+.schedule-section{border-color:rgba(165,97,112,.23)}
+.venue-section{border-color:rgba(165,97,112,.22)}
+
+
+/* Curtain CSS moved to a single universal animation below. */
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<style id="dusty-grunge-name-font">
+@font-face{font-family:"Dusty Grunge";src:local("Dusty Grunge"),url("dusty-grunge.woff2") format("woff2");font-display:swap}
+.brand-name,.arch-bottom,.couple-name-accent{font-family:"Dusty Grunge","Special Elite",Georgia,serif!important;letter-spacing:.035em;text-transform:uppercase}
+.brand-name{font-size:17px!important}
+.arch-bottom{font-size:13px!important;line-height:1.5!important;max-width:90%;white-space:normal}
+@media(max-width:660px){.arch-bottom{font-size:10px!important}.brand-name{font-size:14px!important}}
+</style>
+<style id="safari-ivory-canvas-fix">
+:root {--cream:#fffaf1!important;--paper:#fffdf7!important}
+html,body,body>.page,main,.hero,.section,.notes,.site-footer{background-color:#fffaf1!important}
+body>.page,.page{background-color:#fffaf1!important;
+ background-image:radial-gradient(ellipse at 15% 2%,rgba(210,182,139,.13),transparent 40%)!important}
+.schedule-section{background:#fff8ee!important}
+.venue-section{background:#f7f0e7!important}
+.band{background:#f3eadf!important;color:#754252!important}
+.band span{color:#a98547!important}
+.rsvp-wrap{background:#f5e9e1!important;color:#67394b!important}
+.rsvp-wrap h2,.rsvp-wrap p:not(.small-label){color:#67394b!important}
+.rsvp-wrap .btn{background:#754252!important;color:#fff9f0!important;border-color:#754252!important}
+.venue-panel{background:#78455a!important}
+.site-header{background-color:#fffaf1;background-color:rgba(255,250,241,.94)!important}
+</style>
+
+<style id="universal-drape-system">
+.drape-stage{position:fixed;top:0;left:0;right:0;bottom:0;height:100vh;width:100%;
+ z-index:99999;overflow:hidden;display:none;pointer-events:none;background:transparent!important;
+ -webkit-transform:translateZ(0);transform:translateZ(0)}
+html.curtain-exit .drape-stage,html.curtain-arrive .drape-stage{display:block;pointer-events:auto}
+.drape-half{position:absolute;top:0;height:100%;width:50.5%;overflow:hidden;
+ background-repeat:no-repeat;background-size:100% 100%;background-position:center center;
+ -webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform,opacity}
+.drape-left{left:0;background-color:#fff9f0;background-image:url('curtain-ivory-left.jpg')}
+.drape-right{right:0;background-color:#fff9f0;background-image:url('curtain-ivory-right.jpg')}
+.drape-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;pointer-events:none}
+.drape-stage.canvas-ready .drape-canvas{opacity:1}
+.drape-stage.canvas-ready .drape-half{opacity:0}
+/* CSS-only fallback if 2D canvas or rAF is unavailable. */
+html.curtain-exit .drape-left{-webkit-animation:drapeCloseL 1.3s ease-out both;animation:drapeCloseL 1.3s ease-out both}
+html.curtain-exit .drape-right{-webkit-animation:drapeCloseR 1.3s ease-out both;animation:drapeCloseR 1.3s ease-out both}
+html.curtain-arrive .drape-left{-webkit-animation:drapeOpenL 2.9s cubic-bezier(.45,0,.14,1) both;animation:drapeOpenL 2.9s cubic-bezier(.45,0,.14,1) both}
+html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(.45,0,.14,1) both;animation:drapeOpenR 2.9s cubic-bezier(.45,0,.14,1) both}
+@-webkit-keyframes drapeCloseL{from{-webkit-transform:translateX(-103%) scaleX(.7)}to{-webkit-transform:translateX(0) scaleX(1)}}
+@keyframes drapeCloseL{from{transform:translateX(-103%) scaleX(.7)}to{transform:translateX(0) scaleX(1)}}
+@-webkit-keyframes drapeCloseR{from{-webkit-transform:translateX(103%) scaleX(.7)}to{-webkit-transform:translateX(0) scaleX(1)}}
+@keyframes drapeCloseR{from{transform:translateX(103%) scaleX(.7)}to{transform:translateX(0) scaleX(1)}}
+@-webkit-keyframes drapeOpenL{from{-webkit-transform:translateX(0) scaleX(1)}to{-webkit-transform:translateX(-104%) scaleX(.38)}}
+@keyframes drapeOpenL{from{transform:translateX(0) scaleX(1)}to{transform:translateX(-104%) scaleX(.38)}}
+@-webkit-keyframes drapeOpenR{from{-webkit-transform:translateX(0) scaleX(1)}to{-webkit-transform:translateX(104%) scaleX(.38)}}
+@keyframes drapeOpenR{from{transform:translateX(0) scaleX(1)}to{transform:translateX(104%) scaleX(.38)}}
+@media(prefers-reduced-motion:reduce){.drape-stage{display:none!important}}
+</style>
+</head>
+<body>
+<div class="drape-stage" aria-hidden="true" data-drape="ivory">
+  <div class="drape-half drape-left"></div><div class="drape-half drape-right"></div>
+  <canvas class="drape-canvas" aria-hidden="true"></canvas>
+</div>
+
+
+
+
+<div class="page">
+  <div class="wrap">
+    <header class="site-header" aria-label="Site header">
+      <a class="brand" href="#welcome" aria-label="Shoeb and Fabbiha, top of page"><span class="brand-mark" aria-hidden="true"><span>S F</span></span><span class="brand-name">Shoeb &amp; Fabbiha</span></a>
+      <nav class="nav" aria-label="Quick navigation">
+        <a class="nav-home" href="index.html" aria-label="Home — return to cinematic invitation"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+        <a href="#welcome">Welcome</a>
+        <a href="#celebration">Details</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#location">Venue</a>
+        <a href="#guest-info">Guest info</a>
+        <a class="nav-rsvp" href="#rsvp">RSVP</a>
+      </nav>
+    </header>
+  </div>
+  <main>
+    <section id="welcome" class="hero wrap">
+      <div class="hero-copy">
+        <p class="kicker">You are warmly invited</p>
+        <h1>Let us<br><em>celebrate.</em></h1>
+        <p class="intro">Together with our families, we look forward to sharing a special evening of love, joy and togetherness with you.</p>
+        <div class="hero-date"><span>Wednesday, 31 March 2027</span><span class="separator" aria-hidden="true">✦</span><span>5:00 pm</span></div>
+        <a class="btn" href="#celebration">Explore the celebration <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-halo"></div>
+        <div class="arch">
+          <svg class="arch-flourish" viewBox="0 0 130 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 37C24 35 28 18 44 19C54 19 56 27 65 29C74 27 77 19 86 19C101 18 107 35 127 37" stroke="#9B7947" stroke-width="1.2"/><path d="M65 27C63 12 68 10 65 2C62 10 67 12 65 27ZM44 20C39 8 31 9 29 3C34 20 35 17 44 20ZM86 20C91 8 99 9 101 3C96 20 95 17 86 20Z" fill="#A78652" fill-opacity=".58"/><path d="M11 37L26 31M119 37L104 31" stroke="#9B7947" stroke-width=".8"/></svg>
+          <div class="arch-top">THE WEDDING CELEBRATION</div>
+          <span class="arch-decoration">✧</span>
+          <img class="hero-couple" src="couple-shoeb-haircut.png" alt="Illustration of the bride in a maroon lehenga and the groom in a black sherwani from behind">
+          <div class="arch-bottom">Shoeb &amp; Fabbiha · 31 · 03 · 2027</div>
+        </div>
+        <div class="vertical-rule"></div>
+      </div>
+    </section>
+    <div class="band" aria-hidden="true"><p>A CELEBRATION OF LOVE <span>✧</span> FAMILY <span>✧</span> TOGETHERNESS</p></div>
+    <section class="section wrap" id="celebration">
+      <div class="section-lead reveal">
+        <p class="small-label">Your invitation</p>
+        <h2 class="section-title">The celebration</h2>
+        <p class="section-subtitle">We cannot wait to celebrate this memorable day with the people who mean the most to us.</p>
+      </div>
+      <div class="detail-grid">
+        <article class="detail reveal"><span class="detail-icon" aria-hidden="true">✧</span><p class="detail-label">The date</p><h3 class="detail-value">31 March 2027</h3><p class="detail-note">Wednesday</p></article>
+        <article class="detail reveal"><span class="detail-icon" aria-hidden="true">⌁</span><p class="detail-label">Guest arrival</p><h3 class="detail-value">5:00 PM</h3><p class="detail-note">British Summer Time (UK)</p></article>
+        <article class="detail reveal"><span class="detail-icon" aria-hidden="true">◇</span><p class="detail-label">The venue</p><h3 class="detail-value">White Abbey Ballroom</h3><p class="detail-note">Bradford, West Yorkshire</p></article>
+      </div>
+    </section>
+    <section class="schedule-section" id="schedule" aria-labelledby="schedule-heading">
+      <div class="wrap">
+        <div class="section-lead reveal">
+          <p class="small-label">The evening ahead</p>
+          <h2 class="section-title" id="schedule-heading">Order of the day</h2>
+          <p class="section-subtitle">A little guide to the celebration. Further timings will be shared once confirmed.</p>
+        </div>
+        <div class="schedule-timeline" aria-label="Wedding celebration schedule">
+          <article class="schedule-event reveal">
+            <div class="schedule-when">5:00 PM</div>
+            <div class="schedule-marker" aria-hidden="true"><span></span></div>
+            <div class="schedule-description"><h3>Guest arrival</h3><p>We look forward to welcoming you to White Abbey Ballroom.</p></div>
+          </article>
+          <article class="schedule-event reveal">
+            <div class="schedule-when">Following arrivals</div>
+            <div class="schedule-marker" aria-hidden="true"><span></span></div>
+            <div class="schedule-description"><h3>The wedding celebration</h3><p>Join us to celebrate together with our families and friends.</p></div>
+          </article>
+          <article class="schedule-event reveal">
+            <div class="schedule-when">During the evening</div>
+            <div class="schedule-marker" aria-hidden="true"><span></span></div>
+            <div class="schedule-description"><h3>Dining &amp; celebration</h3><p>Enjoy the evening with us. More precise timings will be confirmed closer to the date.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="venue-section" id="location">
+      <div class="venue-grid wrap">
+        <div class="venue-panel reveal" aria-label="White Abbey Ballroom venue panel">
+          <span class="flourish" aria-hidden="true">✧</span>
+          <strong>White Abbey<br>Ballroom</strong>
+          <p class="panel-label">Bradford · West Yorkshire</p>
+        </div>
+        <div class="venue-info reveal">
+          <p class="small-label">Where we'll celebrate</p>
+          <h2>Find your way<br>to us.</h2>
+          <p>We look forward to welcoming you to White Abbey Ballroom. Please allow enough time to arrive and park before the celebration.</p>
+          <address class="address">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL<br>United Kingdom</address>
+          <p class="map-label">Choose your maps app</p>
+          <div class="map-options" aria-label="Get directions">
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">Google Maps ↗</a>
+            <a href="https://www.waze.com/ul?q=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;navigate=yes" target="_blank" rel="noopener noreferrer">Waze ↗</a>
+            <a href="https://maps.apple.com/?daddr=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;dirflg=d" target="_blank" rel="noopener noreferrer">Apple Maps ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="notes wrap" id="guest-info">
+      <div class="section-lead reveal">
+        <p class="small-label">A little to know</p>
+        <h2 class="section-title">For our guests</h2>
+        <p class="section-subtitle">A few details to help you enjoy the celebration.</p>
+      </div>
+      <div class="note-grid">
+        <article class="note reveal"><span class="note-symbol" aria-hidden="true">◇</span><div><h3>Parking</h3><p>Parking is available at the venue. Spaces may be limited, so please allow extra time on arrival.</p></div></article>
+        <article class="note reveal"><span class="note-symbol" aria-hidden="true">✧</span><div><h3>Prayer facilities</h3><p>Prayer facilities will be available at the venue for guests who wish to use them.</p></div></article>
+      </div>
+    </section>
+    <section class="rsvp-wrap" id="rsvp">
+      <div class="rsvp-glow" aria-hidden="true"></div>
+      <div class="wrap reveal">
+        <p class="small-label">We would love to celebrate with you</p>
+        <h2>Kindly RSVP.</h2>
+        <p>Please let us know whether you'll be joining us. Your attendance response will be collected securely through our Joy wedding website.</p>
+        <a class="btn" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" rel="noopener">Confirm your attendance <span class="arrow" aria-hidden="true">↗</span></a>
+        <p class="rsvp-footnote">You'll continue to Joy to submit your response.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><div class="footer-monogram">S <span aria-hidden="true">✧</span> F</div><p>Shoeb &amp; Fabbiha · 31 March 2027</p></footer>
+</div>
+<script>
+(function(){
+  // The links are normal hash links; this only highlights the current section.
+  var menuLinks=document.querySelectorAll('.nav a[href^="#"]');
+  if(menuLinks.length){
+    function setCurrent(id){
+      for(var n=0;n<menuLinks.length;n++){
+        var active=menuLinks[n].getAttribute('href')==='#'+id;
+        if(active) menuLinks[n].setAttribute('aria-current','location');
+        else menuLinks[n].removeAttribute('aria-current');
+      }
+    }
+    for(var i=0;i<menuLinks.length;i++){
+      menuLinks[i].addEventListener('click',function(){setCurrent(this.getAttribute('href').substring(1));});
+    }
+    if('IntersectionObserver' in window){
+      var sections=document.querySelectorAll('main section[id]');
+      var sectionObserver=new IntersectionObserver(function(entries){
+        for(var e=0;e<entries.length;e++){
+          if(entries[e].isIntersecting)setCurrent(entries[e].target.id);
+        }
+      },{rootMargin:'-20% 0px -60% 0px',threshold:0});
+      for(var s=0;s<sections.length;s++)sectionObserver.observe(sections[s]);
+    }
+  }
+  var items=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)) return;
+  var prefersLess=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersLess)return;
+  var obs=new IntersectionObserver(function(entries){
+    for(var i=0;i<entries.length;i++){
+      if(entries[i].isIntersecting){entries[i].target.classList.add('is-in-view');obs.unobserve(entries[i].target);}
+    }
+  },{threshold:.10});
+  for(var i=0;i<items.length;i++)obs.observe(items[i]);
+})();
+</script>
+
+
+<script src="curtain-motion.js?v=3" defer></script>
+</body>
+</html>
