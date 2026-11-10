@@ -423,8 +423,6 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
     <p class="date">Wednesday · 31 March 2027</p>
     <p class="arrival">Guest arrival · 5:00 PM · UK time</p>
     <p class="venue">The White Abbey Ballroom</p>
-    <address class="address">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL</address>
-    <button class="directions" id="open-map-choices" type="button" aria-haspopup="dialog" aria-controls="map-choice-dialog">GET DIRECTIONS <span aria-hidden="true">↗</span></button>
    </header>
    <div class="soft-divider" aria-hidden="true"></div>
    <section aria-label="Wedding countdown">
@@ -449,18 +447,6 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
   </div>
  </div>
 </main>
-<dialog class="map-choice-dialog" id="map-choice-dialog" aria-labelledby="map-choice-title" aria-describedby="map-choice-description">
- <button class="map-choice-x" type="button" id="close-map-choices" aria-label="Close directions choices">×</button>
- <p class="map-choice-kicker">White Abbey Ballroom</p>
- <h2 class="map-choice-title" id="map-choice-title">Choose your maps app</h2>
- <p class="map-choice-address" id="map-choice-description">3 Whetley Hill, White Abbey Road<br>Bradford, BD8 8NL</p>
- <div class="map-choice-links">
-  <a class="map-choice-option" href="https://www.google.com/maps/dir/?api=1&amp;destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;travelmode=driving" target="_blank" rel="noopener noreferrer"><span>Google Maps</span><span aria-hidden="true">↗</span></a>
-  <a class="map-choice-option" href="https://waze.com/ul?q=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;navigate=yes" target="_blank" rel="noopener noreferrer"><span>Waze</span><span aria-hidden="true">↗</span></a>
-  <a class="map-choice-option" href="https://maps.apple.com/directions?destination=The%20White%20Abbey%20Ballroom%2C%203%20Whetley%20Hill%2C%20White%20Abbey%20Road%2C%20Bradford%2C%20BD8%208NL%2C%20United%20Kingdom&amp;mode=driving" target="_blank" rel="noopener noreferrer"><span>Apple Maps</span><span aria-hidden="true">↗</span></a>
- </div>
- <p class="map-choice-note">Opens your chosen app if available, or its website.</p>
-</dialog>
 
 <script>
 (function(){
@@ -703,24 +689,6 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
     },17000);
   }
   window.addEventListener('pageshow',function(e){if(e.persisted && !done)openWithoutFilm();});
-})();
-</script>
-
-<script>
-(function(){
- var box=document.getElementById('map-choice-dialog');
- var trigger=document.getElementById('open-map-choices');
- var closeButton=document.getElementById('close-map-choices');
- if(!box||!trigger||!closeButton)return;
- function close(){try{if(box.close)box.close();else box.removeAttribute('open');}catch(e){box.removeAttribute('open');}}
- trigger.addEventListener('click',function(){
-   try{if(box.showModal)box.showModal();else box.setAttribute('open','');}
-   catch(e){box.setAttribute('open','');}
- });
- closeButton.addEventListener('click',close);
- box.addEventListener('click',function(e){if(e.target===box)close();});
- var links=box.getElementsByTagName('a');
- for(var i=0;i<links.length;i++)links[i].addEventListener('click',close);
 })();
 </script>
 
