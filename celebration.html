@@ -53,6 +53,8 @@ button:focus-visible,a:focus-visible{outline:3px solid #b18b57;outline-offset:4p
  color:#684957;border:1px solid transparent;padding:11px 13px;border-radius:999px;
  transition:background .22s ease,color .22s ease,border-color .22s ease}
 .nav a:hover,.nav a[aria-current="location"]{color:#5e3445;background:rgba(191,143,144,.22)}
+.nav .nav-home{gap:6px;color:#714356;border-color:rgba(166,123,67,.35);background:rgba(255,249,240,.48)}
+.nav .nav-home:hover{background:rgba(166,123,67,.14);border-color:rgba(166,123,67,.58)}
 .nav .nav-rsvp{background:#754252;color:#fff0da;border-color:rgba(102,53,70,.75);padding-inline:20px}
 .nav .nav-rsvp:hover,.nav .nav-rsvp[aria-current="location"]{background:#875261;color:#fff}
 /* Without blur support, the solid translucent colour remains readable. */
@@ -370,6 +372,158 @@ html.curtain-arrive .wedding-curtain__panel--right {
 .wedding-curtain__panel{filter:none!important}
 </style>
 
+
+<style id="luxury-ruffle-curtain">
+
+/* Natural fabric movement: tension at the centre, a staggered pull, then
+   compressed folds as the silk gathers at the outside edges. */
+.wedding-curtain__panel {
+  width:50.5%!important; height:100%!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:100% 100%!important;
+  -webkit-transform-origin:left center;
+  transform-origin:left center;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  filter:none!important;
+}
+.wedding-curtain__panel--left { left:0; right:auto; -webkit-transform-origin:left center;transform-origin:left center; }
+.wedding-curtain__panel--right { right:0; left:auto; -webkit-transform-origin:right center;transform-origin:right center; }
+.wedding-curtain__panel svg{display:none!important}
+.wedding-curtain__panel::after{display:none!important}
+.wedding-curtain__panel::before{
+ content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+ background:repeating-linear-gradient(90deg,
+    rgba(0,0,0,.09) 0%,rgba(255,255,255,.025) 3%,
+    rgba(255,255,255,.09) 8%,rgba(0,0,0,.035) 12%,
+    rgba(0,0,0,.13) 17%,rgba(255,255,255,0) 23%);
+ background-size:140% 100%;
+ opacity:.32;
+ animation:none;
+}
+html.curtain-arrive .wedding-curtain__panel::before {
+ animation:curtainFabricLight 2.8s ease-out both;
+}
+html.curtain-exit .wedding-curtain__panel::before {
+ animation:curtainFabricLight 1.15s ease-out both;
+}
+@keyframes curtainFabricLight{
+ 0%{background-position:0% center;opacity:.18}
+ 45%{background-position:75% center;opacity:.32}
+ 100%{background-position:100% center;opacity:.48}
+}
+html.curtain-exit .wedding-curtain__panel--left {
+ -webkit-animation:realCloseLeft 1.04s cubic-bezier(.55,.03,.25,1) both!important;
+ animation:realCloseLeft 1.04s cubic-bezier(.55,.03,.25,1) both!important;
+}
+html.curtain-exit .wedding-curtain__panel--right {
+ -webkit-animation:realCloseRight 1.04s cubic-bezier(.55,.03,.25,1) both!important;
+ animation:realCloseRight 1.04s cubic-bezier(.55,.03,.25,1) both!important;
+}
+@-webkit-keyframes realCloseLeft {
+ 0%{-webkit-transform:translate3d(-105%,0,0) scaleX(.72)}
+ 44%{-webkit-transform:translate3d(-52%,0,0) scaleX(.82)}
+ 76%{-webkit-transform:translate3d(2%,0,0) scaleX(1.035)}
+ 91%{-webkit-transform:translate3d(-1%,0,0) scaleX(.99)}
+ 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
+}
+@keyframes realCloseLeft {
+ 0%{transform:translate3d(-105%,0,0) scaleX(.72)}
+ 44%{transform:translate3d(-52%,0,0) scaleX(.82)}
+ 76%{transform:translate3d(2%,0,0) scaleX(1.035)}
+ 91%{transform:translate3d(-1%,0,0) scaleX(.99)}
+ 100%{transform:translate3d(0,0,0) scaleX(1)}
+}
+@-webkit-keyframes realCloseRight {
+ 0%{-webkit-transform:translate3d(105%,0,0) scaleX(.72)}
+ 44%{-webkit-transform:translate3d(52%,0,0) scaleX(.82)}
+ 76%{-webkit-transform:translate3d(-2%,0,0) scaleX(1.035)}
+ 91%{-webkit-transform:translate3d(1%,0,0) scaleX(.99)}
+ 100%{-webkit-transform:translate3d(0,0,0) scaleX(1)}
+}
+@keyframes realCloseRight {
+ 0%{transform:translate3d(105%,0,0) scaleX(.72)}
+ 44%{transform:translate3d(52%,0,0) scaleX(.82)}
+ 76%{transform:translate3d(-2%,0,0) scaleX(1.035)}
+ 91%{transform:translate3d(1%,0,0) scaleX(.99)}
+ 100%{transform:translate3d(0,0,0) scaleX(1)}
+}
+html.curtain-arrive .wedding-curtain__panel--left {
+ -webkit-animation:realOpenLeft 2.85s cubic-bezier(.45,.02,.22,1) both!important;
+ animation:realOpenLeft 2.85s cubic-bezier(.45,.02,.22,1) both!important;
+}
+html.curtain-arrive .wedding-curtain__panel--right {
+ -webkit-animation:realOpenRight 2.85s cubic-bezier(.45,.02,.22,1) both!important;
+ animation:realOpenRight 2.85s cubic-bezier(.45,.02,.22,1) both!important;
+}
+@-webkit-keyframes realOpenLeft {
+ 0%,9%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 16%{-webkit-transform:translate3d(1%,0,0) scaleX(1.028);opacity:1}
+ 28%{-webkit-transform:translate3d(-12%,0,0) scaleX(.94);opacity:1}
+ 42%{-webkit-transform:translate3d(-40%,0,0) scaleX(.81);opacity:1}
+ 62%{-webkit-transform:translate3d(-78%,0,0) scaleX(.57);opacity:1}
+ 80%{-webkit-transform:translate3d(-96%,0,0) scaleX(.38);opacity:1}
+ 93%{-webkit-transform:translate3d(-104%,0,0) scaleX(.33);opacity:1}
+ 100%{-webkit-transform:translate3d(-104%,0,0) scaleX(.33);opacity:0}
+}
+@keyframes realOpenLeft {
+ 0%,9%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 16%{transform:translate3d(1%,0,0) scaleX(1.028);opacity:1}
+ 28%{transform:translate3d(-12%,0,0) scaleX(.94);opacity:1}
+ 42%{transform:translate3d(-40%,0,0) scaleX(.81);opacity:1}
+ 62%{transform:translate3d(-78%,0,0) scaleX(.57);opacity:1}
+ 80%{transform:translate3d(-96%,0,0) scaleX(.38);opacity:1}
+ 93%{transform:translate3d(-104%,0,0) scaleX(.33);opacity:1}
+ 100%{transform:translate3d(-104%,0,0) scaleX(.33);opacity:0}
+}
+@-webkit-keyframes realOpenRight {
+ 0%,9%{-webkit-transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 16%{-webkit-transform:translate3d(-1%,0,0) scaleX(1.028);opacity:1}
+ 28%{-webkit-transform:translate3d(12%,0,0) scaleX(.94);opacity:1}
+ 42%{-webkit-transform:translate3d(40%,0,0) scaleX(.81);opacity:1}
+ 62%{-webkit-transform:translate3d(78%,0,0) scaleX(.57);opacity:1}
+ 80%{-webkit-transform:translate3d(96%,0,0) scaleX(.38);opacity:1}
+ 93%{-webkit-transform:translate3d(104%,0,0) scaleX(.33);opacity:1}
+ 100%{-webkit-transform:translate3d(104%,0,0) scaleX(.33);opacity:0}
+}
+@keyframes realOpenRight {
+ 0%,9%{transform:translate3d(0,0,0) scaleX(1);opacity:1}
+ 16%{transform:translate3d(-1%,0,0) scaleX(1.028);opacity:1}
+ 28%{transform:translate3d(12%,0,0) scaleX(.94);opacity:1}
+ 42%{transform:translate3d(40%,0,0) scaleX(.81);opacity:1}
+ 62%{transform:translate3d(78%,0,0) scaleX(.57);opacity:1}
+ 80%{transform:translate3d(96%,0,0) scaleX(.38);opacity:1}
+ 93%{transform:translate3d(104%,0,0) scaleX(.33);opacity:1}
+ 100%{transform:translate3d(104%,0,0) scaleX(.33);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .wedding-curtain{display:none!important}
+}
+
+.wedding-curtain__panel{background-color:#f8f1e7!important;background-image:url('ivory-satin-curtain.jpg')!important}
+</style>
+
+<style id="ivory-page-override">
+/* Explicit ivory everywhere except a few intentional maroon accents. */
+html,body,.page,main{background-color:#fff9f0!important}
+.page{background-image:radial-gradient(ellipse at 10% 5%,rgba(222,196,157,.11),transparent 36%)!important}
+.site-header{background-color:rgba(255,249,240,.92)!important}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+ .site-header{background-color:#fff9f0!important}
+}
+.band{background-color:#f3e8dd!important;color:#754252!important;border-color:rgba(166,123,67,.32)!important}
+.band span{color:#a67b43!important}
+.schedule-section{background:#fffaf3!important}
+.venue-section{background:#f7efe4!important}
+.venue-panel{background:#7e4a5b!important}
+.rsvp-wrap{background:#f4e7df!important;color:#67394b!important}
+.rsvp-wrap h2{color:#67394b!important}
+.rsvp-wrap p:not(.small-label){color:#795963!important}
+.rsvp-wrap .small-label{color:#a67b43!important}
+.rsvp-wrap .btn{background:#754252!important;color:#fff8ef!important;border-color:#754252!important}
+.rsvp-wrap:before,.rsvp-wrap:after{border-color:rgba(166,123,67,.35)!important}
+</style>
 </head>
 <body>
 
@@ -388,6 +542,7 @@ html.curtain-arrive .wedding-curtain__panel--right {
     <header class="site-header" aria-label="Site header">
       <a class="brand" href="#welcome" aria-label="Shoeb and Fabbiha, top of page"><span class="brand-mark" aria-hidden="true"><span>S F</span></span><span class="brand-name">Shoeb &amp; Fabbiha</span></a>
       <nav class="nav" aria-label="Quick navigation">
+        <a class="nav-home" href="index.html" aria-label="Home — return to cinematic invitation"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
         <a href="#welcome">Welcome</a>
         <a href="#celebration">Details</a>
         <a href="#schedule">Schedule</a>
@@ -548,7 +703,7 @@ html.curtain-arrive .wedding-curtain__panel--right {
     if(window.history && window.history.replaceState){
       try{window.history.replaceState(window.history.state,'',window.location.pathname+window.location.hash);}catch(ignore){}
     }
-  },2680);
+  },3200);
 })();
 </script>
 </body>
