@@ -252,6 +252,72 @@ html.video-complete .play-gate{display:none}
 .play-gate{display:none!important}
 @media(prefers-reduced-motion:reduce){.play-gate{transition:none}}
 
+
+/* Velvet curtains: two physical-looking panels with gold seams and pleats.
+   Animations use basic transforms for older iOS Safari and Android browsers. */
+.wedding-curtain{position:fixed;z-index:99999;left:0;right:0;top:0;bottom:0;
+ height:100vh;height:100dvh;overflow:hidden;visibility:hidden;pointer-events:none;
+ -webkit-transform:translateZ(0);transform:translateZ(0)}
+.wedding-curtain__panel{position:absolute;top:0;bottom:0;width:50.8%;height:100%;
+ background:linear-gradient(180deg,rgba(24,7,17,.20) 0%,transparent 17%,transparent 80%,rgba(27,9,17,.32) 100%),
+ repeating-linear-gradient(90deg,rgba(13,4,11,.36) 0px,rgba(211,135,150,.19) 14px,rgba(255,213,195,.10) 26px,rgba(26,6,16,.34) 47px,rgba(184,106,127,.12) 63px,rgba(22,6,14,.33) 81px),
+ linear-gradient(90deg,#4a1d30,#9a5663 47%,#62293d 100%);
+ background-color:#713648;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+ -webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);will-change:transform}
+.wedding-curtain__panel--left{left:0;border-right:2px solid rgba(232,194,130,.95);box-shadow:inset -18px 0 30px rgba(23,4,17,.42),inset 1px 0 2px rgba(238,201,153,.24)}
+.wedding-curtain__panel--right{right:0;border-left:2px solid rgba(232,194,130,.95);box-shadow:inset 18px 0 30px rgba(23,4,17,.42),inset -1px 0 2px rgba(238,201,153,.24)}
+.wedding-curtain__panel::before{content:"";position:absolute;inset:0;pointer-events:none;
+ background:repeating-linear-gradient(90deg,rgba(238,190,140,.07) 0px,transparent 2px,transparent 49px,rgba(0,0,0,.13) 53px,transparent 57px)}
+.wedding-curtain__top{position:absolute;z-index:2;top:0;left:0;right:0;height:54px;height:min(10vh,76px);
+ background:linear-gradient(180deg,#3e1628 0%,#7c3e4f 55%,#552536 100%);
+ border-bottom:2px solid #c8a46f;box-shadow:0 9px 16px rgba(35,9,19,.3),inset 0 -6px 8px rgba(31,8,18,.35);
+ opacity:0;pointer-events:none}
+.wedding-curtain__top::after{content:"";position:absolute;bottom:-6px;left:0;right:0;height:4px;
+ background:repeating-linear-gradient(90deg,#c19d68 0 5px,#ead09c 5px 7px,#a7804a 7px 12px)}
+.wedding-curtain__seal{position:absolute;z-index:3;left:50%;top:50%;width:104px;height:104px;
+ margin-left:-52px;margin-top:-52px;display:-webkit-box;display:-ms-flexbox;display:flex;
+ align-items:center;justify-content:center;border:1px solid rgba(232,200,147,.88);border-radius:50%;
+ background:radial-gradient(circle,rgba(89,40,55,.95),rgba(63,22,37,.95));
+ color:#f1d6a3;font:400 28px/1 Georgia,serif;letter-spacing:.01em;
+ box-shadow:0 0 0 7px rgba(112,54,69,.65),0 0 0 8px rgba(235,199,139,.36),0 8px 35px rgba(19,3,11,.32);
+ opacity:0;pointer-events:none}
+.wedding-curtain__seal span{font-size:14px;color:#dfbd83;padding:0 8px}
+/* Leaving the film: the curtains meet at the centre before navigating. */
+html.curtain-exit .wedding-curtain{visibility:visible;pointer-events:auto}
+html.curtain-exit .wedding-curtain__panel--left{
+ -webkit-animation:velvetCloseLeft .84s cubic-bezier(.65,.04,.25,1) both;animation:velvetCloseLeft .84s cubic-bezier(.65,.04,.25,1) both}
+html.curtain-exit .wedding-curtain__panel--right{
+ -webkit-animation:velvetCloseRight .84s cubic-bezier(.65,.04,.25,1) both;animation:velvetCloseRight .84s cubic-bezier(.65,.04,.25,1) both}
+html.curtain-exit .wedding-curtain__top{-webkit-animation:valanceEnter .55s .2s both;animation:valanceEnter .55s .2s both}
+html.curtain-exit .wedding-curtain__seal{-webkit-animation:sealEnter .4s .48s both;animation:sealEnter .4s .48s both}
+@-webkit-keyframes velvetCloseLeft{from{-webkit-transform:translate3d(-102%,0,0)}to{-webkit-transform:translate3d(0,0,0)}}
+@keyframes velvetCloseLeft{from{transform:translate3d(-102%,0,0)}to{transform:translate3d(0,0,0)}}
+@-webkit-keyframes velvetCloseRight{from{-webkit-transform:translate3d(102%,0,0)}to{-webkit-transform:translate3d(0,0,0)}}
+@keyframes velvetCloseRight{from{transform:translate3d(102%,0,0)}to{transform:translate3d(0,0,0)}}
+@-webkit-keyframes valanceEnter{from{opacity:0}to{opacity:1}}
+@keyframes valanceEnter{from{opacity:0}to{opacity:1}}
+@-webkit-keyframes sealEnter{from{opacity:0;-webkit-transform:scale(.86)}to{opacity:1;-webkit-transform:scale(1)}}
+@keyframes sealEnter{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
+/* Arriving at the ballroom page: start closed, then sweep both panels outward. */
+html.curtain-arrive .wedding-curtain{visibility:visible}
+html.curtain-arrive .wedding-curtain__panel--left{
+ -webkit-animation:velvetOpenLeft 1.52s .42s cubic-bezier(.69,0,.18,1) both;animation:velvetOpenLeft 1.52s .42s cubic-bezier(.69,0,.18,1) both}
+html.curtain-arrive .wedding-curtain__panel--right{
+ -webkit-animation:velvetOpenRight 1.52s .42s cubic-bezier(.69,0,.18,1) both;animation:velvetOpenRight 1.52s .42s cubic-bezier(.69,0,.18,1) both}
+html.curtain-arrive .wedding-curtain__top{
+ -webkit-animation:valanceLeave 1.3s .55s both;animation:valanceLeave 1.3s .55s both}
+html.curtain-arrive .wedding-curtain__seal{
+ -webkit-animation:sealLeave .75s .2s both;animation:sealLeave .75s .2s both}
+@-webkit-keyframes velvetOpenLeft{from{-webkit-transform:translate3d(0,0,0)}to{-webkit-transform:translate3d(-103%,0,0)}}
+@keyframes velvetOpenLeft{from{transform:translate3d(0,0,0)}to{transform:translate3d(-103%,0,0)}}
+@-webkit-keyframes velvetOpenRight{from{-webkit-transform:translate3d(0,0,0)}to{-webkit-transform:translate3d(103%,0,0)}}
+@keyframes velvetOpenRight{from{transform:translate3d(0,0,0)}to{transform:translate3d(103%,0,0)}}
+@-webkit-keyframes valanceLeave{0%,15%{opacity:1}100%{opacity:0}}
+@keyframes valanceLeave{0%,15%{opacity:1}100%{opacity:0}}
+@-webkit-keyframes sealLeave{0%,30%{opacity:1;-webkit-transform:scale(1)}100%{opacity:0;-webkit-transform:scale(.94)}}
+@keyframes sealLeave{0%,30%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.94)}}
+@media(prefers-reduced-motion:reduce){.wedding-curtain{display:none!important}}
+
 </style>
 <script>if(document.documentElement.classList)document.documentElement.classList.add('pending');</script>
 <noscript><style>.story{opacity:1!important;transform:none!important;filter:none!important}.cue{display:none!important}</style></noscript>
@@ -396,7 +462,7 @@ html.video-complete .play-gate{display:none}
    <div class="end-ornament" aria-hidden="true">✧</div>
    <p class="next-note">With the blessings of Allah</p>
    <p class="footnote">Full celebration details and RSVP inside</p>
-   <a class="enter" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027">ENTER INVITATION <span class="arrow" aria-hidden="true">→</span></a>
+   <a class="enter" href="celebration.html?curtain=1">ENTER INVITATION <span class="arrow" aria-hidden="true">→</span></a>
   </div>
  </div>
 </main>
@@ -667,5 +733,36 @@ html.video-complete .play-gate{display:none}
 })();
 </script>
 
+
+<!-- Cinematic velvet curtain overlay: purely decorative; normal links still work. -->
+<div class="wedding-curtain" aria-hidden="true">
+ <div class="wedding-curtain__panel wedding-curtain__panel--left"></div>
+ <div class="wedding-curtain__panel wedding-curtain__panel--right"></div>
+ <div class="wedding-curtain__top"></div>
+ <div class="wedding-curtain__seal">S<span>✦</span>F</div>
+</div>
+
+<script>
+(function(){
+  var link=document.querySelector('a.enter[href^="celebration.html"]');
+  if(!link || !link.addEventListener || !document.documentElement.classList)return;
+  var busy=false;
+  link.addEventListener('click',function(event){
+    if(busy){event.preventDefault();return;}
+    if(event.defaultPrevented || (typeof event.button==='number' && event.button!==0) ||
+       event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)return;
+    var reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced)return;
+    event.preventDefault();busy=true;
+    document.documentElement.classList.add('curtain-exit');
+    var destination=link.href;
+    window.setTimeout(function(){window.location.href=destination;},860);
+  });
+  // Safari back-forward cache must never leave a closed curtain over the intro.
+  window.addEventListener('pageshow',function(){
+    busy=false;document.documentElement.classList.remove('curtain-exit');
+  });
+})();
+</script>
 </body>
 </html>
