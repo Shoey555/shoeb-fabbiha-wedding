@@ -590,6 +590,19 @@ main section[id]{scroll-margin-top:95px!important}
  .hero-copy .btn .maroon-arrow-wrap,.directions-launch .maroon-arrow-wrap{width:24px!important;height:24px!important}
 }
 </style>
+
+<style id="dress-code-20261111">
+/* Dress code: elegant fabric-inspired swatches, readable at every phone width. */
+.note-grid .dress-code-note .note-symbol{color:#aa8b55}
+.dress-code-colours{display:flex;flex-wrap:wrap;align-items:center;gap:11px 20px;margin-top:13px}
+.dress-code-colour{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font:400 12px/1.6 var(--sans);color:#6d4c57}
+.dress-code-colour strong{font-weight:700;color:#673f50}
+.dress-code-swatch{display:inline-block;width:18px;height:18px;flex:none;border-radius:50%;border:1px solid rgba(112,78,66,.2);box-shadow:0 1px 4px rgba(60,40,30,.10),inset 0 1px 1px rgba(255,255,255,.55)}
+.dress-code-swatch.cream{background:#F2E6D2}
+.dress-code-swatch.dusty-pink{background:#CFA1AA}
+@media(min-width:661px){.note-grid .secret-garden-note{grid-column:auto;width:auto;justify-self:stretch}}
+@media(max-width:660px){.dress-code-colours{gap:10px 17px}.dress-code-colour{font-size:12px}}
+</style>
 </head>
 <body>
 <div class="drape-stage" aria-hidden="true" data-drape="ivory">
@@ -704,6 +717,17 @@ main section[id]{scroll-margin-top:95px!important}
       <div class="note-grid">
         <article class="note reveal"><span class="note-symbol" aria-hidden="true">◇</span><div><h3>Parking</h3><p>Parking is available at the venue. Spaces may be limited, so please allow extra time on arrival.</p></div></article>
         <article class="note reveal"><span class="note-symbol" aria-hidden="true">✧</span><div><h3>Prayer facilities</h3><p>Prayer facilities are located on the bottom floor. A member of staff can guide you there on the day.</p></div></article>
+        <article class="note reveal dress-code-note">
+          <span class="note-symbol" aria-hidden="true">✦</span>
+          <div>
+            <h3>Dress code</h3>
+            <p>We kindly ask guests to wear:</p>
+            <div class="dress-code-colours" aria-label="Dress code colours">
+              <span class="dress-code-colour"><span class="dress-code-swatch cream" aria-hidden="true"></span><strong>Men</strong> — Cream</span>
+              <span class="dress-code-colour"><span class="dress-code-swatch dusty-pink" aria-hidden="true"></span><strong>Women</strong> — Dusty Pink</span>
+            </div>
+          </div>
+        </article>
         <article class="note reveal secret-garden-note"><span class="note-symbol" aria-hidden="true">✿</span><div><h3>Secret Garden</h3><p>Hidden within White Abbey, waiting to be discovered — a space to relax, take pictures and unwind on the day.</p></div></article>
       </div>
     </section>
