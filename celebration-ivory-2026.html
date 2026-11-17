@@ -556,7 +556,7 @@ main section[id]{scroll-margin-top:95px!important}
 }
 </style>
 
-<style id="rsvp-deadline-march-2027">
+<style id="rsvp-deadline-february-2027">
 /* RSVP cutoff — visible, readable and accessible without animation. */
 #rsvp .rsvp-deadline{
   display:inline-flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px 13px;
@@ -602,6 +602,48 @@ main section[id]{scroll-margin-top:95px!important}
 .dress-code-swatch.dusty-pink{background:#CFA1AA}
 @media(min-width:661px){.note-grid .secret-garden-note{grid-column:auto;width:auto;justify-self:stretch}}
 @media(max-width:660px){.dress-code-colours{gap:10px 17px}.dress-code-colour{font-size:12px}}
+</style>
+
+<style id="feb20-rsvp-reminder-and-closing">
+/* Compact reminder below guest information, before the main RSVP feature. */
+.guest-rsvp-reminder{
+ display:flex;align-items:center;gap:18px;max-width:910px;margin:38px auto 0;
+ padding:22px 24px;border:1px solid rgba(171,131,68,.52);border-radius:14px;
+ background:linear-gradient(115deg,rgba(255,251,243,.96),rgba(249,234,216,.88));
+ box-shadow:0 10px 28px rgba(94,60,62,.06),inset 0 1px rgba(255,255,255,.85);
+}
+.guest-rsvp-reminder-icon{font:400 34px/1 Georgia,serif;color:#b58f53;flex:none}
+.guest-rsvp-reminder-copy{flex:1;min-width:0}
+.guest-rsvp-reminder .guest-rsvp-eyebrow{color:#a17b43;font:700 10px/1.5 var(--sans);letter-spacing:.2em;text-transform:uppercase;margin:0 0 5px}
+.guest-rsvp-reminder h3{color:#713e50;font:500 clamp(22px,2.4vw,28px)/1.1 var(--serif);margin:0 0 5px}
+.guest-rsvp-reminder-copy>p:last-child{color:#765b65;font:400 12px/1.7 var(--sans);margin:0}
+.guest-rsvp-reminder-copy strong{color:#67394b;font-weight:700}
+.guest-rsvp-reminder-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+ text-decoration:none;white-space:nowrap;min-height:42px;padding:10px 15px;
+ background:#713e50;border:1px solid #713e50;border-radius:5px;color:#fff4e5;
+ font:700 10px/1.3 var(--sans);letter-spacing:.13em;transition:background .2s ease,transform .2s ease}
+.guest-rsvp-reminder-link:hover{background:#875366;transform:translateY(-1px)}
+.reminder-diagonal-arrow{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:none;border-radius:50%;color:#70263f;background:#fff1d9}
+.reminder-diagonal-arrow svg{display:block}
+/* Simple farewell, separate from the gold-highlighted RSVP section. */
+.wedding-closing{background:#fffaf1;text-align:center;padding:75px 20px 57px;border-bottom:1px solid rgba(166,131,76,.15)}
+.wedding-closing-inner{max-width:690px;margin:0 auto}
+.wedding-closing-ornament{display:flex;align-items:center;gap:16px;justify-content:center;max-width:260px;margin:0 auto 23px;color:#b18b52}
+.wedding-closing-ornament:before,.wedding-closing-ornament:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(177,139,82,.8))}
+.wedding-closing-ornament:after{transform:rotate(180deg)}
+.wedding-closing-ornament span{font-size:22px;line-height:1}
+.wedding-closing-kicker{font:italic 400 23px/1.2 var(--serif);color:#a18155;margin:0 0 7px}
+.wedding-closing h2{font:500 clamp(37px,6vw,62px)/1.1 var(--serif);color:#713e50;margin:0 0 15px;letter-spacing:-.02em}
+.wedding-closing h2 span{color:#b18b52;font-style:italic}
+.wedding-closing-message{font:400 14px/1.85 var(--sans);color:#785f69;margin:0 auto;max-width:470px}
+@media(max-width:660px){
+ .guest-rsvp-reminder{flex-wrap:wrap;gap:11px 13px;padding:18px 16px;margin-top:29px;text-align:left}
+ .guest-rsvp-reminder-icon{font-size:27px}
+ .guest-rsvp-reminder-copy{flex-basis:calc(100% - 45px)}
+ .guest-rsvp-reminder-link{margin-left:40px;min-height:40px;padding:9px 15px}
+ .wedding-closing{padding:62px 20px 42px}
+ .wedding-closing-message{font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -694,7 +736,7 @@ main section[id]{scroll-margin-top:95px!important}
     <section class="venue-section" id="location">
       <div class="venue-grid wrap">
         <figure class="venue-panel venue-photo reveal" aria-label="Illustration of White Abbey Ballroom at twilight">
-          <img class="venue-photo-image" src="white-abbey-twilight-flowers.jpg" loading="lazy" decoding="async" alt="Illustrated view of White Abbey Ballroom at twilight, with illuminated entrance steps and flowers on both sides">
+          <img class="venue-photo-image" src="white-abbey-twilight-flowers.jpg" loading="lazy" decoding="async" alt="Illustrated view of White Abbey Ballroom at twilight, with illuminated entrance steps">
           <figcaption class="venue-photo-caption"><span>THE VENUE</span><strong>White Abbey Ballroom</strong><small>BRADFORD · WEST YORKSHIRE</small></figcaption>
         </figure>
         <div class="venue-info reveal">
@@ -730,6 +772,16 @@ main section[id]{scroll-margin-top:95px!important}
         </article>
         <article class="note reveal secret-garden-note"><span class="note-symbol" aria-hidden="true">✿</span><div><h3>Secret Garden</h3><p>Hidden within White Abbey, waiting to be discovered — a space to relax, take pictures and unwind on the day.</p></div></article>
       </div>
+
+      <aside class="guest-rsvp-reminder reveal" aria-label="RSVP reminder">
+        <div class="guest-rsvp-reminder-icon" aria-hidden="true">✧</div>
+        <div class="guest-rsvp-reminder-copy">
+          <p class="guest-rsvp-eyebrow">A kind reminder</p>
+          <h3>Your presence means a lot.</h3>
+          <p>Please confirm your attendance by <strong>20 February 2027</strong> so we can prepare a place for you.</p>
+        </div>
+        <a class="guest-rsvp-reminder-link" href="#rsvp" aria-label="Go to the RSVP section">RSVP NOW <span class="reminder-diagonal-arrow" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      </aside>
     </section>
     <section class="rsvp-wrap rsvp-feature" id="rsvp" aria-labelledby="rsvp-heading">
       <div class="rsvp-glow" aria-hidden="true"></div>
@@ -737,12 +789,21 @@ main section[id]{scroll-margin-top:95px!important}
         <p class="small-label">Your response matters</p>
         <h2 id="rsvp-heading">Your RSVP matters.</h2>
         <p class="rsvp-intro">We would love to celebrate with you. Please confirm your attendance so we can arrange seating for our guests.</p>
-        <p class="rsvp-deadline"><span class="rsvp-deadline-label">RSVP by</span> <time class="rsvp-deadline-date" datetime="2027-03-01">Monday, 1 March 2027</time></p>
+        <p class="rsvp-deadline"><span class="rsvp-deadline-label">RSVP by</span> <time class="rsvp-deadline-date" datetime="2027-02-20">Saturday, 20 February 2027</time></p>
         <a class="btn rsvp-primary-button" href="https://withjoy.com/shoeb-and-fabbiha-mar-2027" rel="noopener noreferrer">COMPLETE YOUR RSVP <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-        <p class="rsvp-warning"><span class="warning-symbol" aria-hidden="true">!</span><span><strong>Important — seating is limited.</strong> Guests who do not complete an RSVP by 1 March 2027 may not be guaranteed a seat. Please submit your response by the deadline.</span></p>
+        <p class="rsvp-warning"><span class="warning-symbol" aria-hidden="true">!</span><span><strong>Important — seating is limited.</strong> Guests who do not complete an RSVP by 20 February 2027 may not be guaranteed a seat. Please submit your response by the deadline.</span></p>
         <p class="rsvp-footnote">The RSVP form opens on our Joy wedding website.</p>
       </div>
     </section>
+
+  <section class="wedding-closing" aria-label="A message from Shoeb and Fabbiha">
+    <div class="wedding-closing-inner wrap">
+      <div class="wedding-closing-ornament" aria-hidden="true"><span>✧</span></div>
+      <p class="wedding-closing-kicker">With love,</p>
+      <h2>Shoeb <span aria-hidden="true">&amp;</span> Fabbiha</h2>
+      <p class="wedding-closing-message">We look forward to celebrating this special day with you.</p>
+    </div>
+  </section>
   </main>
   <footer class="site-footer wrap"><div class="footer-monogram">S <span aria-hidden="true">✧</span> F</div><p>Shoeb &amp; Fabbiha · 31 March 2027</p></footer>
 </div>
