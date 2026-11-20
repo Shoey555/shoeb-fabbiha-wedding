@@ -6,25 +6,20 @@
 <meta name="theme-color" content="#fff9f0">
 <meta name="description" content="The wedding celebration of Shoeb Ahmed and Fabbiha Akther Shama. Wednesday, 31 March 2027 at White Abbey Ballroom, Bradford.">
 <title>Shoeb & Fabbiha | The Celebration</title>
+<style id="very-first-paint-shield">
+html.curtain-boot, html.curtain-boot body {background:#123c33!important;}
+</style>
 <script>
-/* A dark emerald hand-off is visible before Page 2 is painted, seamlessly
-   continuing the Page 1 emerald closing curtain even on a cold Safari load. */
+/* Mark the handoff BEFORE the browser paints Page 2. The inline curtain
+   controller below owns the fade and timeout; never remove boot on an
+   unrelated timer while the opening is still running. */
 (function(){
-  try{
-    var requested=/(?:\?|&)curtain=1(?:&|$)/.test(location.search||'');
-    var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(requested&&!reduced){
-      document.documentElement.className+=' curtain-boot';
-      window.setTimeout(function(){
-        var r=document.documentElement;
-        if(r.classList.contains('curtain-boot')){
-          r.classList.remove('curtain-boot');
-          var el=document.querySelector('.drape-stage');
-          if(el)el.style.display='none';
-        }
-      },4500);
-    }
-  }catch(ignore){}
+ try{
+  if(/(?:\?|&)curtain=1(?:&|$)/.test(location.search||'')&&
+     !(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){
+    document.documentElement.className+=' curtain-boot';
+  }
+ }catch(ignore){}
 })();
 </script>
 <link rel="preload" href="curtain-ivory-lite-left-v6.jpg" as="image">
@@ -617,18 +612,29 @@ main section[id]{scroll-margin-top:95px!important}
 @media(max-width:660px){.dress-code-colours{gap:10px 17px}.dress-code-colour{font-size:12px}}
 </style>
 
-<style id="safari-first-paint-curtain-and-punctuality-v7">
-
-/* White flash prevention: this shield exists from the very first Page 2 paint.
-   The JS reveals predecoded curtain pixels UNDER the green cover, then fades it
-   before starting the curtain-opening animation. No blank ivory intermediate. */
-.drape-stage{transition:opacity 360ms ease!important}
-.drape-stage::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
- background:#123c33;opacity:0;transition:opacity 300ms ease}
-html.curtain-boot .drape-stage{display:block!important;opacity:1!important;
- pointer-events:auto!important;background:#123c33!important}
-html.curtain-boot .drape-stage::after{opacity:1}
-html.curtain-boot .drape-half,html.curtain-boot .drape-canvas{opacity:0!important}
+<style id="safari-seamless-curtain-v8">
+/* The actual fabric renders UNDER a separate opaque shield. The shield
+   persists across the rendering frame, only fades after fabric is painted,
+   and no style rule ever makes it disappear abruptly during the handoff. */
+.drape-stage{transition:none!important;background:transparent!important;
+ contain:layout paint;isolation:isolate}
+html.curtain-boot .drape-stage,
+html.curtain-arrive .drape-stage{display:block!important;opacity:1!important;
+ pointer-events:auto!important}
+html.curtain-boot .drape-stage.fading-to-page{opacity:0!important;
+ transition:opacity 550ms ease!important; -webkit-transition:opacity 550ms ease!important}
+.drape-stage .curtain-shield{
+ position:absolute;inset:0;z-index:10;pointer-events:none;
+ background:#123c33;opacity:1;
+ -webkit-transition:opacity 460ms ease;transition:opacity 460ms ease;
+ -webkit-transform:translateZ(0);transform:translateZ(0)}
+.drape-stage.shield-fading .curtain-shield{opacity:0}
+.drape-stage.canvas-ready .drape-canvas{opacity:1!important}
+.drape-stage.canvas-ready .drape-half{opacity:0!important}
+html.curtain-boot .drape-stage .drape-half{opacity:1}
+html.curtain-boot .drape-stage .drape-canvas{opacity:0}
+html.curtain-boot .drape-stage.canvas-ready .drape-canvas{opacity:1}
+html.curtain-boot .drape-stage.canvas-ready .drape-half{opacity:0}
 @media(prefers-reduced-motion:reduce){html.curtain-boot .drape-stage{display:none!important}}
 .schedule-punctual{margin:17px auto 24px;padding:13px 18px;max-width:620px;
  border:1px solid rgba(164,121,64,.43);background:rgba(255,250,239,.88);
@@ -636,14 +642,134 @@ html.curtain-boot .drape-half,html.curtain-boot .drape-canvas{opacity:0!importan
  border-radius:10px}
 .schedule-punctual strong{color:#733e51;font-weight:800}
 @media(max-width:660px){.schedule-punctual{font-size:12px;padding:12px 14px;margin-top:14px}}
-
 </style>
 </head>
 <body>
 <div class="drape-stage" aria-hidden="true" data-drape="ivory">
   <div class="drape-half drape-left"></div><div class="drape-half drape-right"></div>
   <canvas class="drape-canvas" aria-hidden="true"></canvas>
+  <div class="curtain-shield" aria-hidden="true"></div>
 </div>
+<script id="no-flicker-curtain-controller-v8">
+/* v8: paint -> hold -> crossfade -> open, one contiguous curtain layer. */
+(function(){
+ 'use strict';
+ var root=document.documentElement;
+ var stage=document.querySelector('.drape-stage[data-drape="ivory"]');
+ if(!root||!stage)return;
+ var requested=/(?:\?|&)curtain=1(?:&|$)/.test(location.search||'');
+ var reduced=false,saveData=false;
+ try{reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);}catch(e){}
+ try{var c=navigator.connection||navigator.webkitConnection;
+   saveData=!!(c&&(c.saveData||c.effectiveType==='slow-2g'));}catch(e){}
+ var raf=window.requestAnimationFrame||window.webkitRequestAnimationFrame;
+ var finished=false,launched=false,ready=[false,false],images=[new Image(),new Image()];
+ var canvas=stage.querySelector('.drape-canvas'),ctx=null,W=0,H=0,dpr=1;
+ try{if(canvas&&canvas.getContext)ctx=canvas.getContext('2d');}catch(e){}
+ function clearQuery(){try{if(history.replaceState)history.replaceState(history.state,'',location.pathname+location.hash);}catch(e){}}
+ function done(){
+  if(finished)return;finished=true;
+  root.classList.remove('curtain-boot');root.classList.remove('curtain-arrive');
+  stage.classList.remove('canvas-ready');stage.classList.remove('shield-fading');
+  stage.style.display='none';stage.style.opacity='';stage.style.transition='';
+  clearQuery();
+ }
+ function fadeToPage(){
+  if(finished)return;
+  // Failure / slow network: fade the WHOLE drape stage over the real page,
+  // never expose a half-loaded white curtain underneath the emerald shield.
+  if(raf)raf(function(){raf(function(){stage.classList.add('fading-to-page');});});
+  else window.setTimeout(function(){stage.classList.add('fading-to-page');},35);
+  window.setTimeout(done,630);
+ }
+ if(!requested||reduced){done();return;}
+ root.classList.add('curtain-boot');stage.style.display='block';
+ // On data saver skip the animation; still dissolve the green cover cleanly.
+ if(saveData){fadeToPage();return;}
+ var timeout=window.setTimeout(fadeToPage,3750);
+ function clamp(n){return n<0?0:n>1?1:n;}
+ function ease(n){return n*n*(3-2*n);}
+ function dimensions(){
+  W=Math.max(1,window.innerWidth||root.clientWidth||375);
+  H=Math.max(1,window.innerHeight||root.clientHeight||667);
+  if(!ctx)return;
+  dpr=Math.max(1,Math.min(1.25,window.devicePixelRatio||1));
+  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+ }
+ function paint(p){
+  if(!ctx||!ready[0]||!ready[1])return false;
+  p=clamp(p);var e=ease(p),half=W*.505;
+  ctx.clearRect(0,0,W,H);
+  for(var side=0;side<2;side++){
+   var im=images[side],width=half*(1-.66*e),shift=half*1.055*e;
+   var base=(side===0?0:W-half)+(side===0?-shift:shift);
+   var sign=side===0?1:-1,ripple=Math.sin(Math.PI*p);
+   for(var y=0;y<H;y+=10){
+    var h=Math.min(11,H-y),n=y/H;
+    var wave=Math.sin(n*11+p*17+side*1.4)*ripple*4.5;
+    var wave2=Math.sin(n*27-p*9+side)*ripple*1.5;
+    var lag=6*Math.sin(Math.PI*n)*ripple*Math.sin(p*7.5);
+    var dx=sign*(wave+wave2+lag),sy=Math.min(im.height-1,n*im.height);
+    try{ctx.drawImage(im,0,sy,im.width,
+       Math.min(im.height-sy,im.height*h/H+1),base+dx,y,width,h);}catch(e){}
+   }
+  }
+  return true;
+ }
+ function startOpening(useCanvas){
+  if(finished)return;
+  root.classList.add('curtain-arrive');
+  if(!useCanvas||!raf){window.setTimeout(done,2640);return;}
+  var duration=2450,start=null;
+  function frame(t){
+   if(finished)return;
+   if(start===null)start=t;
+   var p=clamp((t-start)/duration);
+   paint(p);
+   if(p<1)raf(frame);else done();
+  }
+  raf(frame);
+  window.setTimeout(done,duration+450);
+ }
+ function launch(){
+  if(finished||launched||!ready[0]||!ready[1])return;
+  launched=true;window.clearTimeout(timeout);
+  if(document.visibilityState==='hidden'||(window.pageYOffset||root.scrollTop||0)>35){fadeToPage();return;}
+  dimensions();
+  var useCanvas=!!(ctx&&raf&&paint(0));
+  if(useCanvas)stage.classList.add('canvas-ready');
+  // Crucial: do not remove curtain-boot here. The shield is a real layer,
+  // and MUST persist until after the fabric is painted and composited.
+  function reveal(){
+    if(finished)return;
+    stage.classList.add('shield-fading');
+    // The whole 460ms crossfade happens with fully CLOSED curtains below.
+    window.setTimeout(function(){startOpening(useCanvas);},520);
+  }
+  if(raf)raf(function(){raf(reveal);});
+  else window.setTimeout(reveal,55);
+ }
+ function imageReady(i){return function(){
+  if(finished)return;
+  if(!images[i].naturalWidth){fadeToPage();return;}
+  function mark(){ready[i]=true;if(ready[0]&&ready[1])launch();}
+  // Safari may dispatch onload before the decoded bitmap can be painted.
+  try{if(images[i].decode){var p=images[i].decode();
+   if(p&&typeof p.then==='function'){p.then(mark,mark);return;}}}catch(ignore){}
+  mark();
+ };}
+ for(var i=0;i<2;i++){
+   images[i].onload=imageReady(i);
+   images[i].onerror=fadeToPage;
+ }
+ images[0].src='curtain-ivory-lite-left-v6.jpg';
+ images[1].src='curtain-ivory-lite-right-v6.jpg';
+ window.addEventListener('pagehide',done,false);
+ window.addEventListener('pageshow',function(e){if(e.persisted)done();},false);
+})();
+</script>
 
 
 
@@ -836,7 +962,7 @@ html.curtain-boot .drape-half,html.curtain-boot .drape-canvas{opacity:0!importan
 </script>
 
 
-<script src="curtain-motion-page2-v7.js" defer></script>
+<!-- v8 transition controller is inlined above so it cannot be delayed by an extra script request. -->
 
 <!-- Venue directions choice moved from the cinematic page to the venue section here. -->
 <dialog id="map-choice-dialog" class="map-choice-dialog" aria-labelledby="map-choice-title" aria-describedby="map-choice-description">
