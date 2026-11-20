@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#090f0b">
 <meta name="description" content="Shoeb & Fabbiha invite you to celebrate their wedding on 31 March 2027.">
 <title>Shoeb &amp; Fabbiha | Wedding Invitation</title>
+<!-- The Bismillah artwork paints immediately while first-visit MP4 buffers. -->
+<link rel="preload" href="bismillah-frame-mobile-hd.jpg" as="image" media="(max-width:699px)">
+<link rel="preload" href="bismillah-frame-desktop-hd.jpg" as="image" media="(min-width:700px)">
 <style>
 :root{--ink:#080e0b;--gold:#dcc18b;--ivory:#f4e7c7;--muted:#c6ad7b}
 *,*::before,*::after{box-sizing:border-box}
@@ -306,6 +309,16 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 .enter .maroon-arrow-wrap{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 25px!important;width:25px!important;height:25px!important;line-height:0!important;background:#fff2db!important;border-radius:50%!important}
 .enter .thin-maroon-arrow{display:block!important;width:18px!important;height:18px!important;fill:none!important}
 .enter .thin-maroon-arrow path{stroke:#70263f!important;stroke-width:1.45!important;fill:none!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+
+/* First-visit Safari safeguard: never display an un-decoded black/blank video.
+   Only crossfade the film over the already-loaded genuine Bismillah still
+   after a real decoded video frame is available. */
+.scene video{opacity:0!important;transition:opacity 550ms ease!important}
+html.film-frame-ready:not(.video-complete):not(.fallback-playing) .scene video{opacity:1!important}
+html:not(.video-complete) .afterglow{opacity:.98}
+html.video-complete .afterglow{opacity:.21}
+html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!important}
+
 </style>
 </head>
 <body>
@@ -316,9 +329,9 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 <div class="scene" aria-hidden="true">
   <picture class="afterglow" aria-hidden="true">
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile-hd.jpg">
-  <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async">
+  <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async" fetchpriority="high">
  </picture>
- <video id="film" src="bismillah-mobile-hd.mp4" muted autoplay playsinline webkit-playsinline preload="metadata" poster="poster-mobile.jpg" aria-label="Bismillah cinematic introduction"></video>
+ <video id="film" muted autoplay playsinline webkit-playsinline preload="auto" poster="poster-mobile.jpg" aria-label="Bismillah cinematic introduction"></video>
   <div class="gold-haze"></div>
 </div>
 <div class="particles" aria-hidden="true">
@@ -393,7 +406,7 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 </div>
 <picture class="bismillah-veil" aria-hidden="true">
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile-hd.jpg">
-  <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async">
+  <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async" fetchpriority="high">
 </picture>
 <div class="frame" aria-hidden="true"></div>
 <div id="play-gate" class="play-gate" aria-live="polite">
@@ -449,7 +462,7 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
    <div class="end-ornament" aria-hidden="true">✧</div>
    <p class="next-note">With the blessings of Allah</p>
    <p class="footnote">Full celebration details and RSVP inside</p>
-   <a class="enter" href="celebration-ivory-2026.html?curtain=1&amp;v=6-network-fix">ENTER INVITATION <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+   <a class="enter" href="celebration-ivory-2026.html?curtain=1&amp;v=7-safari-fix">ENTER INVITATION <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   </div>
  </div>
 </main>
@@ -475,9 +488,27 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
   var totalRise=endAt-startAt+followTime;
   var progress=0, done=false, finalClock=null, playing=false, retrying=false;
   var fallbackActive=false, mediaStartedAt=0;
+  var frameReady=false,frameCallbackSupported=!!(film&&film.requestVideoFrameCallback);
+  var lastMediaAdvanceAt=now(),lastMediaTime=0;
+  function frameDecoded(force){
+    if(frameReady || fallbackActive || done || !film)return;
+    if((film.readyState||0)<2 || !(film.videoWidth>0))return;
+    if(!force && (film.currentTime||0)<.045)return;
+    frameReady=true;
+    lastMediaTime=film.currentTime||0;
+    lastMediaAdvanceAt=now();
+    mediaStartedAt=now()-lastMediaTime*1000;
+    root.classList.add('film-frame-ready');
+    hideGate();
+  }
+  if(frameCallbackSupported){
+    try{film.requestVideoFrameCallback(function(){frameDecoded(true);});}catch(ignore){frameCallbackSupported=false;}
+  }
+  film.addEventListener('loadeddata',function(){if(!frameCallbackSupported)frameDecoded(true);});
+  film.addEventListener('timeupdate',function(){if(!frameCallbackSupported)frameDecoded(false);});
 
-  /* Countdown: 5pm British Summer Time, 31 March 2027. */
-  var eventAt=new Date('2027-03-31T16:00:00Z').getTime();
+  /* Countdown to the 5:30pm British Summer Time celebration, 31 March 2027. */
+  var eventAt=new Date('2027-03-31T16:30:00Z').getTime();
   var ids=['days','hours','minutes','seconds'];
   var count=document.getElementById('countdown');
   var complete=document.getElementById('countdown-complete');
@@ -578,12 +609,13 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
   function showFailure(){if(!done)stillCinematic();}
   function animate(){
     if(done || finalClock!==null || fallbackActive)return;
+    // Wait for decoded pixels, not just Safari's optimistic "playing" event.
+    // Never scroll through a blank or frozen first frame.
+    if(!frameReady){raf(animate);return;}
     var t=film.currentTime || 0;
-    // iOS Safari may report a playing event without regular frame updates.
-    // A wall clock keeps the invitation moving if the media timeline stalls.
-    if(playing && mediaStartedAt>0){
-      var wall=(now()-mediaStartedAt)/1000;
-      if(wall>t+.22)t=wall-.22;
+    if(t>lastMediaTime+.035){lastMediaTime=t;lastMediaAdvanceAt=now();}
+    else if(playing && t<endAt-.2 && now()-lastMediaAdvanceAt>1900){
+      stillCinematic();return;
     }
     if(t>=startAt){reveal();advance(Math.min(t,endAt)-startAt);}
     if(film.ended || t>=endAt){finish();return;}
@@ -641,13 +673,14 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
   gateContinue.addEventListener('click',stillCinematic);
   film.addEventListener('playing',function(){
     playing=true;
-    mediaStartedAt=now()-(film.currentTime||0)*1000;
+    // "playing" can fire before the first iOS Safari frame is painted.
+    if(!frameCallbackSupported)frameDecoded(false);
     hideGate();
   });
   film.addEventListener('ended',finish);
   film.addEventListener('error',function(){
     if(done)return;
-    if(!film.getAttribute('data-lowres')){
+    if(!film.getAttribute('data-lowres') && film.getAttribute('src')!== (mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4')){
       film.setAttribute('data-lowres','1');
       var legacy=mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4';
       film.setAttribute('src',legacy);
@@ -668,7 +701,10 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
     openWithoutFilm();
   }else{
     /* Select an actual src (rather than <source media>) for older Safari. */
-    var asset=mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4';
+    var connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+    var lowData=!!(connection && (connection.saveData || connection.effectiveType==='2g' || connection.effectiveType==='slow-2g'));
+    var asset=lowData ? (mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4') :
+       (mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4');
     if(!mobile)film.poster='poster.jpg';
     if(film.getAttribute('src')!==asset){film.setAttribute('src',asset);}
     film.muted=true;
@@ -677,6 +713,12 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
     lock();
     raf(animate);
     play(false);
+    // A first visit can need the full MP4 download before decoding. After a
+    // short grace period preserve the experience with the original film still.
+    window.setTimeout(function(){
+      if(!done && !fallbackActive && !frameReady && finalClock===null)
+        stillCinematic();
+    },3900);
     // A paused or slow first frame automatically gets the artwork-based intro.
     window.setTimeout(function(){
       if(!done && !fallbackActive && !playing && film.currentTime<.15)
