@@ -251,8 +251,7 @@ html.needs-play .play-gate,html.play-failed .play-gate{opacity:1;visibility:visi
 html.play-failed .play-gate .continue-fallback{display:block}
 html.play-failed .play-gate .start-film{display:none}
 html.video-complete .play-gate{display:none}
-/* No user-tap gate: blocked autoplay automatically runs the artwork animation. */
-.play-gate{display:none!important}
+/* If autoplay is refused, allow the guest to start the actual film. */
 @media(prefers-reduced-motion:reduce){.play-gate{transition:none}}
 
 
@@ -505,6 +504,7 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     try{film.requestVideoFrameCallback(function(){frameDecoded(true);});}catch(ignore){frameCallbackSupported=false;}
   }
   film.addEventListener('loadeddata',function(){if(!frameCallbackSupported)frameDecoded(true);});
+  film.addEventListener('seeked',function(){if(!frameCallbackSupported)frameDecoded(true);});
   film.addEventListener('timeupdate',function(){if(!frameCallbackSupported)frameDecoded(false);});
 
   /* Countdown to the 5:30pm British Summer Time celebration, 31 March 2027. */
@@ -593,20 +593,19 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     }
     raf(step);
   }
-  var fallbackCheck=null;
   function showPlay(reason){
-    // Browsers can reject muted autoplay (notably older iOS + Low Power Mode).
-    // Don't strand the guest at a PLAY button: use the same artwork automatically.
-    if(done || hasClass('video-complete') || playing || fallbackActive)return;
-    if(fallbackCheck!==null)return;
-    fallbackCheck=window.setTimeout(function(){
-      fallbackCheck=null;
-      if(!done && !playing && !fallbackActive && finalClock===null && (film.currentTime||0)<.25){
-        stillCinematic();
-      }
-    },800);
+    // A slow first visit is not a video failure. Never skip the real film
+    // merely because Safari has not fetched or decoded its first frame.
+    if(done || fallbackActive || finalClock!==null || frameReady && !film.paused)return;
+    root.classList.add('needs-play');
+    if(gateNote)gateNote.textContent=reason || 'Tap to watch the opening cinematic';
   }
-  function showFailure(){if(!done)stillCinematic();}
+  function showFailure(){
+    if(done || fallbackActive || finalClock!==null)return;
+    root.classList.remove('needs-play');
+    root.classList.add('play-failed');
+    if(gateNote)gateNote.textContent='This device could not play the video. View the cinematic artwork instead.';
+  }
   function animate(){
     if(done || finalClock!==null || fallbackActive)return;
     // Wait for decoded pixels, not just Safari's optimistic "playing" event.
@@ -614,18 +613,18 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     if(!frameReady){raf(animate);return;}
     var t=film.currentTime || 0;
     if(t>lastMediaTime+.035){lastMediaTime=t;lastMediaAdvanceAt=now();}
-    else if(playing && t<endAt-.2 && now()-lastMediaAdvanceAt>1900){
-      stillCinematic();return;
+    else if(playing && t<endAt-.2 && now()-lastMediaAdvanceAt>8000){
+      playing=false;
+      showPlay('Playback paused. Tap to resume the cinematic.');
     }
     if(t>=startAt){reveal();advance(Math.min(t,endAt)-startAt);}
     if(film.ended || t>=endAt){finish();return;}
     raf(animate);
   }
   function play(userInitiated){
-    if(done)return;
+    if(done || fallbackActive)return;
     retrying=!!userInitiated;
     hideGate();
-    // Must run directly inside the click handler when autoplay is blocked.
     try{
       film.muted=true;
       film.setAttribute('muted','');
@@ -634,20 +633,22 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
       var result=film.play();
       if(result && typeof result.then==='function'){
         result.then(function(){
+          if(done || fallbackActive)return;
           playing=true;
-          if(!mediaStartedAt)mediaStartedAt=now()-(film.currentTime||0)*1000;
+          lastMediaAdvanceAt=now();
           hideGate();
         },function(){
-          if(userInitiated)stillCinematic();else showPlay('Automatic fallback');
+          playing=false;
+          showPlay(userInitiated?'Tap to retry the opening video':'Tap to watch the opening cinematic');
         });
+      }else if(!film.paused){
+        playing=true;
+        lastMediaAdvanceAt=now();
       }
-    }catch(err){if(userInitiated)stillCinematic();else showPlay('Automatic fallback');}
-    window.setTimeout(function(){
-      if(!done && !fallbackActive && film.currentTime<.12){
-        if(userInitiated)stillCinematic();
-        else if(film.paused)showPlay('Automatic fallback');
-      }
-    },1600);
+    }catch(err){
+      playing=false;
+      showPlay('Tap to watch the opening cinematic');
+    }
   }
   function blockSkipping(e){
     if(!hasClass('cinematic-active'))return;
@@ -675,6 +676,7 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     playing=true;
     // "playing" can fire before the first iOS Safari frame is painted.
     if(!frameCallbackSupported)frameDecoded(false);
+    lastMediaAdvanceAt=now();
     hideGate();
   });
   film.addEventListener('ended',finish);
@@ -684,8 +686,8 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
       film.setAttribute('data-lowres','1');
       var legacy=mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4';
       film.setAttribute('src',legacy);
-      try{film.load();play(false);}catch(ignore){stillCinematic();}
-    }else stillCinematic();
+      try{film.load();play(false);}catch(ignore){showFailure();}
+    }else showFailure();
   });
   film.addEventListener('stalled',function(){
     if(!done && !fallbackActive && !playing && film.currentTime<.1)showPlay('Automatic fallback');
@@ -713,30 +715,16 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     lock();
     raf(animate);
     play(false);
-    // A first visit can need the full MP4 download before decoding. After a
-    // short grace period preserve the experience with the original film still.
+    // Show a manual-play option if a cold Safari load remains undecoded.
+    // Keep the genuine Bismillah still visible, and NEVER auto-scroll past
+    // the video because of network speed, Low Power Mode or decode delay.
     window.setTimeout(function(){
-      if(!done && !fallbackActive && !frameReady && finalClock===null)
-        stillCinematic();
-    },3900);
-    // A paused or slow first frame automatically gets the artwork-based intro.
-    window.setTimeout(function(){
-      if(!done && !fallbackActive && !playing && film.currentTime<.15)
-        showPlay('Automatic fallback');
-    },2300);
-    // Autoplay-disabled Safari automatically sees the film-artwork animation.
-    // If decoding stalls once playback begins, also use this visual fallback.
-    window.setTimeout(function(){
-      if(!done && !fallbackActive && finalClock===null && playing && film.currentTime<.3)
-        stillCinematic();
-    },6500);
-    window.setTimeout(function(){
-      if(!done && !fallbackActive && finalClock===null && playing){
-        if(film.currentTime>=endAt-1)finish();else stillCinematic();
-      }
-    },17000);
+      if(!done && !fallbackActive && finalClock===null && !frameReady)
+        showPlay('Tap to watch the opening cinematic');
+    },9000);
+
   }
-  window.addEventListener('pageshow',function(e){if(e.persisted && !done)openWithoutFilm();});
+  window.addEventListener('pageshow',function(e){if(e.persisted && !done && !fallbackActive && film.paused)showPlay('Tap to resume the opening cinematic');});
 })();
 </script>
 
