@@ -477,7 +477,7 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
    <div class="end-ornament" aria-hidden="true">✧</div>
    <p class="next-note">With the blessings of Allah</p>
    <p class="footnote">Full celebration details and RSVP inside</p>
-   <a class="enter" href="celebration-ivory-2026.html?curtain=1&amp;v=7-safari-fix">ENTER INVITATION <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+   <a class="enter" href="celebration-ivory-2026.html?curtain=1&amp;v=9-ivory-first-paint">ENTER INVITATION <span class="maroon-arrow-wrap" aria-hidden="true"><svg class="thin-maroon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" stroke="#70263F" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   </div>
  </div>
 </main>
@@ -742,11 +742,16 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   });
   film.addEventListener('ended',finish);
   film.addEventListener('error',function(){
-    if(done)return;
-    if(!film.getAttribute('data-lowres') && film.getAttribute('src')!== (mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4')){
-      film.setAttribute('data-lowres','1');
-      var legacy=mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4';
-      film.setAttribute('src',legacy);
+    if(done || fallbackActive)return;
+    // Try a different encoding only on a real media load/decoder error.
+    // Slow network or blocked autoplay are NOT errors and must keep the
+    // current film available for a user-initiated Play tap.
+    var alternate=mobile?'bismillah-mobile-hd.mp4':'intro-desktop-compatible.mp4';
+    if(!film.getAttribute('data-alternate-tried') && film.getAttribute('src')!==alternate){
+      film.setAttribute('data-alternate-tried','1');
+      frameReady=false;playing=false;autoplayDenied=false;autoAttempts=0;
+      root.classList.remove('film-frame-ready');
+      film.setAttribute('src',alternate);
       try{film.load();play(false);}catch(ignore){showFailure();}
     }else showFailure();
   });
