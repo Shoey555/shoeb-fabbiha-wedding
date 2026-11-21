@@ -309,14 +309,16 @@ html.curtain-arrive .drape-right{-webkit-animation:drapeOpenR 2.9s cubic-bezier(
 .enter .thin-maroon-arrow{display:block!important;width:18px!important;height:18px!important;fill:none!important}
 .enter .thin-maroon-arrow path{stroke:#70263f!important;stroke-width:1.45!important;fill:none!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 
-/* First-visit Safari safeguard: never display an un-decoded black/blank video.
-   Only crossfade the film over the already-loaded genuine Bismillah still
-   after a real decoded video frame is available. */
-.scene video{opacity:0!important;transition:opacity 550ms ease!important}
-html.film-frame-ready:not(.video-complete):not(.fallback-playing) .scene video{opacity:1!important}
+/* Safari permits silent inline autoplay only while a video is visible.
+   Do NOT start the film at opacity:0: that creates a deadlock while waiting
+   for requestVideoFrameCallback. The video displays its own photographic
+   poster before the first decoded frame, with the same artwork behind it. */
+.scene video{opacity:1!important;transition:opacity 750ms ease!important;visibility:visible!important}
 html:not(.video-complete) .afterglow{opacity:.98}
 html.video-complete .afterglow{opacity:.21}
-html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!important}
+html.video-complete .scene video,html.fallback-playing .scene video,html.play-failed .scene video{opacity:0!important}
+/* A manual play gate must not hide the underlying video and prevent autoplay. */
+html.needs-play:not(.video-complete) .scene video{opacity:1!important}
 
 </style>
 </head>
@@ -330,7 +332,21 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile-hd.jpg">
   <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async" fetchpriority="high">
  </picture>
- <video id="film" muted autoplay playsinline webkit-playsinline preload="auto" poster="poster-mobile.jpg" aria-label="Bismillah cinematic introduction"></video>
+ <video id="film" muted autoplay playsinline webkit-playsinline preload="auto" poster="bismillah-frame-mobile-hd.jpg" aria-label="Bismillah cinematic introduction"></video>
+<script>
+/* Select the correct film as soon as the player exists, BEFORE the long
+   invitation markup is parsed. Safari can begin the initial network fetch. */
+(function(){
+  var v=document.getElementById('film');
+  var mobile=(window.innerWidth||document.documentElement.clientWidth||375)<700;
+  var net=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  var slow=!!(net&&(net.saveData||net.effectiveType==='2g'||net.effectiveType==='slow-2g'));
+  var src=slow?(mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4'):(mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4');
+  v.poster=mobile?'bismillah-frame-mobile-hd.jpg':'bismillah-frame-desktop-hd.jpg';
+  v.defaultMuted=true;v.muted=true;
+  v.setAttribute('src',src);
+})();
+</script>
   <div class="gold-haze"></div>
 </div>
 <div class="particles" aria-hidden="true">
@@ -503,9 +519,14 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
   if(frameCallbackSupported){
     try{film.requestVideoFrameCallback(function(){frameDecoded(true);});}catch(ignore){frameCallbackSupported=false;}
   }
-  film.addEventListener('loadeddata',function(){if(!frameCallbackSupported)frameDecoded(true);});
-  film.addEventListener('seeked',function(){if(!frameCallbackSupported)frameDecoded(true);});
-  film.addEventListener('timeupdate',function(){if(!frameCallbackSupported)frameDecoded(false);});
+  // requestVideoFrameCallback can be late or omitted on cold Safari loads.
+  // loadeddata and timeupdate are independent ways to unlock the transition.
+  film.addEventListener('loadeddata',function(){frameDecoded(true);});
+  film.addEventListener('seeked',function(){frameDecoded(true);});
+  film.addEventListener('timeupdate',function(){frameDecoded((film.currentTime||0)>.10);});
+  film.addEventListener('canplay',function(){
+    if(!done && !fallbackActive && film.paused && !hasClass('play-failed'))play(false);
+  });
 
   /* Countdown to the 5:30pm British Summer Time celebration, 31 March 2027. */
   var eventAt=new Date('2027-03-31T16:30:00Z').getTime();
@@ -608,8 +629,9 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
   }
   function animate(){
     if(done || finalClock!==null || fallbackActive)return;
-    // Wait for decoded pixels, not just Safari's optimistic "playing" event.
-    // Never scroll through a blank or frozen first frame.
+    // The real poster covers buffering; if WebKit's frame callback is lost
+    // but time has advanced, do not deadlock the transition.
+    if(!frameReady && (film.currentTime||0)>.12)frameDecoded(true);
     if(!frameReady){raf(animate);return;}
     var t=film.currentTime || 0;
     if(t>lastMediaTime+.035){lastMediaTime=t;lastMediaAdvanceAt=now();}
@@ -674,8 +696,8 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
   gateContinue.addEventListener('click',stillCinematic);
   film.addEventListener('playing',function(){
     playing=true;
-    // "playing" can fire before the first iOS Safari frame is painted.
-    if(!frameCallbackSupported)frameDecoded(false);
+    // Let the decoder and timeupdate confirm pixels; do not hide the film.
+    frameDecoded(false);
     lastMediaAdvanceAt=now();
     hideGate();
   });
@@ -707,7 +729,7 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     var lowData=!!(connection && (connection.saveData || connection.effectiveType==='2g' || connection.effectiveType==='slow-2g'));
     var asset=lowData ? (mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4') :
        (mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4');
-    if(!mobile)film.poster='poster.jpg';
+    film.poster=mobile?'bismillah-frame-mobile-hd.jpg':'bismillah-frame-desktop-hd.jpg';
     if(film.getAttribute('src')!==asset){film.setAttribute('src',asset);}
     film.muted=true;
     // Assigning src already initiates resource selection; calling load() here
@@ -719,9 +741,13 @@ html.video-complete .scene video,html.fallback-playing .scene video{opacity:0!im
     // Keep the genuine Bismillah still visible, and NEVER auto-scroll past
     // the video because of network speed, Low Power Mode or decode delay.
     window.setTimeout(function(){
-      if(!done && !fallbackActive && finalClock===null && !frameReady)
+      if(!done && !fallbackActive && finalClock===null && !frameReady){
+        // A second attempt is safe, even if the first autoplay promise was
+        // accepted before the video had enough data to display a frame.
+        if((film.readyState||0)>=2 && film.paused)play(false);
         showPlay('Tap to watch the opening cinematic');
-    },9000);
+      }
+    },6500);
 
   }
   window.addEventListener('pageshow',function(e){if(e.persisted && !done && !fallbackActive && film.paused)showPlay('Tap to resume the opening cinematic');});
