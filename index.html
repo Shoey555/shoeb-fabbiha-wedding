@@ -900,13 +900,13 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     var st=window.__introFrameStats?window.__introFrameStats():{};
     var css=window.getComputedStyle?getComputedStyle(video):{opacity:'?'};
     var src=(video.currentSrc||video.src||'').split('/').pop().split('?')[0];
-    ui.textContent='INTRO DIAGNOSTICS\\n'+
-      'source: '+src+'\\n'+
-      'time: '+(video.currentTime||0).toFixed(2)+'  paused: '+video.paused+'  ended: '+video.ended+'\\n'+
-      'ready: '+video.readyState+'  network: '+video.networkState+'  size: '+video.videoWidth+'x'+video.videoHeight+'\\n'+
-      'decoded: '+frames+'  callbacks: '+(st.frames||0)+'  pixelsChanged: '+changed+(sampleError?' ('+sampleError+')':'')+'\\n'+
-      'opacity: '+css.opacity+'  visible: '+document.visibilityState+'  complete: '+document.documentElement.classList.contains('video-complete')+'\\n'+
-      'play: '+(window.__introPlayResult||'-')+'  error: '+(video.error?video.error.code:'-')+'\\n'+
+    ui.textContent='INTRO DIAGNOSTICS\n'+
+      'source: '+src+'\n'+
+      'time: '+(video.currentTime||0).toFixed(2)+'  paused: '+video.paused+'  ended: '+video.ended+'\n'+
+      'ready: '+video.readyState+'  network: '+video.networkState+'  size: '+video.videoWidth+'x'+video.videoHeight+'\n'+
+      'decoded: '+frames+'  callbacks: '+(st.frames||0)+'  pixelsChanged: '+changed+(sampleError?' ('+sampleError+')':'')+'\n'+
+      'opacity: '+css.opacity+'  visible: '+document.visibilityState+'  complete: '+document.documentElement.classList.contains('video-complete')+'\n'+
+      'play: '+(window.__introPlayResult||'-')+'  error: '+(video.error?video.error.code:'-')+'\n'+
       'events: '+events.join(' | ');
   }
   refresh();setInterval(refresh,400);
