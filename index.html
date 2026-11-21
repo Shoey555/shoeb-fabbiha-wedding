@@ -332,7 +332,7 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   <source media="(max-width:699px)" srcset="bismillah-frame-mobile-hd.jpg">
   <img src="bismillah-frame-desktop-hd.jpg" alt="" decoding="async" fetchpriority="high">
  </picture>
- <video id="film" muted autoplay playsinline webkit-playsinline preload="auto" poster="bismillah-frame-mobile-hd.jpg" aria-label="Bismillah cinematic introduction"></video>
+ <video id="film" src="intro-mobile-compatible.mp4" muted autoplay playsinline webkit-playsinline preload="auto" poster="bismillah-frame-mobile-hd.jpg" aria-label="Bismillah cinematic introduction"></video>
 <script>
 /* Select the correct film as soon as the player exists, BEFORE the long
    invitation markup is parsed. Safari can begin the initial network fetch. */
@@ -341,10 +341,10 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   var mobile=(window.innerWidth||document.documentElement.clientWidth||375)<700;
   var net=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
   var slow=!!(net&&(net.saveData||net.effectiveType==='2g'||net.effectiveType==='slow-2g'));
-  var src=slow?(mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4'):(mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4');
+  var src=mobile?'intro-mobile-compatible.mp4':(slow?'intro-desktop-compatible.mp4':'bismillah-desktop-hd.mp4');
   v.poster=mobile?'bismillah-frame-mobile-hd.jpg':'bismillah-frame-desktop-hd.jpg';
   v.defaultMuted=true;v.muted=true;
-  v.setAttribute('src',src);
+  if(v.getAttribute('src')!==src)v.setAttribute('src',src);
 })();
 </script>
   <div class="gold-haze"></div>
@@ -503,6 +503,24 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   var totalRise=endAt-startAt+followTime;
   var progress=0, done=false, finalClock=null, playing=false, retrying=false;
   var fallbackActive=false, mediaStartedAt=0;
+  var autoplayDenied=false, autoAttempts=0, animationRunning=false;
+  var ivoryPrepared=false, ivoryPreloads=[];
+  function prepareIvoryCurtains(){
+    if(ivoryPrepared)return;
+    ivoryPrepared=true;
+    // Preload the next page's REAL ivory fabric after the film gets going,
+    // so the receiving page need not show a placeholder colour.
+    for(var i=0;i<2;i++){
+      var picture=new Image();
+      picture.src=i===0?'curtain-ivory-lite-left-v6.jpg':'curtain-ivory-lite-right-v6.jpg';
+      ivoryPreloads.push(picture);
+    }
+  }
+  function startAnimation(){
+    if(animationRunning || done || fallbackActive || finalClock!==null)return;
+    animationRunning=true;
+    raf(animate);
+  }
   var frameReady=false,frameCallbackSupported=!!(film&&film.requestVideoFrameCallback);
   var lastMediaAdvanceAt=now(),lastMediaTime=0;
   function frameDecoded(force){
@@ -514,7 +532,9 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     lastMediaAdvanceAt=now();
     mediaStartedAt=now()-lastMediaTime*1000;
     root.classList.add('film-frame-ready');
-    hideGate();
+    // loadeddata alone does NOT mean autoplay worked on iOS Safari.
+    if(!film.paused && (film.currentTime||0)>.10)hideGate();
+    if(!film.paused)startAnimation();
   }
   if(frameCallbackSupported){
     try{film.requestVideoFrameCallback(function(){frameDecoded(true);});}catch(ignore){frameCallbackSupported=false;}
@@ -523,9 +543,12 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   // loadeddata and timeupdate are independent ways to unlock the transition.
   film.addEventListener('loadeddata',function(){frameDecoded(true);});
   film.addEventListener('seeked',function(){frameDecoded(true);});
-  film.addEventListener('timeupdate',function(){frameDecoded((film.currentTime||0)>.10);});
+  film.addEventListener('timeupdate',function(){
+    frameDecoded((film.currentTime||0)>.10);
+    if(frameReady && !film.paused)startAnimation();
+  });
   film.addEventListener('canplay',function(){
-    if(!done && !fallbackActive && film.paused && !hasClass('play-failed'))play(false);
+    if(!done && !fallbackActive && film.paused && !autoplayDenied && autoAttempts<3)play(false);
   });
 
   /* Countdown to the 5:30pm British Summer Time celebration, 31 March 2027. */
@@ -558,7 +581,10 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   function lock(){root.classList.add('cinematic-active');if(invitation && 'inert' in invitation)invitation.inert=true;}
   function unlock(){root.classList.remove('cinematic-active');if(invitation && 'inert' in invitation)invitation.inert=false;}
   function hideGate(){root.classList.remove('needs-play');root.classList.remove('play-failed');}
-  function reveal(){root.classList.remove('pending');root.classList.add('revealing');}
+  function reveal(){
+    root.classList.remove('pending');root.classList.add('revealing');
+    prepareIvoryCurtains();
+  }
   function clamp(v){return Math.max(0,Math.min(1,v));}
   function ease(v){return (1-Math.cos(Math.PI*v))/2;}
   function target(){
@@ -617,7 +643,8 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   function showPlay(reason){
     // A slow first visit is not a video failure. Never skip the real film
     // merely because Safari has not fetched or decoded its first frame.
-    if(done || fallbackActive || finalClock!==null || frameReady && !film.paused)return;
+    if(done || fallbackActive || finalClock!==null)return;
+    if(!film.paused && (film.currentTime||0)>.2 && now()-lastMediaAdvanceAt<3000)return;
     root.classList.add('needs-play');
     if(gateNote)gateNote.textContent=reason || 'Tap to watch the opening cinematic';
   }
@@ -628,48 +655,59 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     if(gateNote)gateNote.textContent='This device could not play the video. View the cinematic artwork instead.';
   }
   function animate(){
-    if(done || finalClock!==null || fallbackActive)return;
-    // The real poster covers buffering; if WebKit's frame callback is lost
-    // but time has advanced, do not deadlock the transition.
+    if(done || finalClock!==null || fallbackActive){animationRunning=false;return;}
+    // Don't hammer requestAnimationFrame while video has not decoded;
+    // the media events will restart this loop once a real frame exists.
     if(!frameReady && (film.currentTime||0)>.12)frameDecoded(true);
-    if(!frameReady){raf(animate);return;}
+    if(!frameReady || (film.paused && !film.ended)){
+      animationRunning=false;return;
+    }
     var t=film.currentTime || 0;
-    if(t>lastMediaTime+.035){lastMediaTime=t;lastMediaAdvanceAt=now();}
-    else if(playing && t<endAt-.2 && now()-lastMediaAdvanceAt>8000){
+    if(t>lastMediaTime+.035){
+      lastMediaTime=t;lastMediaAdvanceAt=now();
+      if(t>.10)hideGate();
+    }else if(t<endAt-.2 && now()-lastMediaAdvanceAt>5500){
       playing=false;
-      showPlay('Playback paused. Tap to resume the cinematic.');
+      showPlay('Video stalled. Tap to resume the wedding cinematic.');
     }
     if(t>=startAt){reveal();advance(Math.min(t,endAt)-startAt);}
-    if(film.ended || t>=endAt){finish();return;}
+    if(film.ended || t>=endAt){finish();animationRunning=false;return;}
     raf(animate);
   }
   function play(userInitiated){
     if(done || fallbackActive)return;
+    if(userInitiated)autoplayDenied=false;
+    else{
+      if(autoplayDenied || autoAttempts>=3)return;
+      autoAttempts++;
+    }
     retrying=!!userInitiated;
     hideGate();
     try{
-      film.muted=true;
+      film.muted=true;film.defaultMuted=true;
       film.setAttribute('muted','');
       film.setAttribute('playsinline','');
       film.setAttribute('webkit-playsinline','');
+      // For a user click this call stays inside the click stack.
       var result=film.play();
       if(result && typeof result.then==='function'){
         result.then(function(){
           if(done || fallbackActive)return;
-          playing=true;
-          lastMediaAdvanceAt=now();
-          hideGate();
-        },function(){
+          playing=true;lastMediaAdvanceAt=now();
+          if((film.currentTime||0)>.1)hideGate();
+          startAnimation();
+        },function(error){
           playing=false;
-          showPlay(userInitiated?'Tap to retry the opening video':'Tap to watch the opening cinematic');
+          if(!userInitiated && error && error.name==='NotAllowedError')autoplayDenied=true;
+          showPlay(userInitiated?'Tap to retry the wedding cinematic':'Tap to play the wedding cinematic');
         });
       }else if(!film.paused){
-        playing=true;
-        lastMediaAdvanceAt=now();
+        playing=true;lastMediaAdvanceAt=now();startAnimation();
       }
-    }catch(err){
+    }catch(error){
       playing=false;
-      showPlay('Tap to watch the opening cinematic');
+      if(!userInitiated && error && error.name==='NotAllowedError')autoplayDenied=true;
+      showPlay('Tap to play the wedding cinematic');
     }
   }
   function blockSkipping(e){
@@ -699,7 +737,8 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     // Let the decoder and timeupdate confirm pixels; do not hide the film.
     frameDecoded(false);
     lastMediaAdvanceAt=now();
-    hideGate();
+    if((film.currentTime||0)>.1)hideGate();
+    startAnimation();
   });
   film.addEventListener('ended',finish);
   film.addEventListener('error',function(){
@@ -717,7 +756,7 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   film.addEventListener('pause',function(){
     if(!done && !fallbackActive && !film.ended && finalClock===null){
       playing=false;
-      showPlay('Automatic fallback');
+      showPlay('Tap to resume the wedding cinematic');
     }
   });
 
@@ -727,30 +766,38 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     /* Select an actual src (rather than <source media>) for older Safari. */
     var connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
     var lowData=!!(connection && (connection.saveData || connection.effectiveType==='2g' || connection.effectiveType==='slow-2g'));
-    var asset=lowData ? (mobile?'intro-mobile-compatible.mp4':'intro-desktop-compatible.mp4') :
-       (mobile?'bismillah-mobile-hd.mp4':'bismillah-desktop-hd.mp4');
+    var asset=mobile?'intro-mobile-compatible.mp4':(lowData?'intro-desktop-compatible.mp4':'bismillah-desktop-hd.mp4');
     film.poster=mobile?'bismillah-frame-mobile-hd.jpg':'bismillah-frame-desktop-hd.jpg';
     if(film.getAttribute('src')!==asset){film.setAttribute('src',asset);}
     film.muted=true;
     // Assigning src already initiates resource selection; calling load() here
     // can abort Safari's automatic play attempt.
     lock();
-    raf(animate);
     play(false);
     // Show a manual-play option if a cold Safari load remains undecoded.
     // Keep the genuine Bismillah still visible, and NEVER auto-scroll past
     // the video because of network speed, Low Power Mode or decode delay.
     window.setTimeout(function(){
-      if(!done && !fallbackActive && finalClock===null && !frameReady){
-        // A second attempt is safe, even if the first autoplay promise was
-        // accepted before the video had enough data to display a frame.
-        if((film.readyState||0)>=2 && film.paused)play(false);
-        showPlay('Tap to watch the opening cinematic');
+      if(!done && !fallbackActive && finalClock===null &&
+         (film.paused || (film.currentTime||0)<.12)){
+        // Safari's initial play() can be rejected or never make progress
+        // on a cold tab. The actual film stays visible; offer one tap.
+        if(!autoplayDenied && autoAttempts<3 && film.paused)play(false);
+        showPlay('Tap to play the wedding cinematic');
       }
-    },6500);
+    },3800);
 
   }
-  window.addEventListener('pageshow',function(e){if(e.persisted && !done && !fallbackActive && film.paused)showPlay('Tap to resume the opening cinematic');});
+  window.addEventListener('pageshow',function(e){
+    if(done || fallbackActive || !film.paused)return;
+    if(e.persisted || autoplayDenied)showPlay('Tap to play the opening cinematic');
+    else if(autoAttempts<3)play(false);
+  });
+  document.addEventListener('visibilitychange',function(){
+    if(done || fallbackActive || document.visibilityState!=='visible' || !film.paused)return;
+    if(autoplayDenied)showPlay('Tap to play the opening cinematic');
+    else if(autoAttempts<3)play(false);
+  });
 })();
 </script>
 
