@@ -7,7 +7,9 @@
 <meta name="description" content="The wedding celebration of Shoeb Ahmed and Fabbiha Akther Shama. Wednesday, 31 March 2027 at White Abbey Ballroom, Bradford.">
 <title>Shoeb & Fabbiha | The Celebration</title>
 <style id="very-first-paint-shield">
-html.curtain-boot, html.curtain-boot body {background:#123c33!important;}
+/* The receiving page must never paint flat emerald: it opens in ivory.
+   These colours are visible before Safari has decoded the curtain photos. */
+html.curtain-boot, html.curtain-boot body {background:#fff9f0!important;}
 </style>
 <script>
 /* Mark the handoff BEFORE the browser paints Page 2. The inline curtain
@@ -625,9 +627,21 @@ html.curtain-boot .drape-stage.fading-to-page{opacity:0!important;
  transition:opacity 550ms ease!important; -webkit-transition:opacity 550ms ease!important}
 .drape-stage .curtain-shield{
  position:absolute;inset:0;z-index:10;pointer-events:none;
- background:#123c33;opacity:1;
+ background:#fff9f0;opacity:1;
  -webkit-transition:opacity 460ms ease;transition:opacity 460ms ease;
  -webkit-transform:translateZ(0);transform:translateZ(0)}
+/* Paint the CLOSED ivory fabric immediately, not a blank colour.
+   These identical panels are reused underneath for the animated reveal,
+   so the first frame and animation can crossfade without colour flashes. */
+.drape-stage .curtain-shield::before,
+.drape-stage .curtain-shield::after{
+ content:"";position:absolute;top:0;bottom:0;width:50.5%;
+ background-color:#fff9f0;background-size:100% 100%;
+ background-repeat:no-repeat;background-position:center}
+.drape-stage .curtain-shield::before{
+ left:0;background-image:url('curtain-ivory-lite-left-v6.jpg')}
+.drape-stage .curtain-shield::after{
+ right:0;background-image:url('curtain-ivory-lite-right-v6.jpg')}
 .drape-stage.shield-fading .curtain-shield{opacity:0}
 .drape-stage.canvas-ready .drape-canvas{opacity:1!important}
 .drape-stage.canvas-ready .drape-half{opacity:0!important}
@@ -684,7 +698,7 @@ html.curtain-boot .drape-stage.canvas-ready .drape-half{opacity:0}
  }
  if(!requested||reduced){done();return;}
  root.classList.add('curtain-boot');stage.style.display='block';
- // On data saver skip the animation; still dissolve the green cover cleanly.
+ // On data saver skip the animation; still dissolve the ivory fabric cleanly.
  if(saveData){fadeToPage();return;}
  var timeout=window.setTimeout(fadeToPage,3750);
  function clamp(n){return n<0?0:n>1?1:n;}
