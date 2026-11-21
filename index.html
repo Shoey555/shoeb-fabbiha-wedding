@@ -697,6 +697,14 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   }
   function play(userInitiated){
     if(done || fallbackActive)return;
+    if(userInitiated && frameCallbackSupported && !frameReady && (film.currentTime||0)>.65){
+      // If Safari's clock ran against a frozen poster, a simple play()
+      // on an already-playing element does nothing. Rewind the decoder
+      // INSIDE the trusted tap handler before retrying playback.
+      try{film.pause();film.currentTime=0;}catch(ignore){}
+      presentedFrames=0;lastPresentedMediaTime=-1;
+      lastMediaTime=0;lastMediaAdvanceAt=now();
+    }
     if(userInitiated)autoplayDenied=false;
     else{
       if(autoplayDenied || autoAttempts>=3)return;
