@@ -522,10 +522,15 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     raf(animate);
   }
   var frameReady=false,frameCallbackSupported=!!(film&&film.requestVideoFrameCallback);
+  var presentedFrames=0,lastPresentedMediaTime=-1,lastPresentedWallTime=0;
   var lastMediaAdvanceAt=now(),lastMediaTime=0;
   function frameDecoded(force){
     if(frameReady || fallbackActive || done || !film)return;
     if((film.readyState||0)<2 || !(film.videoWidth>0))return;
+    // Safari can advance currentTime and fire loadeddata/playing while
+    // continuing to show the POSTER. Only compositor frames prove the
+    // moving Bismillah cinematic is really visible.
+    if(frameCallbackSupported && presentedFrames<2)return;
     if(!force && (film.currentTime||0)<.045)return;
     frameReady=true;
     lastMediaTime=film.currentTime||0;
@@ -536,15 +541,31 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     if(!film.paused && (film.currentTime||0)>.10)hideGate();
     if(!film.paused)startAnimation();
   }
-  if(frameCallbackSupported){
-    try{film.requestVideoFrameCallback(function(){frameDecoded(true);});}catch(ignore){frameCallbackSupported=false;}
+  function onPresentedVideoFrame(timestamp,metadata){
+    if(done || fallbackActive || finalClock!==null)return;
+    var t=metadata && typeof metadata.mediaTime==='number' ? metadata.mediaTime : film.currentTime||0;
+    if(t>lastPresentedMediaTime+.035){
+      presentedFrames++;
+      lastPresentedMediaTime=t;
+      lastPresentedWallTime=now();
+    }
+    if(presentedFrames>=2 && t>.12){
+      frameDecoded(true);
+      if(frameReady && !film.paused)startAnimation();
+    }
+    // Stay subscribed: one frame is not proof that video is moving.
+    try{film.requestVideoFrameCallback(onPresentedVideoFrame);}
+    catch(ignore){frameCallbackSupported=false;}
   }
-  // requestVideoFrameCallback can be late or omitted on cold Safari loads.
-  // loadeddata and timeupdate are independent ways to unlock the transition.
-  film.addEventListener('loadeddata',function(){frameDecoded(true);});
-  film.addEventListener('seeked',function(){frameDecoded(true);});
+  if(frameCallbackSupported){
+    try{film.requestVideoFrameCallback(onPresentedVideoFrame);}
+    catch(ignore){frameCallbackSupported=false;}
+  }
+  // On older browsers without frame callbacks, fall back to media events.
+  film.addEventListener('loadeddata',function(){if(!frameCallbackSupported)frameDecoded(true);});
+  film.addEventListener('seeked',function(){if(!frameCallbackSupported)frameDecoded(true);});
   film.addEventListener('timeupdate',function(){
-    frameDecoded((film.currentTime||0)>.10);
+    if(!frameCallbackSupported)frameDecoded((film.currentTime||0)>.10);
     if(frameReady && !film.paused)startAnimation();
   });
   film.addEventListener('canplay',function(){
@@ -658,7 +679,7 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     if(done || finalClock!==null || fallbackActive){animationRunning=false;return;}
     // Don't hammer requestAnimationFrame while video has not decoded;
     // the media events will restart this loop once a real frame exists.
-    if(!frameReady && (film.currentTime||0)>.12)frameDecoded(true);
+    if(!frameReady && !frameCallbackSupported && (film.currentTime||0)>.12)frameDecoded(true);
     if(!frameReady || (film.paused && !film.ended)){
       animationRunning=false;return;
     }
@@ -750,6 +771,7 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     if(!film.getAttribute('data-alternate-tried') && film.getAttribute('src')!==alternate){
       film.setAttribute('data-alternate-tried','1');
       frameReady=false;playing=false;autoplayDenied=false;autoAttempts=0;
+      presentedFrames=0;lastPresentedMediaTime=-1;lastPresentedWallTime=0;
       root.classList.remove('film-frame-ready');
       film.setAttribute('src',alternate);
       try{film.load();play(false);}catch(ignore){showFailure();}
@@ -783,14 +805,29 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
     // Keep the genuine Bismillah still visible, and NEVER auto-scroll past
     // the video because of network speed, Low Power Mode or decode delay.
     window.setTimeout(function(){
-      if(!done && !fallbackActive && finalClock===null &&
-         (film.paused || (film.currentTime||0)<.12)){
-        // Safari's initial play() can be rejected or never make progress
-        // on a cold tab. The actual film stays visible; offer one tap.
+      if(done || fallbackActive || finalClock!==null || frameReady)return;
+      var t=film.currentTime||0;
+      if(frameCallbackSupported && t>.65 && !film.paused){
+        // iOS WebKit sometimes advances the video clock without presenting
+        // ANY moving frames. A user's normal Refresh fixes this case.
+        // Warm up once automatically, but never loop if the browser refuses.
+        var shouldReload=false, key='sf-video-recover-'+location.pathname;
+        try{
+          var stamp=Number(sessionStorage.getItem(key)||0);
+          if(!stamp || Date.now()-stamp>45000){
+            sessionStorage.setItem(key,String(Date.now()));
+            shouldReload=true;
+          }
+        }catch(ignore){}
+        if(shouldReload){
+          try{window.location.reload();return;}catch(ignore){}
+        }
+        showPlay('The video did not display correctly. Tap to retry the cinematic.');
+      }else{
         if(!autoplayDenied && autoAttempts<3 && film.paused)play(false);
         showPlay('Tap to play the wedding cinematic');
       }
-    },3800);
+    },4500);
 
   }
   window.addEventListener('pageshow',function(e){
