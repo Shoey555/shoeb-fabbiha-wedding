@@ -524,6 +524,7 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
   var frameReady=false,frameCallbackSupported=!!(film&&film.requestVideoFrameCallback);
   var presentedFrames=0,lastPresentedMediaTime=-1,lastPresentedWallTime=0;
   var lastMediaAdvanceAt=now(),lastMediaTime=0;
+  window.__introFrameStats=function(){return {frames:presentedFrames,ready:frameReady};};
   function frameDecoded(force){
     if(frameReady || fallbackActive || done || !film)return;
     if((film.readyState||0)<2 || !(film.videoWidth>0))return;
@@ -722,10 +723,12 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
       if(result && typeof result.then==='function'){
         result.then(function(){
           if(done || fallbackActive)return;
+          window.__introPlayResult='resolved';
           playing=true;lastMediaAdvanceAt=now();
           if((film.currentTime||0)>.1)hideGate();
           startAnimation();
         },function(error){
+          window.__introPlayResult='rejected: '+(error && error.name || 'unknown');
           playing=false;
           if(!userInitiated && error && error.name==='NotAllowedError')autoplayDenied=true;
           showPlay(userInitiated?'Tap to retry the wedding cinematic':'Tap to play the wedding cinematic');
@@ -857,6 +860,58 @@ html.needs-play:not(.video-complete) .scene video{opacity:1!important}
 
 
 
+
+<script id="intro-diagnostics-optional">
+/* Only active with ?debugintro=1; no playback changes, no data sent. */
+(function(){
+  if(!/(?:\?|&)debugintro=1(?:&|$)/.test(location.search||''))return;
+  var video=document.getElementById('film');
+  if(!video)return;
+  var ui=document.createElement('div');
+  ui.id='intro-debug-panel';
+  ui.setAttribute('style','position:fixed;bottom:42px;left:8px;right:8px;z-index:2147483647;max-width:620px;margin:auto;padding:8px 10px;background:rgba(0,0,0,.91);border:1px solid #e3ca88;color:#fff;font:11px/1.45 Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;pointer-events:none');
+  document.body.appendChild(ui);
+  var events=[],lastSample=0,lastHash=null,changed=0,sampleError='';
+  var canvas=document.createElement('canvas');canvas.width=16;canvas.height=16;
+  var ctx=canvas.getContext&&canvas.getContext('2d');
+  function log(ev){
+    events.push(ev+' @'+Math.round((window.performance&&performance.now?performance.now():Date.now())/100)/10);
+    if(events.length>4)events.shift();
+  }
+  var watch=['loadeddata','canplay','playing','pause','waiting','stalled','error','ended'];
+  for(var i=0;i<watch.length;i++)(function(evt){
+    video.addEventListener(evt,function(){log(evt);});
+  })(watch[i]);
+  function sample(){
+    if(!ctx||video.readyState<2||Date.now()-lastSample<750)return;
+    lastSample=Date.now();
+    try{
+      ctx.drawImage(video,0,0,16,16);
+      var pixels=ctx.getImageData(0,0,16,16).data,hash=0;
+      for(var j=0;j<pixels.length;j+=16)hash+=pixels[j]*(j+1)+pixels[j+1];
+      if(lastHash!==null&&Math.abs(hash-lastHash)>3500)changed++;
+      lastHash=hash;
+    }catch(e){sampleError=e.name||String(e);}
+  }
+  function refresh(){
+    sample();
+    var q=video.getVideoPlaybackQuality&&video.getVideoPlaybackQuality();
+    var frames=q?q.totalVideoFrames:(video.webkitDecodedFrameCount||'?');
+    var st=window.__introFrameStats?window.__introFrameStats():{};
+    var css=window.getComputedStyle?getComputedStyle(video):{opacity:'?'};
+    var src=(video.currentSrc||video.src||'').split('/').pop().split('?')[0];
+    ui.textContent='INTRO DIAGNOSTICS\\n'+
+      'source: '+src+'\\n'+
+      'time: '+(video.currentTime||0).toFixed(2)+'  paused: '+video.paused+'  ended: '+video.ended+'\\n'+
+      'ready: '+video.readyState+'  network: '+video.networkState+'  size: '+video.videoWidth+'x'+video.videoHeight+'\\n'+
+      'decoded: '+frames+'  callbacks: '+(st.frames||0)+'  pixelsChanged: '+changed+(sampleError?' ('+sampleError+')':'')+'\\n'+
+      'opacity: '+css.opacity+'  visible: '+document.visibilityState+'  complete: '+document.documentElement.classList.contains('video-complete')+'\\n'+
+      'play: '+(window.__introPlayResult||'-')+'  error: '+(video.error?video.error.code:'-')+'\\n'+
+      'events: '+events.join(' | ');
+  }
+  refresh();setInterval(refresh,400);
+})();
+</script>
 <script src="curtain-motion.js?v=6-network-fix" defer></script>
 </body>
 </html>
